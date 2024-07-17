@@ -1238,7 +1238,7 @@ class _HolaConductor2State extends State<HolaConductor2> {
                                                 ),
                                               ],
                                             ),
-                                            const Expanded(child: SizedBox()),
+                                           // const Expanded(child: SizedBox()),
                                             Text(
                                               "Tipo de pago",
                                               style: TextStyle(
@@ -1489,9 +1489,9 @@ class _HolaConductor2State extends State<HolaConductor2> {
                                                                                 252,
                                                                                 1.000)),
                                                                       )),
-                                                                  const Expanded(
+                                                                  /*const Expanded(
                                                                       child:
-                                                                          SizedBox()),
+                                                                        SizedBox())*/
                                                                   ElevatedButton(
                                                                       onPressed:
                                                                           () {

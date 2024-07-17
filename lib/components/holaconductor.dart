@@ -437,7 +437,67 @@ class _HolaConductorState extends State<HolaConductor> {
                           height: largoActual * 0.08,
                         ),
                         //BOTON DE COMENZAR RUTA QUE APARECE SOLO SI EL CONDUCTOR TIENE UNA RUTA DE ESE DÍA
-                        SizedBox(
+                        if (tengoruta && (descargaste == false))
+                          ElevatedButton(
+                            onPressed: () {
+                              if (rutaTerminadaPref) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Pdf(
+                                      rutaID: finalrutaIDpref,
+                                      pedidos: finaltotalPendiente,
+                                      totalMonto: finaltotalMonto,
+                                      totalYape: finaltotalYape,
+                                      totalPlin: finaltotalPlin,
+                                      totalEfectivo: finaltotalEfectivo,
+                                      pedidosEntregados: finaltotalEntregado,
+                                      idpedidos: finalidpedidos,
+                                      pedidosTruncados: finaltotalTruncado,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                if (yaSeActualizoStockPref) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HolaConductor2(),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ActualizadoStock(),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            style: ButtonStyle(
+                              surfaceTintColor: MaterialStateProperty.all(
+                                  Color.fromRGBO(83, 176, 68, 1.000)),
+                              elevation: MaterialStateProperty.all(10),
+                              minimumSize: MaterialStatePropertyAll(Size(
+                                  anchoActual * 0.28, largoActual * 0.054)),
+                              backgroundColor: MaterialStateProperty.all(
+                                  Color.fromRGBO(83, 176, 68, 1.000)),
+                            ),
+                            child: Text(
+                              comenzarOaqui,
+                              style: TextStyle(
+                                fontSize: largoActual * 0.021,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        else
+                          Expanded(child: Container()),
+                        /*SizedBox(
                           child: tengoruta && (descargaste == false)
                               ? ElevatedButton(
                                   onPressed: () {
@@ -502,8 +562,8 @@ class _HolaConductorState extends State<HolaConductor> {
                                         color: Colors.white),
                                   ))
                               : Expanded(child: Container()),
-                        ),
-                        Expanded(child: Container()),
+                        ),*/
+                        // Expanded(child: Container()),
                         Lottie.asset('lib/imagenes/camion6.json'),
                       ],
                     ))),

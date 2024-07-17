@@ -130,8 +130,8 @@ class _FormuState extends State<Formu> {
                           top: 10 * 0.013, left: 10 * 0.055),
                       //color:Colors.grey,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           IconButton(
                               onPressed: () {
@@ -170,7 +170,7 @@ class _FormuState extends State<Formu> {
                               )),
                             ],
                           ),
-                          Expanded(child: Container()),
+                          //Expanded(child: Container()),
                           Container(
                             margin: EdgeInsets.only(right: anchoActual * 0.025),
                             height: (largoActual * 0.094),

@@ -250,7 +250,7 @@ class _PdfState extends State<Pdf> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(child: Container()),
+                  //  Expanded(child: Container()),
                     Text(
                       '¡Felicidades,\n${userProvider.user?.nombre}!',
                       textAlign: TextAlign.center,
