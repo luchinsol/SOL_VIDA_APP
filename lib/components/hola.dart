@@ -1726,7 +1726,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                             fontSize: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                22,
+                                                27,
                                             fontWeight: FontWeight.bold,
                                             color: Color.fromRGBO(
                                                 0, 106, 252, 1.000)))
@@ -1811,7 +1811,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                 BorderRadius.circular(20),
                                             image: DecorationImage(
                                               image: NetworkImage(promo),
-                                              fit: BoxFit.fitHeight,
+                                              fit: BoxFit.fill,
                                             )),
                                       ),
                                     );

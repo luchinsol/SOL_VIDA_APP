@@ -374,6 +374,7 @@ class _PreloginState extends State<Prelogin> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text("${MediaQuery.of(context).size.width}"),
                         const SizedBox(
                           height: 80,
                         ),
@@ -383,7 +384,7 @@ class _PreloginState extends State<Prelogin> {
                           decoration: const BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
-                                      'lib/imagenes/nuevecito.png'))),
+                                      'lib/imagenes/nuevito.png'))),
                         ),
                         Container(
                           child: Column(
@@ -667,7 +668,7 @@ class _PreloginState extends State<Prelogin> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 172, 255, 48),
                                   ),
                                 ))
                           ],

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:appsol_final/components/conductorinit.dart';
 import 'package:appsol_final/components/login.dart';
 import 'package:appsol_final/components/navegador.dart';
+import 'package:appsol_final/components/preinicios.dart';
 import 'package:appsol_final/models/user_model.dart';
 import 'package:appsol_final/provider/pedido_provider.dart';
 import 'package:appsol_final/provider/ruta_provider.dart';
@@ -79,8 +81,8 @@ class MyApp extends StatelessWidget {
                   indice: 0,
                   subIndice: 0,
                 )
-              : (rol == 5 ? HolaConductor() : Login()))
-          : Login(),
+              : (rol == 5 ? Conductorinit() : Solvida()))
+          : Solvida(),
     );
   }
 }

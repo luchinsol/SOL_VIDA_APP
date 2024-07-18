@@ -18,6 +18,7 @@ class _SolvidaState extends State<Solvida> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            Text("${MediaQuery.of(context).size.width}"),
             const SizedBox(
               height: 50,
             ),
@@ -147,76 +148,86 @@ class _SolvidaState extends State<Solvida> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  const Color(0xFF3D54CF),
-                  const Color(0xFF3179D2),
-                ],
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (bool didPop) {
+          if (didPop) {
+            return;
+          }
+        },
+        child: Stack(
+          children: [
+            
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    const Color(0xFF3D54CF),
+                    const Color(0xFF3179D2),
+                  ],
+                ),
+        
+        /*
+                image: DecorationImage(
+                  image: AssetImage('lib/imagenes/azul.jpg'),
+                  fit: BoxFit
+                      .cover, // Cambiado a BoxFit.cover para que cubra todo el Container
+                ),
+        */
               ),
-
-/*
-              image: DecorationImage(
-                image: AssetImage('lib/imagenes/azul.jpg'),
-                fit: BoxFit
-                    .cover, // Cambiado a BoxFit.cover para que cubra todo el Container
-              ),
-*/
             ),
-          ),
-          Column(
-            children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  if (constraints.maxWidth <= Breakpoint.xsmall) {
-                    //codigo,ancho,alto,t1,t2,botones,textoboton
-                    return sollogo("xsmall", 100, constraints.maxWidth, 180, 23,
-                        15, 0.85, 12);
-                  } else if (constraints.maxWidth <= Breakpoint.avgsmall) {
-                    return sollogo("avgsmall", 130, constraints.maxWidth, 190,
-                        23, 15, 0.88, 16);
-                  } else if (constraints.maxWidth <= Breakpoint.small) {
-                    return sollogo("small", 150, constraints.maxWidth, 220, 30,
-                        17, 0.8, 20);
-                  } else if (constraints.maxWidth <= Breakpoint.avgmedium) {
-                    return sollogo("avgmedium", 170, constraints.maxWidth, 230,
-                        23, 15, 0.77, 25);
-                  } else if (constraints.maxWidth <= Breakpoint.medium) {
-                    return sollogo("medium", 200, constraints.maxWidth, 250, 29,
-                        20, 0.78, 25);
-                  } else if (constraints.maxWidth <= Breakpoint.avglarg) {
-                    return sollogo("avglarge", 220, constraints.maxWidth, 250,
-                        37, 20, 0.65, 25);
-                  } else if (constraints.maxWidth <= Breakpoint.large) {
-                    return sollogo("large", 230, constraints.maxWidth, 250, 35,
-                        25, 0.62, 25);
-                  } else if (constraints.maxWidth <= Breakpoint.avgxlarge) {
-                    return sollogo("avgxlarge", 250, constraints.maxWidth, 250,
-                        43, 25, 0.55, 25);
-                  } else {
-                    return sollogo(
-                        "xlarge",
-                        270,
-                        constraints.maxWidth,
-                        280,
-                        40,
-                        25,
-                        0.55,
-                        35); /*Text(
-                      "out range",
-                      style: TextStyle(fontSize: 60),
-                    );*/
-                  }
-                },
-              ),
-            ],
-          ),
-        ],
+            Column(
+              children: [
+                
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (constraints.maxWidth <= Breakpoint.xsmall) {
+                      //codigo,ancho,alto,t1,t2,botones,textoboton
+                      return sollogo("xsmall", 100, constraints.maxWidth, 180, 23,
+                          15, 0.85, 12);
+                    } else if (constraints.maxWidth <= Breakpoint.avgsmall) {
+                      return sollogo("avgsmall", 130, constraints.maxWidth, 190,
+                          23, 15, 0.88, 16);
+                    } else if (constraints.maxWidth <= Breakpoint.small) {
+                      return sollogo("small", 150, constraints.maxWidth, 220, 30,
+                          17, 0.8, 20);
+                    } else if (constraints.maxWidth <= Breakpoint.avgmedium) {
+                      return sollogo("avgmedium", 170, constraints.maxWidth, 230,
+                          23, 15, 0.77, 25);
+                    } else if (constraints.maxWidth <= Breakpoint.medium) {
+                      return sollogo("medium", 200, constraints.maxWidth, 250, 29,
+                          20, 0.78, 25);
+                    } else if (constraints.maxWidth <= Breakpoint.avglarg) {
+                      return sollogo("avglarge", 220, constraints.maxWidth, 250,
+                          37, 20, 0.65, 25);
+                    } else if (constraints.maxWidth <= Breakpoint.large) {
+                      return sollogo("large", 230, constraints.maxWidth, 250, 35,
+                          25, 0.62, 25);
+                    } else if (constraints.maxWidth <= Breakpoint.avgxlarge) {
+                      return sollogo("avgxlarge", 250, constraints.maxWidth, 250,
+                          43, 25, 0.55, 25);
+                    } else {
+                      return sollogo(
+                          "xlarge",
+                          270,
+                          constraints.maxWidth,
+                          280,
+                          40,
+                          25,
+                          0.55,
+                          35); /*Text(
+                        "out range",
+                        style: TextStyle(fontSize: 60),
+                      );*/
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

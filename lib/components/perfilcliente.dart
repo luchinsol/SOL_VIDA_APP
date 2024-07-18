@@ -1,4 +1,5 @@
 import 'package:appsol_final/components/login.dart';
+import 'package:appsol_final/components/preinicios.dart';
 import 'package:appsol_final/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -873,7 +874,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                       prefs.remove('user');
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Login()),
+                        MaterialPageRoute(builder: (context) => const Solvida()),
                       );
                     },
                     style: ButtonStyle(
