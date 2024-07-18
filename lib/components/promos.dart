@@ -339,20 +339,37 @@ class _PromosState extends State<Promos> {
                         margin:
                             EdgeInsets.only(top: 0, left: anchoActual * 0.055),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Container(
+                                width: 80,
+                                height: 80,
+                               
+                                decoration:const BoxDecoration(
+                                  //color:Colors.grey,
+                                  image: DecorationImage(
+                                    image: AssetImage('lib/imagenes/nuevecito.png')
+                                  )
+                                ),
+                              ),
+                              const SizedBox(width: 20,),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Llévate las mejores promos!",
+                                    "Escoge tu promoción",
                                     style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 1, 42, 76),
-                                        fontWeight: FontWeight.w200,
+                                        color: Color.fromARGB(255, 1, 84, 151),
+                                        fontWeight: FontWeight.w500,
                                         fontSize: largoActual * 0.026),
                                   ),
-                                  Container(
+                                  Text("favorita!",style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 1, 84, 151),
+                                        fontWeight: FontWeight.w500
+                                        ,
+                                        fontSize: largoActual * 0.026),)
+                                  /*Container(
                                     margin: EdgeInsets.only(
                                         left: anchoActual * 0.055),
                                     child: Text(
@@ -363,7 +380,7 @@ class _PromosState extends State<Promos> {
                                           fontSize: largoActual * 0.025,
                                           fontWeight: FontWeight.w500),
                                     ),
-                                  ),
+                                  ),*/
                                 ],
                               ),
                             ]),
@@ -520,33 +537,38 @@ class _PromosState extends State<Promos> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            children: [
-                              Container(
-                                margin:
-                                    EdgeInsets.only(left: anchoActual * 0.055),
-                                child: Text(
-                                  "Subtotal:",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: largoActual * 0.021,
-                                      color:
-                                          const Color.fromARGB(255, 1, 25, 44)),
+                          Container(
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 2, 108, 195),
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  
+                                  //margin:EdgeInsets.only(left: anchoActual * 0.055),
+                                  child: Text(
+                                    "Pago de:",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: largoActual * 0.021,
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255)),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                margin:
-                                    EdgeInsets.only(left: anchoActual * 0.055),
-                                child: Text(
-                                  "S/.${total}0",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: largoActual * 0.027,
-                                      color: const Color.fromARGB(
-                                          255, 4, 62, 107)),
+                                Container(
+                                  //margin:EdgeInsets.only(left: anchoActual * 0.055),
+                                  child: Text(
+                                    "S/.${total}0",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: largoActual * 0.027,
+                                        color: Color.fromARGB(255, 255, 255, 255)),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -557,45 +579,49 @@ class _PromosState extends State<Promos> {
                                 child: Text(
                                   "Agregar al carrito",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w300,
+                                      fontWeight: FontWeight.bold,
                                       fontSize: largoActual * 0.021,
                                       color:
-                                          const Color.fromARGB(255, 1, 32, 56)),
+                                          Color.fromARGB(255, 2, 94, 165)),
                                 ),
                               ),
                               Container(
-                                margin:
-                                    EdgeInsets.only(right: anchoActual * 0.055),
-                                child: ElevatedButton(
-                                    onPressed: almenosUno
-                                        ? () async {
-                                            obtenerPromos();
-
-                                            pedidoMio = PedidoModel(
-                                              seleccionados: productosProvider,
-                                              seleccionadosPromo:
-                                                  promosProvider,
-                                              cantidadProd:
-                                                  productosProvider.length +
-                                                      promosProvider.length,
-                                              totalProds: totalProvider,
-                                              envio: envio,
-                                            );
-                                            Provider.of<PedidoProvider>(context,
-                                                    listen: false)
-                                                .updatePedido(pedidoMio);
-                                          }
-                                        : null,
-                                    style: ButtonStyle(
-                                        elevation: MaterialStateProperty.all(8),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                const Color.fromRGBO(
-                                                    120, 251, 99, 1.000))),
-                                    child: const Icon(
-                                      Icons.add_shopping_cart_rounded,
-                                      color: Colors.white,
-                                    )),
+                                margin: EdgeInsets.only(right: anchoActual * 0.055),
+                                width: 80,
+                                height: 50,
+                                child: Center(
+                                  child: ElevatedButton(
+                                      onPressed: almenosUno
+                                          ? () async {
+                                              obtenerPromos();
+                                  
+                                              pedidoMio = PedidoModel(
+                                                seleccionados: productosProvider,
+                                                seleccionadosPromo:
+                                                    promosProvider,
+                                                cantidadProd:
+                                                    productosProvider.length +
+                                                        promosProvider.length,
+                                                totalProds: totalProvider,
+                                                envio: envio,
+                                              );
+                                              Provider.of<PedidoProvider>(context,
+                                                      listen: false)
+                                                  .updatePedido(pedidoMio);
+                                            }
+                                          : null,
+                                      style: ButtonStyle(
+                                          elevation: MaterialStateProperty.all(8),
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color.fromARGB(255, 17, 123, 1))),
+                                      child: Center(
+                                        child: const Icon(
+                                          Icons.add_shopping_cart_rounded,
+                                          color: Colors.white,
+                                        ),
+                                      )),
+                                ),
                               ),
                             ],
                           ),

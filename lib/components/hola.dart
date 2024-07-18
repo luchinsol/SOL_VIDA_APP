@@ -147,18 +147,18 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
           context: context,
           builder: (context) {
             return Dialog(
-                backgroundColor: Colors.blue.withOpacity(0.3),
+                //backgroundColor: Colors.blue.withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Stack(
-                  clipBehavior: Clip.none,
+                  //clipBehavior: Clip.none,
                   children: [
                     Container(
                       //padding: EdgeInsets.all(0),
                       // color: Colors.green,
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 1.34,
+                      //width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 2,//1.34,
                       child: RotatedBox(
                         quarterTurns: -1,
                         child: ListWheelScrollView(
@@ -169,7 +169,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                               quarterTurns: 1,
                               child: Container(
                                   height:
-                                      MediaQuery.of(context).size.height / 1.57,
+                                      MediaQuery.of(context).size.height / 1.5,//1.57,
                                   decoration: BoxDecoration(
                                       color: const Color.fromARGB(
                                           255, 250, 251, 252),
@@ -177,13 +177,19 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                   child: Stack(
                                     children: [
                                       Container(
-                                        // padding: EdgeInsets.all(20),
-                                        //color: Colors.amber,),
+                                        
                                         decoration: BoxDecoration(
+                                          color:Colors.amber,
+                                          borderRadius: BorderRadius.circular(20),
                                             image: DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: AssetImage(
-                                                    'lib/imagenes/codigo_entra.jpg'))),
+                                                    'lib/imagenes/codigoentra2.jpg'))),
+                                      ),
+                                      Container(
+                                        width: 100,
+                                        height: 100,
+                                        color: Colors.amber,
                                       ),
                                       Positioned(
                                           top: MediaQuery.of(context)
@@ -219,7 +225,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                     backgroundColor:
                                                         MaterialStateProperty
                                                             .all(Colors
-                                                                .transparent)),
+                                                                .red)),
                                                 onPressed: () {
                                                   // Hacer scroll al siguiente elemento
                                                   final currentPosition =
@@ -329,7 +335,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         /////////////////
 
                                         ),
-                                  Positioned(
+                                    Positioned(
                                         top:
                                             MediaQuery.of(context).size.height /
                                                 1.85,
@@ -344,24 +350,22 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                   backgroundColor:
                                                       MaterialStateProperty.all(
                                                           Colors.transparent)),
-                                            onPressed: () {
-                                                  // Hacer scroll al siguiente elemento
-                                                  final currentPosition =
-                                                      _scrollController.offset;
-                                                  final itemExtent =
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height /
-                                                          3;
-                                                  _scrollController.animateTo(
-                                                    currentPosition +
-                                                        itemExtent,
-                                                    duration:
-                                                        Duration(seconds: 1),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                },
-                                              
+                                              onPressed: () {
+                                                // Hacer scroll al siguiente elemento
+                                                final currentPosition =
+                                                    _scrollController.offset;
+                                                final itemExtent =
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        3;
+                                                _scrollController.animateTo(
+                                                  currentPosition + itemExtent,
+                                                  duration:
+                                                      Duration(seconds: 1),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                              },
                                               child: Text("")),
                                         )
                                         /////////////////
@@ -391,23 +395,21 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                 'lib/imagenes/IMG-20240618-WA0004.jpg'))),
                                   ),
                                   Positioned(
-                                    top:
-                                            MediaQuery.of(context).size.height /
-                                                2.15,
-                                        left:
-                                            MediaQuery.of(context).size.width /
-                                                2.9,
-                                    child: 
-                                      
-                                      /////////////////
-                                      Container(
+                                      top: MediaQuery.of(context).size.height /
+                                          2.15,
+                                      left: MediaQuery.of(context).size.width /
+                                          2.9,
+                                      child:
+
+                                          /////////////////
+                                          Container(
                                         height: 60,
                                         width: 150,
                                         child: ElevatedButton(
-                                          style:ButtonStyle(
-                                            backgroundColor: MaterialStateProperty.all(Colors.transparent)
-                                          ),
-                                          
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.transparent)),
                                             onPressed: () {
                                               final pedidoProvider =
                                                   Provider.of<PedidoProvider>(
@@ -423,21 +425,26 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                               print(bidonProducto[0]
                                                   .cantidadRequeridaParaRuta);*/
                                               bidonProducto[0].cantidad = 1;
-                                        
-                                              PedidoModel newPedido = PedidoModel(
-                                                  seleccionados: bidonProducto,
-                                                  seleccionadosPromo: [],
-                                                  cantidadProd:
-                                                      bidonProducto[0].cantidad,
-                                                  totalProds: bidonProducto[0]
-                                                          .precio *
-                                                      bidonProducto[0].cantidad,
-                                                  envio: 0);
-                                        
+
+                                              PedidoModel newPedido =
+                                                  PedidoModel(
+                                                      seleccionados:
+                                                          bidonProducto,
+                                                      seleccionadosPromo: [],
+                                                      cantidadProd:
+                                                          bidonProducto[0]
+                                                              .cantidad,
+                                                      totalProds:
+                                                          bidonProducto[0]
+                                                                  .precio *
+                                                              bidonProducto[0]
+                                                                  .cantidad,
+                                                      envio: 0);
+
                                               // SE ENVIA EL PROVIDER ACTUAL
                                               pedidoProvider
                                                   .updatePedido(newPedido);
-                                        
+
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -450,25 +457,26 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                             child: Text("")),
                                       )
                                       /////////////////
-                                    
-                                  ),
-                                  Positioned(
-                                    top:MediaQuery.of(context).size.height/1.88,
-                                    left:MediaQuery.of(context).size.width/3,
-                                    child:Container(
-                                      width: 150,
-                                      height: 55,
-                                      child: ElevatedButton(
-                                        style:ButtonStyle(
-                                          backgroundColor: MaterialStateProperty.all(Colors.transparent)
-                                        ),
-                                        onPressed: (){
-                                          Navigator.of(context).pop();
-                                        },
-                                        child:Text("")
+
                                       ),
-                                    )
-                                  )
+                                  Positioned(
+                                      top: MediaQuery.of(context).size.height /
+                                          1.88,
+                                      left:
+                                          MediaQuery.of(context).size.width / 3,
+                                      child: Container(
+                                        width: 150,
+                                        height: 55,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.transparent)),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("")),
+                                      ))
                                 ]),
                               ),
                             ),
@@ -518,19 +526,19 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
         if (data == null) {
           //print("no hay data");
           //print("no compre");
-           if (mounted) {
-          setState(() {
-            compre = false;
-          });
-        }
+          if (mounted) {
+            setState(() {
+              compre = false;
+            });
+          }
           return compre;
         } else {
-         // print("compre");
+          // print("compre");
           if (mounted) {
-          setState(() {
-            compre = true;
-          });
-        }
+            setState(() {
+              compre = true;
+            });
+          }
           return compre;
           //print("no hay dta");
         }
@@ -559,7 +567,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
     //print(yaSeMostro);
     //print("ya compro");
     //print(compreBidon);
-if (!mounted) return;
+    if (!mounted) return;
     if (widget.esNuevo == true && compreBidon == false) {
       //print(".....ENTRANDO Y LLAMANDO.........");
       //print("...todavia");
@@ -1109,20 +1117,21 @@ if (!mounted) return;
                         Container(
                           width: anchoActual,
 
-                          //color: Colors.red,
+                          // color: Colors.red,
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            //crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               //LOCATION
-                              Container(
-                                width: MediaQuery.of(context).size.width / 1.3,
+                              /*Container(
+                                //width: MediaQuery.of(context).size.width / 1.3,
                                 decoration: BoxDecoration(
+                                  color:Colors.amber,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Row(
                                   children: [
                                     //BOTON DE AGREGAR UBI
-                                    Container(
+                                   Container(
                                       width: anchoActual * 0.13,
                                       decoration: BoxDecoration(
                                         color: Colors.yellow.shade200,
@@ -1378,8 +1387,228 @@ if (!mounted) return;
                                 ),
                               ).animate().shakeX(
                                     duration: Duration(milliseconds: 300),
-                                  ),
+                                  ),*/
+                              Container(
+                                //width: anchoActual * 0.13,
+                                height: largoActual * 0.059,
+                                width: largoActual * 0.059,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 61, 84, 207),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      backgroundColor: const Color.fromRGBO(
+                                          0, 106, 252, 1.000),
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          margin: EdgeInsets.only(
+                                              top: largoActual * 0.041,
+                                              left: anchoActual * 0.055,
+                                              right: anchoActual * 0.055),
+                                          height: largoActual * 0.17,
+                                          width: anchoActual,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: Text(
+                                                  'Agregar Ubicación',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize:
+                                                        largoActual * 0.023,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: largoActual * 0.013),
+                                              ElevatedButton(
+                                                onPressed: () async {
+                                                  await currentLocation();
 
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.pop(
+                                                      // ignore: use_build_context_synchronously
+                                                      context);
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.pop(
+                                                      // ignore: use_build_context_synchronously
+                                                      context);
+                                                },
+                                                style: ButtonStyle(
+                                                  surfaceTintColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                  elevation:
+                                                      MaterialStateProperty.all(
+                                                          8),
+                                                  minimumSize:
+                                                      MaterialStatePropertyAll(
+                                                          Size(
+                                                              anchoActual *
+                                                                  0.28,
+                                                              largoActual *
+                                                                  0.054)),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                ),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .add_location_alt_rounded,
+                                                        color: const Color
+                                                            .fromRGBO(
+                                                            0, 106, 252, 1.000),
+                                                        size:
+                                                            largoActual * 0.034,
+                                                      ),
+                                                      Text(
+                                                        ' Agregar ubicación actual',
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                largoActual *
+                                                                    0.021,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: const Color
+                                                                .fromRGBO(
+                                                                0,
+                                                                106,
+                                                                252,
+                                                                1.000)),
+                                                      ),
+                                                    ]),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: Icon(Icons.add_location_alt_outlined,
+                                      size: largoActual * 0.031,
+                                      color: Colors.white),
+                                ),
+                              ),
+
+                              Container(
+                                width: anchoActual * 0.63,
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 20, 108, 7),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Container(
+                                  //color: Colors.amberAccent,
+                                  margin:
+                                      const EdgeInsets.only(left: 12, right: 5),
+                                  child: DropdownButton<String>(
+                                    hint: Text(
+                                      '¿A dónde llevamos tu pedido?',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: largoActual * 0.018,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: largoActual * 0.018,
+                                        fontWeight: FontWeight.w500),
+                                    borderRadius: BorderRadius.circular(20),
+                                    elevation: 20,
+                                    dropdownColor:
+                                        const Color.fromARGB(255, 20, 108, 7),
+                                    isExpanded: true,
+                                    value: _ubicacionSelected,
+                                    items:
+                                        ubicacionesString.map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      if (newValue is String) {
+                                        if (direccionSeleccionada(newValue)
+                                                .zonaID ==
+                                            0) {
+                                          setState(() {
+                                            tituloUbicacion = 'Lo sentimos :(';
+                                            contenidoUbicacion =
+                                                'Todavía no llegamos a tu zona, pero puedes revisar nuestros productos en la aplicación o elegir otra ubicación :D';
+                                          });
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                backgroundColor: Colors.white,
+                                                surfaceTintColor: Colors.white,
+                                                title: Text(
+                                                  tituloUbicacion,
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          largoActual * 0.026,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black),
+                                                ),
+                                                content: Text(
+                                                  contenidoUbicacion,
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          largoActual * 0.018,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop(); // Cierra el AlertDialog
+                                                    },
+                                                    child: Text(
+                                                      'OK',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize:
+                                                              largoActual *
+                                                                  0.02,
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          setState(() {
+                                            _ubicacionSelected = newValue;
+                                            miUbicacion =
+                                                direccionSeleccionada(newValue);
+                                          });
+                                          Provider.of<UbicacionProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .updateUbicacion(miUbicacion);
+                                        }
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
                               //CARRITO
                               Container(
                                 alignment: Alignment.center,
@@ -1408,9 +1637,9 @@ if (!mounted) return;
                                         const Icon(Icons.shopping_cart_rounded),
                                     color: Colors.white,
                                     iconSize: largoActual * 0.030,
-                                  ).animate().shakeY(
+                                  ),/*.animate().shakeY(
                                         duration: Duration(milliseconds: 300),
-                                      ),
+                                      ),*/
                                 ),
                               ),
                             ],
@@ -1418,77 +1647,94 @@ if (!mounted) return;
                         ),
 
                         //BIENVENIDA DEL CLIENTE
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // color: Colors.amber,
-                                  //width: anchoActual,
-                                  margin: EdgeInsets.only(
-                                      left: anchoActual * 0.055,
-                                      top: largoActual * 0.016,
-                                      right: 20),
-                                  child: Text(
-                                    "Bienvenid@, ${userProvider.user?.nombre?.capitalize()}",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: largoActual * 0.019,
-                                        color: colorLetra),
-                                  ),
-                                ),
-                                Container(
-                                  //color: Colors.purple,
-                                  margin: EdgeInsets.only(
-                                      left: anchoActual * 0.055),
-                                  child: Text(
-                                    "Disfruta de Sol Market!",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: largoActual * 0.019,
-                                        color: colorTextos),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(right: 1),
-                              width: MediaQuery.of(context).size.width / 7.5,
-                              //height: 60,
-                              decoration: BoxDecoration(
-                                  //color: Colors.grey,
-                                  ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                        Container(
+                          //color: Colors.amber,
+                          margin: EdgeInsets.only(top: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(left: 3),
-                                    // height: largoActual * 0.059,
-                                    width: largoActual * 0.059,
-                                    //color: Colors.green.shade100,
-                                    child: IconButton(
-                                      icon: Lottie.asset(
-                                          "lib/imagenes/infos.json"),
-                                      onPressed: () async {
-                                        await muestraDialogoPubli(context);
-                                      },
-                                    ),
+                                    width: 80,
+                                    height: 80,
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'lib/imagenes/nuevecito.png'))),
                                   ),
-                                  Text("+ Info",
-                                      style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              30,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromRGBO(
-                                              0, 106, 252, 1.000)))
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        // color: Colors.amber,
+                                        //width: anchoActual,
+                                        margin: EdgeInsets.only(
+                                            left: anchoActual * 0.055,
+                                            top: largoActual * 0.016,
+                                            right: 20),
+                                        child: Text(
+                                          "Bienvenid@, ${userProvider.user?.nombre?.capitalize()} a la",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: largoActual * 0.019,
+                                              color: colorLetra),
+                                        ),
+                                      ),
+                                      Container(
+                                        //color: Colors.purple,
+                                        margin: EdgeInsets.only(
+                                            left: anchoActual * 0.055),
+                                        child: Text(
+                                          "Familia Sol",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: largoActual * 0.019,
+                                              color: colorTextos),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ).animate().shake().fade()
-                          ],
+                              Container(
+                                margin: EdgeInsets.only(right: 1),
+                                width: MediaQuery.of(context).size.width / 7.5,
+                                //height: 60,
+                                decoration: BoxDecoration(
+                                    //color: Colors.grey,
+                                    ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 3),
+                                      // height: largoActual * 0.059,
+                                      width: largoActual * 0.059,
+                                      //color: Colors.green.shade100,
+                                      child: IconButton(
+                                        icon: Lottie.asset(
+                                            "lib/imagenes/infos.json"),
+                                        onPressed: () async {
+                                          await muestraDialogoPubli(context);
+                                        },
+                                      ),
+                                    ),
+                                    Text("+ Info",
+                                        style: TextStyle(
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                22,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromRGBO(
+                                                0, 106, 252, 1.000)))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
 
                         SizedBox(
@@ -1560,8 +1806,7 @@ if (!mounted) return;
                                         height: anchoActual * 0.83,
                                         width: anchoActual * 0.83,
                                         decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 130, 219, 133),
+                                            color: Color.fromARGB(255, 206, 206, 206),
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             image: DecorationImage(
@@ -1591,8 +1836,7 @@ if (!mounted) return;
                                   height: anchoActual * 0.83,
                                   width: anchoActual * 0.83,
                                   decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 130, 219, 133),
+                                      color: Color.fromARGB(255, 206, 206, 206),
                                       borderRadius: BorderRadius.circular(20),
                                       image: DecorationImage(
                                           image: NetworkImage(
@@ -1653,7 +1897,7 @@ if (!mounted) return;
                             "Billetera Sol",
                             style: TextStyle(
                                 color: colorTextos,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.bold,
                                 fontSize: largoActual * 0.019),
                           ),
                         ),
@@ -1666,7 +1910,7 @@ if (!mounted) return;
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
                                   surfaceTintColor: Colors.white,
-                                  color: Colors.yellow.shade200,
+                                  color: Color.fromRGBO(0, 86, 207, 1),
                                   elevation: 10,
                                   child: OutlinedButton(
                                     style: const ButtonStyle(
@@ -2216,27 +2460,35 @@ if (!mounted) return;
                                             Text(
                                               'S/. ${userProvider.user?.saldoBeneficio}0',
                                               style: TextStyle(
-                                                  color: colorLetra,
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 35),
                                             ),
                                             Text(
                                               'Retiralo hasta el: ${fechaLimite.day}/${fechaLimite.month}/${fechaLimite.year}',
                                               style: TextStyle(
-                                                  color: colorLetra,
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize:
                                                       largoActual * 0.016),
                                             ),
                                           ],
                                         ),
-                                        Lottie.asset(
-                                            'lib/imagenes/billetera3.json'),
+                                        Container(
+                                          width: 130,
+                                          height: 80,
+                                          decoration:const BoxDecoration(
+                                           // color: Colors.amber,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage('lib/imagenes/manita.png'))
+                                          )
+                                        ),
                                       ],
                                     ),
                                   ))
-                              .animate()
-                              .shake(duration: Duration(milliseconds: 700)),
+                              /*.animate()
+                              .shake(duration: Duration(milliseconds: 700))*/,
                         ),
                       ]))),
         ));

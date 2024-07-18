@@ -1,3 +1,4 @@
+import 'package:appsol_final/components/conductorinit.dart';
 import 'package:appsol_final/components/formulario.dart';
 import 'package:appsol_final/components/holaconductor.dart';
 import 'package:appsol_final/components/navegador.dart';
@@ -634,7 +635,7 @@ class _LoginState extends State<Login> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const HolaConductor()),
+                                            const Conductorinit()),
                                   );
 
                                   //SI ES GERENTE

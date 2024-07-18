@@ -1,3 +1,4 @@
+import 'package:appsol_final/components/prefinal.dart';
 import 'package:appsol_final/models/pedido_model.dart';
 import 'package:appsol_final/models/promocion_model.dart';
 import 'package:appsol_final/models/producto_model.dart';
@@ -248,7 +249,7 @@ class _PedidoState extends State<Pedido> {
       });
     } else {
       if (ubicacionList is UbicacionListaModel) {
-       // print('no es ubi');
+        // print('no es ubi');
         setState(() {
           direccion = "Seleccione una dirección, por favor";
           ubicacionesString = ubicacionList.listaUbisString;
@@ -422,7 +423,7 @@ class _PedidoState extends State<Pedido> {
     print(seleccionadosTodos);*/
     if (almenosuno) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 169, 168, 168),
         bottomSheet: BottomSheet(
             backgroundColor: const Color.fromRGBO(0, 106, 252, 1.000),
             shadowColor: Colors.black,
@@ -467,6 +468,105 @@ class _PedidoState extends State<Pedido> {
                             onPressed: totalProvider > 0.0 &&
                                     ubicacionSelectID != 0
                                 ? () async {
+                                    showDialog(
+                                        // ignore: use_build_context_synchronously
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  4,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                        "¿Estas de acuerdo con tu compra?",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            color: const Color
+                                                                .fromARGB(255,
+                                                                2, 101, 182),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                  ),
+                                                  Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    //color: Colors.amber,
+                                                    decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'lib/imagenes/nuevecito.png'))),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: const Text(
+                                                            "Cancelar",
+                                                            style: TextStyle(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .purple),
+                                                          )),
+                                                      TextButton(
+                                                          onPressed: () async {
+                                                            await crearPedidoyDetallePedido(
+                                                                userProvider
+                                                                    .user?.id,
+                                                                tipoPedido,
+                                                                totalProvider,
+                                                                (totalProvider -
+                                                                    ahorro +
+                                                                    envio),
+                                                                ahorro,
+                                                                notas.text,
+                                                                _cupon.text,
+                                                                cantidadBidones);
+                                                            limpiarVariables();
+                                                            actualizarProviderPedido();
+                                                            // ignore: use_build_context_synchronously
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const Prefinal()),
+                                                            );
+                                                          },
+                                                          child: const Text(
+                                                            "Si",
+                                                            style: TextStyle(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .blue),
+                                                          )),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  }
+                                /*
                                     await crearPedidoyDetallePedido(
                                         userProvider.user?.id,
                                         tipoPedido,
@@ -484,7 +584,7 @@ class _PedidoState extends State<Pedido> {
                                       MaterialPageRoute(
                                           builder: (context) => const Fin()),
                                     );
-                                  }
+                                  }*/
                                 : null,
                             style: ButtonStyle(
                               elevation: MaterialStateProperty.all(8),
@@ -501,8 +601,8 @@ class _PedidoState extends State<Pedido> {
                               style: TextStyle(
                                   color:
                                       const Color.fromRGBO(0, 106, 252, 1.000),
-                                  fontSize: largoActual * (14 / 736),
-                                  fontWeight: FontWeight.w500),
+                                  fontSize: 25, //largoActual * (14 / 736),
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -563,15 +663,25 @@ class _PedidoState extends State<Pedido> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        margin: EdgeInsets.only(left: anchoActual * 0.055),
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    AssetImage('lib/imagenes/nuevecito.png'))),
+                      ),
                       //TU PEDIDO
                       Container(
                         margin: EdgeInsets.only(left: anchoActual * 0.055),
                         child: Text(
-                          "Tu pedido",
+                          "Tu orden está casi lista!",
                           style: TextStyle(
-                              color: colorTitulos,
-                              fontWeight: FontWeight.w600,
-                              fontSize: tamanoTitulos),
+                              color: Colors.white, // colorTitulos,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30 //tamanoTitulos
+                              ),
                         ),
                       ),
                       SizedBox(
@@ -823,8 +933,8 @@ class _PedidoState extends State<Pedido> {
                         child: Text(
                           "Código de referencia",
                           style: TextStyle(
-                              color: colorTitulos,
-                              fontWeight: FontWeight.w600,
+                              color: Colors.white, //colorTitulos,
+                              fontWeight: FontWeight.bold,
                               fontSize: tamanoTitulos),
                         ),
                       ),
@@ -922,7 +1032,7 @@ class _PedidoState extends State<Pedido> {
                                   //print(fechaLimite);
                                   if (existe) {
                                     //EXISTE EL CODIGO
-                                   // print("codigo válido");
+                                    // print("codigo válido");
                                     setState(() {
                                       fechaLimite = mesyAnio(fechaLimiteString)
                                           .add(const Duration(days: (30 * 3)));
@@ -959,7 +1069,7 @@ class _PedidoState extends State<Pedido> {
                                             );
                                           });
                                     } else {
-                                     // print('el codigo esta vigentee');
+                                      // print('el codigo esta vigentee');
                                       if (hayBidon) {
                                         //SI HAY BIDONES NUEVOS EN LA LISTA DE PRODUCTOS
                                         //print('hay bidones nuevos');
@@ -969,7 +1079,7 @@ class _PedidoState extends State<Pedido> {
                                               255, 0, 93, 1.000);
                                           ahorro = 12.0 * cantidadBidones;
 
-                                         // print("ESTE ES EL AHORRO: $ahorro");
+                                          // print("ESTE ES EL AHORRO: $ahorro");
                                           actualizarProviderPedido();
                                         });
                                       } else {
@@ -1074,7 +1184,7 @@ class _PedidoState extends State<Pedido> {
                         child: Text(
                           "Tipo de envio",
                           style: TextStyle(
-                              color: colorTitulos,
+                              color: Colors.white, //,colorTitulos,
                               fontWeight: FontWeight.w600,
                               fontSize: tamanoTitulos),
                         ),
@@ -1139,7 +1249,7 @@ class _PedidoState extends State<Pedido> {
                                   light0 = value;
                                   tiempoPeru = tiempoActual
                                       .subtract(const Duration(hours: 0));
-                                 /* print(value);
+                                  /* print(value);
                                   print('hora acrtual ${tiempoPeru.hour}');*/
                                 });
                                 if (light0 == false) {
@@ -1218,7 +1328,7 @@ class _PedidoState extends State<Pedido> {
                         child: Text(
                           "Direccion de envio",
                           style: TextStyle(
-                              color: colorTitulos,
+                              color: Colors.white, //colorTitulos,
                               fontWeight: FontWeight.w600,
                               fontSize: tamanoTitulos),
                         ),
@@ -1420,7 +1530,7 @@ class _PedidoState extends State<Pedido> {
                         child: Text(
                           "Resumen de Pedido",
                           style: TextStyle(
-                              color: colorTitulos,
+                              color: Colors.white, //colorTitulos,
                               fontWeight: FontWeight.w600,
                               fontSize: tamanoTitulos),
                         ),
@@ -1515,7 +1625,7 @@ class _PedidoState extends State<Pedido> {
                         child: Text(
                           "Notas para el repartidor",
                           style: TextStyle(
-                              color: colorTitulos,
+                              color: Colors.white, //colorTitulos,
                               fontWeight: FontWeight.w600,
                               fontSize: tamanoTitulos),
                         ),

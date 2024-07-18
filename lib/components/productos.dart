@@ -238,18 +238,37 @@ class _ProductosState extends State<Productos> {
                     Container(
                       margin: EdgeInsets.only(left: anchoActual * 0.055),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: const BoxDecoration(
+                                //color:Colors.grey,
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        'lib/imagenes/nuevecito.png'))),
+                          ),
+                          const SizedBox(width: 20,),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Nuestros Productos",
+                                "Escoge tu producto",
                                 style: TextStyle(
-                                    color: const Color.fromARGB(255, 1, 42, 76),
-                                    fontWeight: FontWeight.w200,
+                                    color: Color.fromARGB(255, 0, 98, 177),
+                                    fontWeight: FontWeight.bold,
                                     fontSize: largoActual * 0.026),
                               ),
-                              Container(
+                              Text(
+                                "favorito!",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 94, 170),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: largoActual * 0.026),
+                              ),
+                              /*Container(
                                 margin:
                                     EdgeInsets.only(left: anchoActual * 0.055),
                                 //color:Colors.grey,
@@ -262,7 +281,7 @@ class _ProductosState extends State<Productos> {
                                       fontSize: largoActual * 0.025,
                                       fontWeight: FontWeight.w500),
                                 ),
-                              ),
+                              ),*/
                             ],
                           ),
                         ],
@@ -401,33 +420,38 @@ class _ProductosState extends State<Productos> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          children: [
-                            Container(
-                              margin:
-                                  EdgeInsets.only(left: anchoActual * 0.055),
-                              child: Text(
-                                "Subtotal:",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: largoActual * 0.021,
-                                    color:
-                                        const Color.fromARGB(255, 1, 25, 44)),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 2, 108, 195),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                          
+                            children: [
+                              Container(
+                                //margin:EdgeInsets.only(left: anchoActual * 0.055),
+                                child: Text(
+                                  "Pago de:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: largoActual * 0.021,
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
+                                ),
                               ),
-                            ),
-                            Container(
-                              margin:
-                                  EdgeInsets.only(left: anchoActual * 0.055),
-                              child: Text(
-                                "S/.${total}0",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: largoActual * 0.027,
-                                    color:
-                                        const Color.fromARGB(255, 4, 62, 107)),
+                              Container(
+                                //margin: EdgeInsets.only(left: anchoActual * 0.055),
+                                child: Text(
+                                  "S/.${total}0",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: largoActual * 0.027,
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -438,7 +462,7 @@ class _ProductosState extends State<Productos> {
                               child: Text(
                                 "Agregar al carrito",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w300,
+                                    fontWeight: FontWeight.bold,
                                     fontSize: largoActual * 0.021,
                                     color:
                                         const Color.fromARGB(255, 1, 32, 56)),
@@ -469,8 +493,7 @@ class _ProductosState extends State<Productos> {
                                       elevation: MaterialStateProperty.all(8),
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              const Color.fromRGBO(
-                                                  120, 251, 99, 1.000))),
+                                              Color.fromARGB(255, 16, 106, 2))),
                                   child: const Icon(
                                     Icons.add_shopping_cart_rounded,
                                     color: Colors.white,
