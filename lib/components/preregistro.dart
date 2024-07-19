@@ -357,7 +357,7 @@ class _FormucliState extends State<Formucli> {
                                 },
                                 keyboardType: TextInputType.datetime,
                                 keyboardAppearance: Brightness.light,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -395,6 +395,8 @@ class _FormucliState extends State<Formucli> {
                               const SizedBox(height: 4),
                               TextFormField(
                                 controller: _password,
+                                keyboardType: TextInputType.visiblePassword,
+                                // obscureText:_obscureText,
                                 decoration: InputDecoration(
                                   labelText: 'Contraseña',
                                   labelStyle: const TextStyle(
@@ -427,7 +429,7 @@ class _FormucliState extends State<Formucli> {
                                     ),
                                   ),
                                 ),
-                                obscureText: true,
+                                obscureText: _obscureText,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'El campo es obligatorio';
@@ -503,7 +505,7 @@ class _FormucliState extends State<Formucli> {
                               const SizedBox(height: 20),
                               Container(
                                 height: 40,
-                                width: MediaQuery.of(context).size.width/1,
+                                width: MediaQuery.of(context).size.width / 1,
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
@@ -534,11 +536,78 @@ class _FormucliState extends State<Formucli> {
                                                 ),
                                               );
                                             });
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Prelogin()),
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Dialog(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    5,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: const BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  'lib/imagenes/nuevecito.png'))),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    Text(
+                                                      "Felicitaciones!",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              25,
+                                                          color: const Color
+                                                              .fromARGB(255, 2,
+                                                              100, 181)),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const Prelogin()),
+                                                          );
+                                                        },
+                                                        child: const Text(
+                                                          "OK",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 24,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      4,
+                                                                      93,
+                                                                      167)),
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         );
                                       } else if (status == 401) {
                                         print("entro al 40");
@@ -546,14 +615,67 @@ class _FormucliState extends State<Formucli> {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return const AlertDialog(
-                                              content: Row(
-                                                children: [
-                                                  //SizedBox(width: 20),
-                                                  Text(" =, )"),
-                                                  Text(
-                                                      " Intente otro usuario por favor!"),
-                                                ],
+                                            return Dialog(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    5,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: const BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  'lib/imagenes/nuevecito.png'))),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    Text(
+                                                      "Intente otro usuario por favor.",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              25,
+                                                          color: const Color
+                                                              .fromARGB(255, 2,
+                                                              100, 181)),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                          "OK",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 24,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      4,
+                                                                      93,
+                                                                      167)),
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                             );
                                           },
@@ -562,8 +684,8 @@ class _FormucliState extends State<Formucli> {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Color.fromARGB(255, 63, 108, 232),
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 63, 108, 232),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       )),
@@ -585,24 +707,24 @@ class _FormucliState extends State<Formucli> {
                           children: [
                             const Text('¿Ya tienes cuenta?',
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Prelogin(),
+                                      builder: (context) => const Prelogin(),
                                     ));
                                 // Navegar a la página de inicio de sesión
                               },
                               child: const Text(
                                 'Inicia Sesión',
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.yellow),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.yellow),
                               ),
                             ),
                           ],

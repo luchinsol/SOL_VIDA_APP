@@ -474,19 +474,29 @@ class _PedidoState extends State<Pedido> {
                                         builder: (BuildContext context) {
                                           return Dialog(
                                             child: Container(
+                                              padding: const EdgeInsets.all(10),
                                               height: MediaQuery.of(context)
                                                       .size
                                                       .height /
-                                                  4,
+                                                  5,
                                               child: Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    child: Text(
+                                                    width: 50,
+                                                    height: 50,
+                                                    //color: Colors.amber,
+                                                    decoration:const BoxDecoration(
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'lib/imagenes/nuevecito.png'))),
+                                                  ),
+                                                  Container(
+                                                    child:const Text(
                                                         "¿Estas de acuerdo con tu compra?",
                                                         style: TextStyle(
-                                                            fontSize: 20,
+                                                            fontSize: 16,
                                                             color: const Color
                                                                 .fromARGB(255,
                                                                 2, 101, 182),
@@ -494,15 +504,7 @@ class _PedidoState extends State<Pedido> {
                                                                 FontWeight
                                                                     .bold)),
                                                   ),
-                                                  Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    //color: Colors.amber,
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                                'lib/imagenes/nuevecito.png'))),
-                                                  ),
+                                                  const SizedBox(height: 20,),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -516,7 +518,7 @@ class _PedidoState extends State<Pedido> {
                                                           child: const Text(
                                                             "Cancelar",
                                                             style: TextStyle(
-                                                                fontSize: 25,
+                                                                fontSize: 19,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -551,7 +553,7 @@ class _PedidoState extends State<Pedido> {
                                                           child: const Text(
                                                             "Si",
                                                             style: TextStyle(
-                                                                fontSize: 25,
+                                                                fontSize: 19,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -596,11 +598,11 @@ class _PedidoState extends State<Pedido> {
                               backgroundColor: MaterialStateProperty.all(
                                   const Color.fromARGB(255, 255, 255, 255)),
                             ),
-                            child: Text(
+                            child:const Text(
                               'Confirmar Pedido',
                               style: TextStyle(
                                   color:
-                                      const Color.fromRGBO(0, 106, 252, 1.000),
+                                       Color.fromRGBO(0, 106, 252, 1.000),
                                   fontSize: 25, //largoActual * (14 / 736),
                                   fontWeight: FontWeight.bold),
                             ),
@@ -667,7 +669,7 @@ class _PedidoState extends State<Pedido> {
                         margin: EdgeInsets.only(left: anchoActual * 0.055),
                         width: 80,
                         height: 80,
-                        decoration: BoxDecoration(
+                        decoration:const BoxDecoration(
                             image: DecorationImage(
                                 image:
                                     AssetImage('lib/imagenes/nuevecito.png'))),
@@ -675,7 +677,7 @@ class _PedidoState extends State<Pedido> {
                       //TU PEDIDO
                       Container(
                         margin: EdgeInsets.only(left: anchoActual * 0.055),
-                        child: Text(
+                        child: const Text(
                           "Tu orden está casi lista!",
                           style: TextStyle(
                               color: Colors.white, // colorTitulos,

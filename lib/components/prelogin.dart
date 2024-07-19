@@ -459,17 +459,30 @@ class _PreloginState extends State<Prelogin> {
                                         keyboardType:
                                             TextInputType.visiblePassword,
                                         obscureText: _obscureText1,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
                                           labelText: 'Contraseña',
                                           hintText: 'Contraseña',
                                           border: InputBorder.none,
-                                          labelStyle: TextStyle(
+                                          labelStyle: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.grey),
-                                          hintStyle: TextStyle(
+                                          hintStyle:const TextStyle(
                                               fontSize: 17, color: Colors.grey),
-                                          prefixIcon: Icon(
+                                          suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _obscureText1 = !_obscureText1;
+                                              });
+                                            },
+                                            child: Icon(
+                                              _obscureText1
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          prefixIcon: const Icon(
                                             Icons.lock,
                                             color: Colors.grey,
                                           ),
@@ -602,13 +615,64 @@ class _PreloginState extends State<Prelogin> {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return const AlertDialog(
-                                              content: Row(
-                                                children: [
-                                                  SizedBox(width: 20),
-                                                  Text(
-                                                      "Credenciales inválidas"),
-                                                ],
+                                            return Dialog(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    5,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  'lib/imagenes/nuevecito.png'))),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    Text(
+                                                      "Credenciales inválidas.",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              25,
+                                                          color: const Color
+                                                              .fromARGB(255, 2,
+                                                              100, 181)),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                          "OK",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 24,
+                                                              color: const Color
+                                                                  .fromARGB(255,
+                                                                  4, 93, 167)),
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                             );
                                           },
@@ -620,7 +684,8 @@ class _PreloginState extends State<Prelogin> {
                                           builder: (BuildContext context) {
                                             return Dialog(
                                               child: Container(
-                                                padding: const EdgeInsets.all(10),
+                                                padding:
+                                                    const EdgeInsets.all(10),
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .height /
