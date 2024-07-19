@@ -6,7 +6,9 @@ import 'package:appsol_final/components/prepermisos.dart';
 import 'package:appsol_final/components/ubicacion.dart';
 import 'package:appsol_final/models/user_model.dart';
 import 'package:appsol_final/provider/user_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 //import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
@@ -374,7 +376,6 @@ class _PreloginState extends State<Prelogin> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("${MediaQuery.of(context).size.width}"),
                         const SizedBox(
                           height: 80,
                         ),
@@ -383,8 +384,8 @@ class _PreloginState extends State<Prelogin> {
                           height: 150,
                           decoration: const BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage(
-                                      'lib/imagenes/nuevito.png'))),
+                                  image:
+                                      AssetImage('lib/imagenes/nuevito.png'))),
                         ),
                         Container(
                           child: Column(
@@ -492,7 +493,11 @@ class _PreloginState extends State<Prelogin> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(left: 160),
+                          decoration: BoxDecoration(
+                              //color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10)),
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 2.2),
                           child: TextButton(
                               onPressed: () {
                                 Navigator.push(
@@ -509,7 +514,7 @@ class _PreloginState extends State<Prelogin> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 17,
-                                    color: Colors.white),
+                                    color: Color.fromARGB(255, 255, 255, 255)),
                               )),
                         ),
                         const SizedBox(
@@ -613,12 +618,63 @@ class _PreloginState extends State<Prelogin> {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return const AlertDialog(
-                                              content: Row(
-                                                children: [
-                                                  SizedBox(width: 20),
-                                                  Text("Usuario no existente"),
-                                                ],
+                                            return Dialog(
+                                              child: Container(
+                                                padding: const EdgeInsets.all(10),
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    5,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  'lib/imagenes/nuevecito.png'))),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    Text(
+                                                      "Usuario no existente. Intente de nuevo.",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              25,
+                                                          color: const Color
+                                                              .fromARGB(255, 2,
+                                                              100, 181)),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 19,
+                                                    ),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                          "OK",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 24,
+                                                              color: const Color
+                                                                  .fromARGB(255,
+                                                                  4, 93, 167)),
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                             );
                                           },
@@ -637,6 +693,7 @@ class _PreloginState extends State<Prelogin> {
                                 child: const Text(
                                   "Iniciar Sesión",
                                   style: TextStyle(
+                                      color: Color.fromARGB(255, 3, 107, 192),
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold),
                                 )),
@@ -667,8 +724,8 @@ class _PreloginState extends State<Prelogin> {
                                   "Registrarse",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Color.fromARGB(255, 172, 255, 48),
+                                    fontSize: 18,
+                                    color: Color.fromARGB(255, 208, 255, 1),
                                   ),
                                 ))
                           ],

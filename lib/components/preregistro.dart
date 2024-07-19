@@ -142,17 +142,17 @@ class _FormucliState extends State<Formucli> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Image.asset(
-                                  'lib/imagenes/nuevecito.png', // Asegúrate de tener el logo en la carpeta assets y agregarla en pubspec.yaml
+                                  'lib/imagenes/nuevito.png', // Asegúrate de tener el logo en la carpeta assets y agregarla en pubspec.yaml
                                   height: 75,
                                 ),
                               ),
-                              const SizedBox(width: 20),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
+                              const SizedBox(height: 20),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 8.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       'Registrate y sorprendete!',
                                       style: TextStyle(
@@ -161,7 +161,7 @@ class _FormucliState extends State<Formucli> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    SizedBox(height: 8),
+                                    SizedBox(height: 0),
                                     Text(
                                       'sorprendete!',
                                       style: TextStyle(
@@ -192,13 +192,22 @@ class _FormucliState extends State<Formucli> {
                                 controller: _nombres,
                                 decoration: InputDecoration(
                                   labelText: 'Nombres',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
                                   hintText: 'Ingrese sus Nombres',
                                   isDense: false,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(1),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -212,13 +221,22 @@ class _FormucliState extends State<Formucli> {
                                 controller: _apellidos,
                                 decoration: InputDecoration(
                                   labelText: 'Apellidos',
-                                  hintText: 'Ingrese sus apellidos',
-                                  isDense: true,
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintText: 'Ingrese sus Apellidos',
+                                  isDense: false,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(1),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -231,14 +249,23 @@ class _FormucliState extends State<Formucli> {
                               TextFormField(
                                 controller: _dni,
                                 decoration: InputDecoration(
-                                  labelText: 'DNI',
+                                  labelText: 'Dni',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
                                   hintText: 'Ingrese su DNI',
-                                  isDense: true,
+                                  isDense: false,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(1),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -263,17 +290,22 @@ class _FormucliState extends State<Formucli> {
                                 }).toList(),
                                 decoration: InputDecoration(
                                   labelText: 'Sexo',
-                                  isDense: true,
-                                  labelStyle: TextStyle(
-                                    fontSize: 14,
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.black,
+                                    color: Color.fromARGB(255, 43, 48, 170),
                                   ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  //hintText: 'Ingrese sus Apellidos',
+                                  isDense: false,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(1),
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -300,11 +332,22 @@ class _FormucliState extends State<Formucli> {
 
                                 decoration: InputDecoration(
                                   labelText: 'Fecha nacimiento',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintText: 'Fecha nacimiento',
+                                  isDense: false,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(1),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -325,13 +368,22 @@ class _FormucliState extends State<Formucli> {
                                 controller: _username,
                                 decoration: InputDecoration(
                                   labelText: 'Usuario',
-                                  hintText: 'Ingresa un usuario',
-                                  isDense: true,
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintText: 'Ingrese su usuario',
+                                  isDense: false,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(1),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -345,13 +397,22 @@ class _FormucliState extends State<Formucli> {
                                 controller: _password,
                                 decoration: InputDecoration(
                                   labelText: 'Contraseña',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
                                   hintText: 'Ingrese una contraseña',
                                   isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(0.8),
                                   suffixIcon: GestureDetector(
                                     onTap: () {
                                       setState(() {
@@ -380,13 +441,22 @@ class _FormucliState extends State<Formucli> {
                                 maxLength: 9,
                                 decoration: InputDecoration(
                                   labelText: 'Teléfono',
-                                  hintText: 'Ingresa un usuario',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintText: 'Ingrese su número',
                                   isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(0.8),
                                 ),
                                 keyboardType: TextInputType.number,
                                 validator: (value) {
@@ -401,13 +471,22 @@ class _FormucliState extends State<Formucli> {
                                 controller: _email,
                                 decoration: InputDecoration(
                                   labelText: 'E-mail',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
                                   hintText: 'Ingresa su email',
                                   isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white.withOpacity(0.8),
+                                  //fillColor: Colors.white.withOpacity(0.8),
                                 ),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
@@ -421,9 +500,10 @@ class _FormucliState extends State<Formucli> {
                                   return null;
                                 },
                               ),
-                              const SizedBox(height: 24),
-                              SizedBox(
-                                width: 300,
+                              const SizedBox(height: 20),
+                              Container(
+                                height: 40,
+                                width: MediaQuery.of(context).size.width/1,
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
@@ -481,19 +561,19 @@ class _FormucliState extends State<Formucli> {
                                       }
                                     }
                                   },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 63, 108, 232),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      )),
                                   child: const Text(
-                                    'Registrarse',
+                                    "Registrarse",
                                     style: TextStyle(
                                         fontSize: 24,
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 3, 67, 244),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      )),
                                 ),
                               ),
                             ],
@@ -504,7 +584,10 @@ class _FormucliState extends State<Formucli> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text('¿Ya tienes cuenta?',
-                                style: TextStyle(color: Colors.white)),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
@@ -516,7 +599,10 @@ class _FormucliState extends State<Formucli> {
                               },
                               child: const Text(
                                 'Inicia Sesión',
-                                style: TextStyle(color: Colors.yellow),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.yellow),
                               ),
                             ),
                           ],

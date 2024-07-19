@@ -18,7 +18,7 @@ class _SolvidaState extends State<Solvida> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
-            Text("${MediaQuery.of(context).size.width}"),
+            
             const SizedBox(
               height: 50,
             ),
@@ -34,7 +34,7 @@ class _SolvidaState extends State<Solvida> {
                       decoration: const BoxDecoration(
                         //color: Colors.grey,
                         image: DecorationImage(
-                          image: AssetImage('lib/imagenes/nuevecito.png'),
+                          image: AssetImage('lib/imagenes/nuevito.png'),
                           fit: BoxFit.contain,
                         ),
                       ),
