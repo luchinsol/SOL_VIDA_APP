@@ -62,8 +62,8 @@ class _HolaConductor2State extends State<HolaConductor2> {
   double longitudPedido = 0.0;
   String apellidoCliente = '';
   String observacionCliente = '';
-  Color colorProgreso = Colors.transparent;
-  Color colorBotonesAzul = const Color.fromRGBO(0, 106, 252, 1.000);
+  Color colorProgreso = const Color.fromRGBO(38,158,158,1);
+  Color colorBotonesAzul = const Color.fromRGBO(38,158,158,1);
   Color colorTexto = const Color.fromARGB(255, 75, 75, 75);
   Pedido pedidoTrabajo = Pedido(
       id: 0,
@@ -676,6 +676,7 @@ class _HolaConductor2State extends State<HolaConductor2> {
 
                     //BOTON DE MENU
                     //FALTA HABILITAR
+                    /*
                     Positioned(
                       top: anchoActual *
                           0.09, // Ajusta la posición vertical según tus necesidades
@@ -695,23 +696,34 @@ class _HolaConductor2State extends State<HolaConductor2> {
                               color: Color.fromARGB(255, 119, 119, 119)),
                         ),
                       ),
+                    ),*/
+                    Positioned(
+                      top: anchoActual *
+                          0.09, // Ajusta la posición vertical según tus necesidades
+                      left: anchoActual *
+                          0.05,
+                      child: Container(
+                        height: anchoActual * 0.34,
+                        width: anchoActual * 0.35,
+                        child: Image(
+                        image: AssetImage('lib/imagenes/logo_aguasol_blanco.png'),),
+                                        decoration: BoxDecoration(
+                                          color:Color.fromRGBO(38,158,158,1),
+                                          borderRadius: BorderRadius.circular(20),),
+                                      ),
+
                     ),
 
                     //BARRA DE PROGRESO
                     Positioned(
                       top: anchoActual *
-                          0.08, // Ajusta la posición vertical según tus necesidades
-                      right: anchoActual *
-                          0.05, // Ajusta la posición horizontal según tus necesidades
-                      child: Card(
-                        surfaceTintColor:
-                            const Color.fromARGB(108, 255, 255, 255),
-                        color: const Color.fromARGB(0, 255, 255, 255),
-                        elevation: 20,
-                        child: Container(
+                          0.16, // Ajusta la posición vertical según tus necesidades
+                      left: anchoActual *
+                          0.42, // Ajusta la posición horizontal según tus necesidades
+                      child: Container(
                             alignment: Alignment.center,
-                            height: anchoActual * 0.12,
-                            width: anchoActual * 0.65,
+                            height: 67,
+                            width: anchoActual * 0.57,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -726,27 +738,26 @@ class _HolaConductor2State extends State<HolaConductor2> {
                                         color: colorTexto,
                                         fontWeight: FontWeight.w800),
                                   ),
-                                  leading: Text(
+                                  /*leading: Text(
                                     "$numPedidoActual",
                                     style: TextStyle(
                                         color: colorTexto,
                                         fontWeight: FontWeight.w500),
-                                  ),
-                                  trailing: Text(
+                                  ),*/
+                                  /*trailing: Text(
                                     "$numeroTotalPedidos",
                                     style: TextStyle(
                                         color: colorTexto,
                                         fontWeight: FontWeight.w500),
-                                  ),
+                                  ),*/
                                   progressColor: colorProgreso,
-                                  backgroundColor: Colors.transparent,
+                                  backgroundColor: const Color.fromRGBO(38,158,158,1),
                                   animateFromLastPercent: true,
                                   animationDuration: 50000,
                                   barRadius: Radius.circular(20),
                                 ),
                               ],
                             )),
-                      ),
                     ),
                     //BOTON DE LLAMADASSS
                     Positioned(
@@ -1736,7 +1747,7 @@ class _HolaConductor2State extends State<HolaConductor2> {
                             minimumSize: MaterialStatePropertyAll(
                                 Size(anchoActual * 0.28, largoActual * 0.054)),
                             backgroundColor: MaterialStateProperty.all(
-                                const Color.fromRGBO(0, 106, 252, 1.000)),
+                                const Color.fromRGBO(38,158,158,1)),
                           ),
                           child: const Icon(Icons.info_rounded,
                               color: Colors.white),
