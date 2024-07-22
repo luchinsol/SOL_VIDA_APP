@@ -95,7 +95,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
   String urlPreview = 'https://youtu.be/EFe9YOZ3YOg?si=1YcKww6EIBJfKnqv';
   String urlExplicacion = 'https://youtu.be/EFe9YOZ3YOg?si=1YcKww6EIBJfKnqv';
   String tituloUbicacion = 'Gracias por compartir tu ubicación!';
-  String contenidoUbicacion = '¡Disfruta de Sol Market!';
+  String contenidoUbicacion = '¡Disfruta de Sol Vida!';
   List<String> listPromociones = [];
 
   List<Producto> bidonProducto = [];
@@ -143,349 +143,344 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       showDialog(
-          barrierColor: Colors.grey.withOpacity(0.41),
+          //barrierColor: Colors.grey.withOpacity(0.41), // opacidad por detras
           context: context,
           builder: (context) {
             return Dialog(
-                //backgroundColor: Colors.blue.withOpacity(0.3),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Stack(
-                  //clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      //padding: EdgeInsets.all(0),
-                      // color: Colors.green,
-                      //width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 2,//1.34,
-                      child: RotatedBox(
-                        quarterTurns: -1,
-                        child: ListWheelScrollView(
-                          itemExtent: MediaQuery.of(context).size.height / 3,
-                          controller: _scrollController,
-                          children: [
-                            RotatedBox(
-                              quarterTurns: 1,
-                              child: Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 1.5,//1.57,
+              backgroundColor:
+                  const Color.fromARGB(255, 58, 108, 235).withOpacity(0.15),
+              child: Container(
+                //color: Colors.green,
+                height: MediaQuery.of(context).size.height /
+                    1.6, //altura del dialogo
+                child: RotatedBox(
+                  quarterTurns: -1,
+                  child: ListWheelScrollView(
+                    itemExtent: MediaQuery.of(context).size.height / 3,
+                    controller: _scrollController,
+                    children: [
+                      RotatedBox(
+                        quarterTurns: 1,
+                        child: Container(
+                          // height: 300,
+                          // height: 100,
+                          // ALTO DEL CONTENEDOR
+                          //height: MediaQuery.of(context).size.height/2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            //color: Colors.amber
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: MediaQuery.of(context).size.height / 2,
+                                decoration: BoxDecoration(
+                                    // color: Colors.green,
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: const DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: AssetImage(
+                                            'lib/imagenes/codigoentra2.jpg'))),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Center(
+                                  child: Text(
+                                    "Código:${codigo}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color:
+                                            Color.fromARGB(255, 218, 26, 180)),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      // Hacer scroll al siguiente elemento
+                                      final currentPosition =
+                                          _scrollController.offset;
+                                      final itemExtent =
+                                          MediaQuery.of(context).size.height /
+                                              3;
+                                      _scrollController.animateTo(
+                                        currentPosition + itemExtent,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    },
+                                    child: Icon(
+                                      Icons.navigate_next,
+                                      size: 40,
+                                      color: Colors.blue,
+                                    )).animate().shake(),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      RotatedBox(
+                        quarterTurns: 1,
+                        child: Container(
+                          // height: 300,
+                          // height: 100,
+                          // ALTO DEL CONTENEDOR
+                          //height: MediaQuery.of(context).size.height/2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            //color: Colors.amber
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: MediaQuery.of(context).size.height / 2,
+                                decoration: BoxDecoration(
+                                    // color: Colors.green,
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: const DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: AssetImage(
+                                            'lib/imagenes/descuento1.jpg'))),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  //padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 250, 251, 252),
+                                      // color: Colors.white,
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        
-                                        decoration: BoxDecoration(
-                                          color:Colors.amber,
-                                          borderRadius: BorderRadius.circular(20),
-                                            image: DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: AssetImage(
-                                                    'lib/imagenes/codigoentra2.jpg'))),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 100,
-                                        color: Colors.amber,
-                                      ),
-                                      Positioned(
-                                          top: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              2.6,
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3.85,
-                                          child: Text(
-                                            "${codigo}",
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        final pedidoProvider =
+                                            Provider.of<PedidoProvider>(context,
+                                                listen: false);
+                                        /*print(
+                                                      "BIDON PRODUCT------------");
+                                                  print(bidonProducto[0].id);
+                                                  print("cantidad");
+                                                  print(
+                                                      bidonProducto[0].cantidad);
+                                                  print(bidonProducto[0].nombre);
+                                                  print(bidonProducto[0].precio);
+                                                  print(bidonProducto[0].promoID);
+                                                  print(bidonProducto[0].cantidadRequeridaParaRuta);*/
+                                        bidonProducto[0].cantidad = 1;
+
+                                        PedidoModel newPedido = PedidoModel(
+                                            seleccionados: bidonProducto,
+                                            seleccionadosPromo: [],
+                                            cantidadProd:
+                                                bidonProducto[0].cantidad,
+                                            totalProds:
+                                                bidonProducto[0].precio *
+                                                    bidonProducto[0].cantidad,
+                                            envio: 0);
+
+                                        // SE ENVIA EL PROVIDER ACTUAL
+                                        pedidoProvider.updatePedido(newPedido);
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Pedido()
+                                              //const Promos()
+                                              ),
+                                        );
+                                      },
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStateProperty.all(
+                                                  Colors.red)),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.shopping_cart_outlined,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          Text(
+                                            "Comprar",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 22,
-                                                color: const Color.fromARGB(
-                                                    255, 255, 7, 139)),
-                                          )),
-                                      Positioned(
-                                          top: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              2,
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3.85,
-                                          child: Container(
-                                            width: 80,
-                                            height: 80,
-                                            child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(Colors
-                                                                .red)),
-                                                onPressed: () {
-                                                  // Hacer scroll al siguiente elemento
-                                                  final currentPosition =
-                                                      _scrollController.offset;
-                                                  final itemExtent =
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height /
-                                                          3;
-                                                  _scrollController.animateTo(
-                                                    currentPosition +
-                                                        itemExtent,
-                                                    duration:
-                                                        Duration(seconds: 1),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                },
-                                                child: Text("")),
-                                          ))
-
-                                      //child: Image(image: AssetImage('lib/imagenes/codigo_entra.jpg')))
-                                    ],
-                                  )),
-                            ),
-                            RotatedBox(
-                              quarterTurns: 1,
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 1.57,
+                                                fontSize: 20,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ))),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      // Hacer scroll al siguiente elemento
+                                      final currentPosition =
+                                          _scrollController.offset;
+                                      final itemExtent =
+                                          MediaQuery.of(context).size.height /
+                                              3;
+                                      _scrollController.animateTo(
+                                        currentPosition + itemExtent,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.navigate_next,
+                                      size: 40,
+                                      color: Colors.blue,
+                                    )).animate().shake(),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      RotatedBox(
+                        quarterTurns: 1,
+                        child: Container(
+                          // height: 300,
+                          // height: 100,
+                          // ALTO DEL CONTENEDOR
+                          //height: MediaQuery.of(context).size.height/2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            //color: Colors.amber
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: MediaQuery.of(context).size.height / 2,
                                 decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 250, 251, 252),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      // padding: EdgeInsets.all(20),
-                                      //color: Colors.amber,),
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: AssetImage(
-                                                  'lib/imagenes/IMG-20240618-WA0002.jpg'))),
-                                    ),
-                                    Positioned(
-                                        top:
-                                            MediaQuery.of(context).size.height /
-                                                2.10,
-                                        left:
-                                            MediaQuery.of(context).size.width /
-                                                5.5,
-                                        child: Container(
-                                          width: 150,
-                                          height: 60,
-                                          child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                          Colors.transparent)),
-                                              onPressed: () {
-                                                final pedidoProvider =
-                                                    Provider.of<PedidoProvider>(
-                                                        context,
-                                                        listen: false);
-                                                /*print(
-                                                    "BIDON PRODUCT------------");
+                                    // color: Colors.green,
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: const DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: AssetImage(
+                                            'lib/imagenes/codigoamigo.jpg'))),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  //padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      // color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        final pedidoProvider =
+                                            Provider.of<PedidoProvider>(context,
+                                                listen: false);
+                                        /*print("BIDON PRODUCT------------");
                                                 print(bidonProducto[0].id);
                                                 print("cantidad");
-                                                print(
-                                                    bidonProducto[0].cantidad);
+                                                print(bidonProducto[0].cantidad);
                                                 print(bidonProducto[0].nombre);
                                                 print(bidonProducto[0].precio);
                                                 print(bidonProducto[0].promoID);
-                                                print(bidonProducto[0].cantidadRequeridaParaRuta);*/
-                                                bidonProducto[0].cantidad = 1;
+                                                print(bidonProducto[0]
+                                                    .cantidadRequeridaParaRuta);*/
+                                        bidonProducto[0].cantidad = 1;
 
-                                                PedidoModel newPedido =
-                                                    PedidoModel(
-                                                        seleccionados:
-                                                            bidonProducto,
-                                                        seleccionadosPromo: [],
-                                                        cantidadProd:
-                                                            bidonProducto[0]
-                                                                .cantidad,
-                                                        totalProds:
-                                                            bidonProducto[0]
-                                                                    .precio *
-                                                                bidonProducto[0]
-                                                                    .cantidad,
-                                                        envio: 0);
+                                        PedidoModel newPedido = PedidoModel(
+                                            seleccionados: bidonProducto,
+                                            seleccionadosPromo: [],
+                                            cantidadProd:
+                                                bidonProducto[0].cantidad,
+                                            totalProds:
+                                                bidonProducto[0].precio *
+                                                    bidonProducto[0].cantidad,
+                                            envio: 0);
 
-                                                // SE ENVIA EL PROVIDER ACTUAL
-                                                pedidoProvider
-                                                    .updatePedido(newPedido);
+                                        // SE ENVIA EL PROVIDER ACTUAL
+                                        pedidoProvider.updatePedido(newPedido);
 
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const Pedido()
-                                                      //const Promos()
-                                                      ),
-                                                );
-                                              },
-                                              child: Text("")),
-                                        )
-                                        /////////////////
-
-                                        ),
-                                    Positioned(
-                                        top:
-                                            MediaQuery.of(context).size.height /
-                                                1.85,
-                                        left:
-                                            MediaQuery.of(context).size.width /
-                                                5.5,
-                                        child: Container(
-                                          width: 150,
-                                          height: 60,
-                                          child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                          Colors.transparent)),
-                                              onPressed: () {
-                                                // Hacer scroll al siguiente elemento
-                                                final currentPosition =
-                                                    _scrollController.offset;
-                                                final itemExtent =
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .height /
-                                                        3;
-                                                _scrollController.animateTo(
-                                                  currentPosition + itemExtent,
-                                                  duration:
-                                                      Duration(seconds: 1),
-                                                  curve: Curves.easeInOut,
-                                                );
-                                              },
-                                              child: Text("")),
-                                        )
-                                        /////////////////
-
-                                        ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            RotatedBox(
-                              quarterTurns: 1,
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 1.57,
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 250, 251, 252),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Stack(children: [
-                                  Container(
-                                    // padding: EdgeInsets.all(20),
-                                    //color: Colors.amber,),
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                'lib/imagenes/IMG-20240618-WA0004.jpg'))),
-                                  ),
-                                  Positioned(
-                                      top: MediaQuery.of(context).size.height /
-                                          2.15,
-                                      left: MediaQuery.of(context).size.width /
-                                          2.9,
-                                      child:
-
-                                          /////////////////
-                                          Container(
-                                        height: 60,
-                                        width: 150,
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.transparent)),
-                                            onPressed: () {
-                                              final pedidoProvider =
-                                                  Provider.of<PedidoProvider>(
-                                                      context,
-                                                      listen: false);
-                                              /*print("BIDON PRODUCT------------");
-                                              print(bidonProducto[0].id);
-                                              print("cantidad");
-                                              print(bidonProducto[0].cantidad);
-                                              print(bidonProducto[0].nombre);
-                                              print(bidonProducto[0].precio);
-                                              print(bidonProducto[0].promoID);
-                                              print(bidonProducto[0]
-                                                  .cantidadRequeridaParaRuta);*/
-                                              bidonProducto[0].cantidad = 1;
-
-                                              PedidoModel newPedido =
-                                                  PedidoModel(
-                                                      seleccionados:
-                                                          bidonProducto,
-                                                      seleccionadosPromo: [],
-                                                      cantidadProd:
-                                                          bidonProducto[0]
-                                                              .cantidad,
-                                                      totalProds:
-                                                          bidonProducto[0]
-                                                                  .precio *
-                                                              bidonProducto[0]
-                                                                  .cantidad,
-                                                      envio: 0);
-
-                                              // SE ENVIA EL PROVIDER ACTUAL
-                                              pedidoProvider
-                                                  .updatePedido(newPedido);
-
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const Pedido()
-                                                    //const Promos()
-                                                    ),
-                                              );
-                                            },
-                                            child: Text("")),
-                                      )
-                                      /////////////////
-
-                                      ),
-                                  Positioned(
-                                      top: MediaQuery.of(context).size.height /
-                                          1.88,
-                                      left:
-                                          MediaQuery.of(context).size.width / 3,
-                                      child: Container(
-                                        width: 150,
-                                        height: 55,
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.transparent)),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text("")),
-                                      ))
-                                ]),
-                              ),
-                            ),
-                          ],
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Pedido()
+                                              //const Promos()
+                                              ),
+                                        );
+                                      },
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStateProperty.all(
+                                                  Colors.red)),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.shopping_cart_outlined,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          Text(
+                                            "Si, usar!",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ))),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      // Termina
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Icon(
+                                      Icons.waving_hand_outlined,
+                                      size: 40,
+                                      color: Colors.blue,
+                                    )).animate().shake(),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ));
+
+                      /*Container(
+                        height: MediaQuery.of(context).size.height / 2,
+                        child: Column(children: [
+                          Container(
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                  color: Colors.amber,
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'lib/imagenes/codigoentra2.jpg')))),
+                          Container(
+                              height: 90,
+                              decoration: const BoxDecoration(
+                                  color: Colors.amber,
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'lib/imagenes/codigoentra2.jpg'))))
+                        ]),
+                      )*/
+                    ],
+                  ),
+                ),
+              ),
+            );
           });
     });
   }
@@ -1089,7 +1084,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
     final largoActual = MediaQuery.of(context).size.height;
     final userProvider = context.watch<UserProvider>();
     String mensajeCodigoParaAmigos =
-        'Hola!,\nTe presento la *app 💧 Sol Market 💧* usa mi codigo para tu primera compra de un *BIDÓN DE AGUA DE 20L (bidon + agua)* y te lo podrás llevar *a solo S/.23.00 ~(Precio regular: S/.35.00)~*.\n¡Solo usando mi código!.\nAdemás puedes referir a tus contactos con tu codigo y _*beneficiarte con S/. 3.00 💸*_ por las compras que realicen. \n✅ USA MI CODIGO DE REFERENCIA: ${userProvider.user?.codigocliente}\n❓ Más detalles AQUÍ: $urlExplicacion \n⏬ Descarga la APP AQUÍ: $urlPreview';
+        'Hola!,\nTe presento la *app 💧 Sol Vida 💧* usa mi codigo para tu primera compra de un *BIDÓN DE AGUA DE 20L (bidon + agua)* y te lo podrás llevar *a solo S/.23.00 ~(Precio regular: S/.35.00)~*.\n¡Solo usando mi código!.\nAdemás puedes referir a tus contactos con tu codigo y _*beneficiarte con S/. 3.00 💸*_ por las compras que realicen. \n✅ USA MI CODIGO DE REFERENCIA: ${userProvider.user?.codigocliente}\n❓ Más detalles AQUÍ: $urlExplicacion \n⏬ Descarga la APP AQUÍ: $urlPreview';
     final TabController _tabController = TabController(length: 2, vsync: this);
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     final pedidoProvider = context.watch<PedidoProvider>();
@@ -1433,15 +1428,88 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                               ElevatedButton(
                                                 onPressed: () async {
                                                   await currentLocation();
+                                                  Navigator.pop(context);
+                                                  Navigator.pop(context);
 
-                                                  // ignore: use_build_context_synchronously
-                                                  Navigator.pop(
-                                                      // ignore: use_build_context_synchronously
-                                                      context);
-                                                  // ignore: use_build_context_synchronously
-                                                  Navigator.pop(
-                                                      // ignore: use_build_context_synchronously
-                                                      context);
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Dialog(
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              5,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                width: 50,
+                                                                height: 50,
+                                                                decoration: const BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                        image: AssetImage(
+                                                                            'lib/imagenes/nuevecito.png'))),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 19,
+                                                              ),
+                                                              Text(
+                                                                "Ubicación añadida! Revisala arriba.",
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        25,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        255,
+                                                                        2,
+                                                                        100,
+                                                                        181)),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 19,
+                                                              ),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                    "OK",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            24,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            4,
+                                                                            93,
+                                                                            167)),
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+
+                                                  
                                                 },
                                                 style: ButtonStyle(
                                                   surfaceTintColor:
@@ -1497,6 +1565,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         );
                                       },
                                     );
+
                                   },
                                   icon: Icon(Icons.add_location_alt_outlined,
                                       size: largoActual * 0.031,
@@ -1532,6 +1601,11 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         const Color.fromARGB(255, 20, 108, 7),
                                     isExpanded: true,
                                     value: _ubicacionSelected,
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors
+                                          .white, // Cambia aquí el color de la flecha
+                                    ),
                                     items:
                                         ubicacionesString.map((String value) {
                                       return DropdownMenuItem<String>(
@@ -1637,7 +1711,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         const Icon(Icons.shopping_cart_rounded),
                                     color: Colors.white,
                                     iconSize: largoActual * 0.030,
-                                  ),/*.animate().shakeY(
+                                  ), /*.animate().shakeY(
                                         duration: Duration(milliseconds: 300),
                                       ),*/
                                 ),
@@ -1806,7 +1880,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         height: anchoActual * 0.83,
                                         width: anchoActual * 0.83,
                                         decoration: BoxDecoration(
-                                            color: Color.fromARGB(255, 206, 206, 206),
+                                            color: Color.fromARGB(
+                                                255, 206, 206, 206),
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             image: DecorationImage(
@@ -1905,590 +1980,765 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                           height: largoActual * 0.009,
                         ),
                         SizedBox(
-                          height: largoActual * 0.14,
+                          height: largoActual * 0.1,
                           child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  surfaceTintColor: Colors.white,
-                                  color: Color.fromRGBO(0, 86, 207, 1),
-                                  elevation: 10,
-                                  child: OutlinedButton(
-                                    style: const ButtonStyle(
-                                        shape: MaterialStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                        ),
-                                        side: MaterialStatePropertyAll(
-                                            BorderSide.none)),
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          barrierColor:
-                                              Colors.black.withOpacity(0.8),
-                                          builder: (BuildContext context) {
-                                            return Dialog(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              insetPadding: EdgeInsets.all(
-                                                0,
-                                              ),
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              surfaceTintColor:
-                                                  Colors.transparent,
-                                              child: Stack(
-                                                  clipBehavior: Clip.none,
-                                                  alignment: Alignment.center,
-                                                  children: [
-                                                    //CONTAINER CON INFO DE LA PROMOOO
-                                                    Container(
-                                                      height:
-                                                          largoActual * 0.64,
-                                                      width: anchoActual * 0.8,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
-                                                          gradient: const LinearGradient(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              surfaceTintColor: Colors.white,
+                              color: Color.fromRGBO(0, 86, 207, 1),
+                              elevation: 10,
+                              child: OutlinedButton(
+                                style: const ButtonStyle(
+                                    shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
+                                    ),
+                                    side: MaterialStatePropertyAll(
+                                        BorderSide.none)),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      barrierColor:
+                                          Colors.black.withOpacity(0.8),
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          insetPadding: EdgeInsets.all(
+                                            0,
+                                          ),
+                                          backgroundColor: Colors.transparent,
+                                          surfaceTintColor: Colors.transparent,
+                                          child: Stack(
+                                              clipBehavior: Clip.none,
+                                              alignment: Alignment.center,
+                                              children: [
+                                                //CONTAINER CON INFO DE LA PROMOOO
+                                                Container(
+                                                  height: largoActual * 0.64,
+                                                  width: anchoActual * 0.8,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      gradient:
+                                                          const LinearGradient(
                                                               colors: [
-                                                                Color.fromRGBO(
-                                                                    0,
-                                                                    106,
-                                                                    252,
-                                                                    1.000),
-                                                                Color.fromRGBO(
-                                                                    0,
-                                                                    106,
-                                                                    252,
-                                                                    1.000),
-                                                                Color.fromRGBO(
-                                                                    0,
-                                                                    106,
-                                                                    252,
-                                                                    1.000),
-                                                                Color.fromRGBO(
-                                                                    150,
-                                                                    198,
-                                                                    230,
-                                                                    1),
-                                                                Colors.white,
-                                                                Colors.white,
-                                                              ],
+                                                            Color.fromRGBO(
+                                                                0,
+                                                                106,
+                                                                252,
+                                                                1.000),
+                                                            Color.fromRGBO(
+                                                                0,
+                                                                106,
+                                                                252,
+                                                                1.000),
+                                                            Color.fromRGBO(
+                                                                0,
+                                                                106,
+                                                                252,
+                                                                1.000),
+                                                            Color.fromRGBO(150,
+                                                                198, 230, 1),
+                                                            Colors.white,
+                                                            Colors.white,
+                                                          ],
                                                               begin: Alignment
                                                                   .topLeft,
                                                               end: Alignment
                                                                   .bottomCenter)),
-                                                      child: Container(
-                                                        margin: EdgeInsets.all(
-                                                            anchoActual * 0.06),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
+                                                  child: Container(
+                                                    margin: EdgeInsets.all(
+                                                        anchoActual * 0.06),
+                                                    child: Column(
+                                                      //mainAxisAlignment: MainAxisAlignment.start,
+                                                      //crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        //ESPACIO PARA QUE EL TEXTO NO SE TAPE CON LAS IMAGENES
+                                                        SizedBox(
+                                                          height: largoActual *
+                                                              0.15,
+                                                        ),
+                                                        //TEXTO QUIERES GANAR MONI
+                                                        Text(
+                                                          '¿Quieres ganar dinero sin salir de tu hogar?',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              fontSize:
+                                                                  largoActual *
+                                                                      0.021,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        //TEXTO CON AGUA SOL PUEDES LOGRARLO
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        Row(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            //ESPACIO PARA QUE EL TEXTO NO SE TAPE CON LAS IMAGENES
-                                                            SizedBox(
-                                                              height:
-                                                                  largoActual *
-                                                                      0.15,
-                                                            ),
-                                                            //TEXTO QUIERES GANAR MONI
                                                             Text(
-                                                              '¿Quieres ganar dinero sin salir de tu hogar?',
+                                                              '¡Con Sol Vida puedes\nlograrlo!',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
                                                               style: TextStyle(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .normal,
                                                                   color: Colors
                                                                       .white,
                                                                   fontSize:
                                                                       largoActual *
-                                                                          0.03,
+                                                                          0.015,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold),
                                                             ),
-                                                            //TEXTO CON AGUA SOL PUEDES LOGRARLO
-                                                            Text(
-                                                              '¡Con Sol Market puedes',
-                                                              style: TextStyle(
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .italic,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      largoActual *
-                                                                          0.025,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                //ESPACIOOO
-                                                                Column(
+                                                            Container(
+                                                              /*decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    color: Colors.white
+  ),*/
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  final Uri
+                                                                      url =
+                                                                      Uri.parse(
+                                                                          urlExplicacion);
+                                                                  if (!await launchUrl(
+                                                                      url)) {
+                                                                    throw Exception(
+                                                                        'Could not launch $url');
+                                                                  }
+                                                                },
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                  ),
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
                                                                   children: [
-                                                                    Text(
-                                                                      'lograrlo!',
-                                                                      style: TextStyle(
-                                                                          fontStyle: FontStyle
-                                                                              .italic,
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontSize: largoActual *
-                                                                              0.025,
-                                                                          fontWeight:
-                                                                              FontWeight.w400),
+                                                                    const Text(
+                                                                      "Video\nExplicativo",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            1,
+                                                                            115,
+                                                                            208),
+                                                                      ),
                                                                     ),
-                                                                    SizedBox(
-                                                                      height: largoActual *
-                                                                          0.046,
+                                                                    //const SizedBox(width: 20,),
+                                                                    Container(
+                                                                      width: 35,
+                                                                      height:
+                                                                          35,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        //color:Colors.amber,
+                                                                        image:
+                                                                            DecorationImage(
+                                                                          image:
+                                                                              AssetImage('lib/imagenes/icons8-youtube-48.png'),
+                                                                        ),
+                                                                      ),
                                                                     ),
                                                                   ],
                                                                 ),
-                                                                InkWell(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      RichText(
-                                                                        text:
-                                                                            TextSpan(
-                                                                          children: [
-                                                                            TextSpan(
-                                                                              text: '         video',
-                                                                              style: TextStyle(
-                                                                                fontWeight: FontWeight.w800,
-                                                                                fontStyle: FontStyle.normal,
-                                                                                color: colorLetra,
-                                                                                fontSize: largoActual * 0.014,
-                                                                                height: 0.3, // Esto controla la altura de la línea para "video"
-                                                                              ),
-                                                                            ),
-                                                                            TextSpan(
-                                                                              text: '\nexplicativo ',
-                                                                              style: TextStyle(
-                                                                                fontWeight: FontWeight.w800,
-                                                                                fontStyle: FontStyle.normal,
-                                                                                color: colorLetra,
-                                                                                fontSize: largoActual * 0.014,
-                                                                                height: 1.13, // Esto controla la altura de la línea para "explicativo"
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
+                                                              ),
+                                                            )
+
+                                                            /* Container(
+                                                              /*decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                color: Colors.white
+                                                              ),*/
+                                                              child:
+                                                                  ElevatedButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                            final Uri url =
+                                                                    Uri.parse(
+                                                                        urlExplicacion);
+                                                                if (!await launchUrl(
+                                                                    url)) {
+                                                                  throw Exception(
+                                                                      'Could not launch $url');
+                                                                          },
+                                                                      style: ElevatedButton
+                                                                          .styleFrom(
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(10)),
                                                                       ),
-                                                                      Container(
-                                                                        child: Image.asset(
-                                                                            'lib/imagenes/icons8-youtube-48.png'),
-                                                                        height: anchoActual *
-                                                                            0.13,
-                                                                        width: anchoActual *
-                                                                            0.13,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(6),
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  onTap:
-                                                                      () async {
-                                                                    final Uri
-                                                                        url =
-                                                                        Uri.parse(
-                                                                            urlExplicacion);
-                                                                    if (!await launchUrl(
-                                                                        url)) {
-                                                                      throw Exception(
-                                                                          'Could not launch $url');
-                                                                    }
-                                                                  },
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          const Text(
+                                                                            "Video\nExplicativo",
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 1, 115, 208)),
+                                                                          ),
+                                                                          //const SizedBox(width: 20,),
+                                                                          Container(
+                                                                            width:
+                                                                                35,
+                                                                            height:
+                                                                                35,
+                                                                            decoration: const BoxDecoration(
+                                                                                //color:Colors.amber,
+                                                                                image: DecorationImage(image: AssetImage('lib/imagenes/icons8-youtube-48.png'))),
+                                                                          )
+                                                                        ],
+                                                                      )),
+                                                            ),*/
+                                                            /*Container(
+                                                              color: Colors.white,
+                                                              child: Row(
+                                                                children: [
+                                                                  const Text("Video\nExplicativo"),
+                                                                  Container(
+                                                                    width: 50,
+                                                                    height: 50,
+                                                                    decoration: const BoxDecoration(
+                                                                      image: DecorationImage(
+                                                                        image: AssetImage('lib/imagenes/icons8-youtube-48.png')
+                                                                      )
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            )*/
+                                                            //ESPACIOOO
+                                                            /*Column(
+                                                              children: [
+                                                                Text(
+                                                                  'lograrlo!',
+                                                                  style: TextStyle(
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .italic,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          largoActual *
+                                                                              0.025,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400),
+                                                                ),
+                                                                SizedBox(
+                                                                  height:
+                                                                      largoActual *
+                                                                          0.046,
                                                                 ),
                                                               ],
-                                                            ),
-                                                            //TEXTO EXPLICATIVO
-                                                            RichText(
-                                                                text: TextSpan(
-                                                                    style: TextStyle(
-                                                                        fontStyle:
-                                                                            FontStyle
-                                                                                .normal,
-                                                                        color:
-                                                                            colorLetra,
-                                                                        fontSize:
-                                                                            largoActual *
-                                                                                0.021,
-                                                                        fontWeight:
-                                                                            FontWeight.w400),
-                                                                    children: [
-                                                                  const TextSpan(
-                                                                      text:
-                                                                          'Puedes '),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          'GANAR S/. ${ganacia}0 ',
-                                                                      style: const TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.w800)),
-                                                                  const TextSpan(
-                                                                      text:
-                                                                          'por cada '),
-                                                                  const TextSpan(
-                                                                      text:
-                                                                          'Bidon Nuevo ',
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.w800)),
-                                                                  const TextSpan(
-                                                                      text:
-                                                                          'que '),
-                                                                  const TextSpan(
-                                                                      text:
-                                                                          'compren ',
-                                                                      style: TextStyle(
-                                                                          fontStyle: FontStyle
+                                                            ),*/
+                                                            /* InkWell(
+                                                              child: Row(
+                                                                children: [
+                                                                  RichText(
+                                                                    text:
+                                                                        TextSpan(
+                                                                      children: [
+                                                                        TextSpan(
+                                                                          text:
+                                                                              'video',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.w800,
+                                                                            fontStyle:
+                                                                                FontStyle.normal,
+                                                                            color:
+                                                                                colorLetra,
+                                                                            fontSize:
+                                                                                largoActual * 0.014,
+                                                                            height:
+                                                                                0.3, // Esto controla la altura de la línea para "video"
+                                                                          ),
+                                                                        ),
+                                                                        TextSpan(
+                                                                          text:
+                                                                              '\nexplicativo ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.w800,
+                                                                            fontStyle:
+                                                                                FontStyle.normal,
+                                                                            color:
+                                                                                colorLetra,
+                                                                            fontSize:
+                                                                                largoActual * 0.014,
+                                                                            height:
+                                                                                1.13, // Esto controla la altura de la línea para "explicativo"
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    child: Image
+                                                                        .asset(
+                                                                            'lib/imagenes/icons8-youtube-48.png'),
+                                                                    height:
+                                                                        anchoActual *
+                                                                            0.13,
+                                                                    width:
+                                                                        anchoActual *
+                                                                            0.13,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              6),
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              onTap: () async {
+                                                                final Uri url =
+                                                                    Uri.parse(
+                                                                        urlExplicacion);
+                                                                if (!await launchUrl(
+                                                                    url)) {
+                                                                  throw Exception(
+                                                                      'Could not launch $url');
+                                                                }
+                                                              },
+                                                            ),*/
+                                                          ],
+                                                        ),
+
+                                                        //TEXTO EXPLICATIVO
+                                                        RichText(
+                                                            text: TextSpan(
+                                                                style: TextStyle(
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                    color:
+                                                                        colorLetra,
+                                                                    fontSize:
+                                                                        largoActual *
+                                                                            0.021,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: [
+                                                              const TextSpan(
+                                                                  text:
+                                                                      'Puedes '),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'GANAR S/. ${ganacia}0 ',
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800)),
+                                                              const TextSpan(
+                                                                  text:
+                                                                      'por cada '),
+                                                              const TextSpan(
+                                                                  text:
+                                                                      'Bidon Nuevo ',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800)),
+                                                              const TextSpan(
+                                                                  text: 'que '),
+                                                              const TextSpan(
+                                                                  text:
+                                                                      'compren ',
+                                                                  style: TextStyle(
+                                                                      fontStyle:
+                                                                          FontStyle
                                                                               .italic,
-                                                                          fontWeight:
-                                                                              FontWeight.w800)),
-                                                                  const TextSpan(
-                                                                      text:
-                                                                          'tus contactos con tu código: '),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          '${userProvider.user?.codigocliente}.',
-                                                                      style: const TextStyle(
-                                                                          fontStyle: FontStyle
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800)),
+                                                              const TextSpan(
+                                                                  text:
+                                                                      'tus contactos con tu código: '),
+                                                              TextSpan(
+                                                                  text:
+                                                                      '${userProvider.user?.codigocliente}.',
+                                                                  style: const TextStyle(
+                                                                      fontStyle:
+                                                                          FontStyle
                                                                               .italic,
-                                                                          fontWeight:
-                                                                              FontWeight.w800)),
-                                                                ])),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800)),
+                                                            ])),
+                                                        SizedBox(
+                                                          height: largoActual *
+                                                              0.007,
+                                                        ),
+                                                        RichText(
+                                                            text: TextSpan(
+                                                                style: TextStyle(
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                    color:
+                                                                        colorLetra,
+                                                                    fontSize:
+                                                                        largoActual *
+                                                                            0.017,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: const [
+                                                              TextSpan(
+                                                                text:
+                                                                    'Recuerda que tu código tiene una válidez de ',
+                                                              ),
+                                                              TextSpan(
+                                                                  text:
+                                                                      '3 meses ',
+                                                                  style: TextStyle(
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .italic,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800)),
+                                                              TextSpan(
+                                                                  text:
+                                                                      'desde que creaste tu cuenta.'),
+                                                            ])),
+
+//ESPACIOOO
+                                                        SizedBox(
+                                                            height:
+                                                                largoActual *
+                                                                    0.04),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
                                                             SizedBox(
                                                               height:
                                                                   largoActual *
-                                                                      0.007,
-                                                            ),
-                                                            RichText(
-                                                                text: TextSpan(
-                                                                    style: TextStyle(
-                                                                        fontStyle:
-                                                                            FontStyle
-                                                                                .normal,
-                                                                        color:
-                                                                            colorLetra,
-                                                                        fontSize:
-                                                                            largoActual *
-                                                                                0.017,
-                                                                        fontWeight:
-                                                                            FontWeight.w400),
-                                                                    children: const [
-                                                                  TextSpan(
-                                                                    text:
-                                                                        'Recuerda que tu código tiene una válidez de ',
-                                                                  ),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          '3 meses ',
-                                                                      style: TextStyle(
-                                                                          fontStyle: FontStyle
-                                                                              .italic,
-                                                                          fontWeight:
-                                                                              FontWeight.w800)),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          'desde que creaste tu cuenta.'),
-                                                                ])),
-
-//ESPACIOOO
-                                                            SizedBox(
-                                                                height:
-                                                                    largoActual *
-                                                                        0.04),
-                                                            Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                SizedBox(
-                                                                  height:
-                                                                      largoActual *
-                                                                          (17 /
-                                                                              740),
-                                                                  child: ElevatedButton(
-                                                                      style: const ButtonStyle(
-                                                                          elevation: MaterialStatePropertyAll(10),
-                                                                          surfaceTintColor: MaterialStatePropertyAll(Colors.white),
-                                                                          backgroundColor: MaterialStatePropertyAll(Colors.white),
-                                                                          shape: MaterialStatePropertyAll(
-                                                                            RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                                          ),
-                                                                          side: MaterialStatePropertyAll(BorderSide.none)),
-                                                                      onPressed: () async {
-                                                                        await Share.share(mensajeCodigoParaAmigos +
+                                                                      (17 /
+                                                                          740),
+                                                              child: ElevatedButton(
+                                                                  style: const ButtonStyle(
+                                                                      elevation: MaterialStatePropertyAll(10),
+                                                                      surfaceTintColor: MaterialStatePropertyAll(Colors.white),
+                                                                      backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 55, 87, 218)),
+                                                                      shape: MaterialStatePropertyAll(
+                                                                        RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.all(Radius.circular(10))),
+                                                                      ),
+                                                                      side: MaterialStatePropertyAll(BorderSide.none)),
+                                                                  onPressed: () async {
+                                                                    await Share.share(
+                                                                        mensajeCodigoParaAmigos +
                                                                             urlPreview);
-                                                                      },
-                                                                      child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          Icon(
-                                                                              Icons.share,
-                                                                              size: largoActual * 0.02,
-                                                                              color: colorTextos),
-                                                                          SizedBox(
-                                                                              width: anchoActual * 0.02),
-                                                                          Text(
-                                                                            'COMPARTE TU CÓDIGO',
-                                                                            style: TextStyle(
-                                                                                fontStyle: FontStyle.normal,
-                                                                                color: colorTextos,
-                                                                                fontSize: largoActual * 0.015,
-                                                                                fontWeight: FontWeight.w500),
-                                                                          ),
-                                                                        ],
-                                                                      )),
-                                                                ),
-                                                                SizedBox(
-                                                                    height:
-                                                                        largoActual *
-                                                                            0.01),
-                                                                //BOTON PARA PUBLICARLO EN TU ESTADO
-                                                                SizedBox(
-                                                                  height:
-                                                                      largoActual *
-                                                                          (17 /
-                                                                              760),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    style: const ButtonStyle(
-                                                                        elevation: MaterialStatePropertyAll(10),
-                                                                        surfaceTintColor: MaterialStatePropertyAll(Colors.white),
-                                                                        backgroundColor: MaterialStatePropertyAll(Colors.white),
-                                                                        shape: MaterialStatePropertyAll(
-                                                                          RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                                        ),
-                                                                        side: MaterialStatePropertyAll(BorderSide.none)),
-                                                                    onPressed:
-                                                                        () async {
-                                                                      var codigo = userProvider
-                                                                          .user
-                                                                          ?.codigocliente;
-                                                                      final image =
-                                                                          await rootBundle
-                                                                              .load(direccionImagenParaEstados);
-                                                                      final buffer =
-                                                                          image
-                                                                              .buffer;
-                                                                      final temp =
-                                                                          await getTemporaryDirectory();
-                                                                      final path =
-                                                                          '${temp.path}/image.jpg';
-
-                                                                      await Share
-                                                                          .shareXFiles(
-                                                                        [
-                                                                          XFile
-                                                                              .fromData(
-                                                                            buffer.asUint8List(
-                                                                              image.offsetInBytes,
-                                                                              image.lengthInBytes,
-                                                                            ),
-                                                                            mimeType:
-                                                                                'jpg',
-                                                                            name:
-                                                                                'usaMiCodigo',
-                                                                          )
-                                                                        ],
-                                                                        subject:
-                                                                            '💵💵 Usa mi codigo: $codigo',
-                                                                      );
-                                                                    },
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Icon(
+                                                                  },
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Icon(
                                                                           Icons
                                                                               .share,
                                                                           size: largoActual *
                                                                               0.02,
                                                                           color:
-                                                                              colorTextos,
-                                                                        ),
-                                                                        SizedBox(
+                                                                              colorTextos),
+                                                                      SizedBox(
                                                                           width:
-                                                                              anchoActual * 0.02,
-                                                                        ),
-                                                                        Text(
-                                                                          'PUBLÍCALO EN TU ESTADO',
-                                                                          style: TextStyle(
-                                                                              fontStyle: FontStyle.normal,
-                                                                              color: colorTextos,
-                                                                              fontSize: largoActual * 0.015,
-                                                                              fontWeight: FontWeight.w500),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                                              anchoActual * 0.02),
+                                                                      Text(
+                                                                        'COMPARTE TU CÓDIGO',
+                                                                        style: TextStyle(
+                                                                            fontStyle: FontStyle.normal,
+                                                                            color: Colors.white, //colorTextos,
+                                                                            fontSize: largoActual * 0.015,
+                                                                            fontWeight: FontWeight.w500),
+                                                                      ),
+                                                                    ],
+                                                                  )),
                                                             ),
-//BOTON COMPARTE
+                                                            SizedBox(
+                                                                height:
+                                                                    largoActual *
+                                                                        0.01),
+                                                            //BOTON PARA PUBLICARLO EN TU ESTADO
+                                                            SizedBox(
+                                                              height:
+                                                                  largoActual *
+                                                                      (17 /
+                                                                          760),
+                                                              child:
+                                                                  ElevatedButton(
+                                                                style:
+                                                                    const ButtonStyle(
+                                                                        elevation: MaterialStatePropertyAll(
+                                                                            10),
+                                                                        surfaceTintColor:
+                                                                            MaterialStatePropertyAll(Colors
+                                                                                .white),
+                                                                        backgroundColor:
+                                                                            MaterialStatePropertyAll(Colors
+                                                                                .white),
+                                                                        shape:
+                                                                            MaterialStatePropertyAll(
+                                                                          RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                        ),
+                                                                        side: MaterialStatePropertyAll(
+                                                                            BorderSide.none)),
+                                                                onPressed:
+                                                                    () async {
+                                                                  var codigo =
+                                                                      userProvider
+                                                                          .user
+                                                                          ?.codigocliente;
+                                                                  final image =
+                                                                      await rootBundle
+                                                                          .load(
+                                                                              direccionImagenParaEstados);
+                                                                  final buffer =
+                                                                      image
+                                                                          .buffer;
+                                                                  final temp =
+                                                                      await getTemporaryDirectory();
+                                                                  final path =
+                                                                      '${temp.path}/image.jpg';
+
+                                                                  await Share
+                                                                      .shareXFiles(
+                                                                    [
+                                                                      XFile
+                                                                          .fromData(
+                                                                        buffer
+                                                                            .asUint8List(
+                                                                          image
+                                                                              .offsetInBytes,
+                                                                          image
+                                                                              .lengthInBytes,
+                                                                        ),
+                                                                        mimeType:
+                                                                            'jpg',
+                                                                        name:
+                                                                            'usaMiCodigo',
+                                                                      )
+                                                                    ],
+                                                                    subject:
+                                                                        '💵💵 Usa mi codigo: $codigo',
+                                                                  );
+                                                                },
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons
+                                                                          .share,
+                                                                      size: largoActual *
+                                                                          0.02,
+                                                                      color:
+                                                                          colorTextos,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: anchoActual *
+                                                                          0.02,
+                                                                    ),
+                                                                    Text(
+                                                                      'PUBLÍCALO EN TU ESTADO',
+                                                                      style: TextStyle(
+                                                                          fontStyle: FontStyle
+                                                                              .normal,
+                                                                          color:
+                                                                              colorTextos,
+                                                                          fontSize: largoActual *
+                                                                              0.015,
+                                                                          fontWeight:
+                                                                              FontWeight.w500),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
                                                           ],
                                                         ),
-                                                      ),
+//BOTON COMPARTE
+                                                      ],
                                                     ),
-                                                    //ANIMACION PALMERAS
-                                                    Positioned(
-                                                      top: -largoActual * 0.08,
-                                                      left: anchoActual * 0.035,
-                                                      height:
-                                                          largoActual * 0.23,
-                                                      child: Lottie.asset(
-                                                          'lib/imagenes/palmeras1.json'),
-                                                    ),
+                                                  ),
+                                                ),
+                                                //ANIMACION PALMERAS
+                                                Positioned(
+                                                  top: -largoActual * 0.08,
+                                                  left: anchoActual * 0.035,
+                                                  height: largoActual * 0.23,
+                                                  child: Lottie.asset(
+                                                      'lib/imagenes/palmeras1.json'),
+                                                ),
 
-                                                    //ANIMACION PLAYERA
-                                                    Positioned(
-                                                      top: -largoActual * 0.08,
-                                                      left: anchoActual * 0.035,
-                                                      height:
-                                                          largoActual * 0.23,
-                                                      child: Lottie.asset(
-                                                          'lib/imagenes/playa1.json'),
-                                                    ),
-                                                    //ANIMACION PALMERAS
-                                                    Positioned(
-                                                      top: -largoActual * 0.08,
-                                                      left: anchoActual * 0.18,
-                                                      height:
-                                                          largoActual * 0.23,
-                                                      child: Lottie.asset(
-                                                          'lib/imagenes/palmeras1.json'),
-                                                    ),
+                                                //ANIMACION PLAYERA
+                                                Positioned(
+                                                  top: -largoActual * 0.08,
+                                                  left: anchoActual * 0.035,
+                                                  height: largoActual * 0.23,
+                                                  child: Lottie.asset(
+                                                      'lib/imagenes/playa1.json'),
+                                                ),
+                                                //ANIMACION PALMERAS
+                                                Positioned(
+                                                  top: -largoActual * 0.08,
+                                                  left: anchoActual * 0.18,
+                                                  height: largoActual * 0.23,
+                                                  child: Lottie.asset(
+                                                      'lib/imagenes/palmeras1.json'),
+                                                ),
 
-                                                    //IMAGEN DE BIDONCITO BONITO
-                                                    Positioned(
-                                                      top: -largoActual * 0.15,
-                                                      right:
-                                                          -anchoActual * 0.08,
-                                                      child: Container(
-                                                        height:
-                                                            largoActual * 0.30,
-                                                        width:
-                                                            anchoActual * 0.5,
-                                                        margin: const EdgeInsets
-                                                            .only(top: 10),
-                                                        decoration: const BoxDecoration(
-                                                            color: Colors
-                                                                .transparent,
-                                                            image: DecorationImage(
-                                                                image: AssetImage(
-                                                                    'lib/imagenes/BIDON20.png'),
-                                                                fit: BoxFit
-                                                                    .scaleDown)),
-                                                      ),
-                                                    ),
-                                                    //BOTON DE CERRADO
-                                                    Positioned(
-                                                      top: -largoActual * 0.13,
-                                                      right:
-                                                          -anchoActual * 0.018,
-                                                      child: Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration: BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  11,
-                                                                  191,
-                                                                  191,
-                                                                  191),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          50)),
-                                                          height: largoActual *
-                                                              0.05,
-                                                          width: largoActual *
-                                                              0.05,
-                                                          child: IconButton(
-                                                            onPressed: () {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const Pedido()
-                                                                    //const Promos()
-                                                                    ),
-                                                              );
-                                                            },
-                                                            icon: const Icon(Icons
-                                                                .close_rounded),
-                                                            color: Colors.white,
-                                                            iconSize:
-                                                                largoActual *
-                                                                    0.030,
-                                                          )),
-                                                    ),
-                                                  ]),
-                                            );
-                                          });
-                                    },
-                                    child: Row(
+                                                //IMAGEN DE BIDONCITO BONITO
+                                                Positioned(
+                                                  top: -largoActual * 0.15,
+                                                  right: -anchoActual * 0.08,
+                                                  child: Container(
+                                                    height: largoActual * 0.30,
+                                                    width: anchoActual * 0.5,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: 10),
+                                                    decoration: const BoxDecoration(
+                                                        color:
+                                                            Colors.transparent,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                'lib/imagenes/BIDON20.png'),
+                                                            fit: BoxFit
+                                                                .scaleDown)),
+                                                  ),
+                                                ),
+                                                //BOTON DE CERRADO
+                                                Positioned(
+                                                  top: -largoActual * 0.13,
+                                                  right: -anchoActual * 0.018,
+                                                  child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(11, 191,
+                                                              191, 191),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      50)),
+                                                      height:
+                                                          largoActual * 0.05,
+                                                      width: largoActual * 0.05,
+                                                      child: IconButton(
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const Pedido()
+                                                                //const Promos()
+                                                                ),
+                                                          );
+                                                        },
+                                                        icon: const Icon(Icons
+                                                            .close_rounded),
+                                                        color: Colors.white,
+                                                        iconSize:
+                                                            largoActual * 0.030,
+                                                      )),
+                                                ),
+                                              ]),
+                                        );
+                                      });
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'S/. ${userProvider.user?.saldoBeneficio}0',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 35),
-                                            ),
-                                            Text(
-                                              'Retiralo hasta el: ${fechaLimite.day}/${fechaLimite.month}/${fechaLimite.year}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize:
-                                                      largoActual * 0.016),
-                                            ),
-                                          ],
+                                        Text(
+                                          'S/. ${userProvider.user?.saldoBeneficio}0',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 35),
                                         ),
-                                        Container(
-                                          width: 130,
-                                          height: 80,
-                                          decoration:const BoxDecoration(
-                                           // color: Colors.amber,
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: AssetImage('lib/imagenes/manita.png'))
-                                          )
+                                        Text(
+                                          'Retiralo hasta el: ${fechaLimite.day}/${fechaLimite.month}/${fechaLimite.year}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: largoActual * 0.016),
                                         ),
                                       ],
                                     ),
-                                  ))
-                              /*.animate()
-                              .shake(duration: Duration(milliseconds: 700))*/,
+                                    Container(
+                                        width: 130,
+                                        height: 80,
+                                        decoration: const BoxDecoration(
+                                            // color: Colors.amber,
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: AssetImage(
+                                                    'lib/imagenes/manita.png')))),
+                                  ],
+                                ),
+                              ))
+                          /*.animate()
+                              .shake(duration: Duration(milliseconds: 700))*/
+                          ,
                         ),
                       ]))),
         ));

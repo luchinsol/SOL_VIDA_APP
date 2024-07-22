@@ -108,7 +108,7 @@ class _PerfilCliente extends State<PerfilCliente> {
         .add(const Duration(days: (30 * 3)));
     //TYJYUJY
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 213, 210, 210),
       body: SafeArea(
           child: Padding(
         padding: EdgeInsets.all(anchoActual * 0.04),
@@ -248,7 +248,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                   ]))),
                               Container(
                                 height: largoActual * 0.12,
-                                width: anchoActual * 0.31,
+                                width: anchoActual * 0.231,
                                 //color: Colors.grey,
                                 child: Lottie.asset(
                                   'lib/imagenes/Animation - 1718738830493.json',
