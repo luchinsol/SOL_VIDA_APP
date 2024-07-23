@@ -257,15 +257,15 @@ class _ProductosState extends State<Productos> {
                               Text(
                                 "Escoge tu producto",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 98, 177),
-                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontWeight: FontWeight.w400,
                                     fontSize: largoActual * 0.026),
                               ),
                               Text(
                                 "favorito!",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 94, 170),
-                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontWeight: FontWeight.w400,
                                     fontSize: largoActual * 0.026),
                               ),
                               /*Container(
@@ -423,7 +423,8 @@ class _ProductosState extends State<Productos> {
                         Container(
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 2, 108, 195),
+                              color: const Color.fromRGBO(
+                                        0, 106, 252, 1.000),
                               borderRadius: BorderRadius.circular(20)),
                           child: Column(
                           
@@ -465,7 +466,8 @@ class _ProductosState extends State<Productos> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: largoActual * 0.021,
                                     color:
-                                        const Color.fromARGB(255, 1, 32, 56)),
+                                        const Color.fromRGBO(
+                                        0, 106, 252, 1.000)),
                               ),
                             ),
                             Container(
@@ -493,7 +495,7 @@ class _ProductosState extends State<Productos> {
                                       elevation: MaterialStateProperty.all(8),
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              Color.fromARGB(255, 16, 106, 2))),
+                                              Color.fromRGBO(58, 182, 0, 1))),
                                   child: const Icon(
                                     Icons.add_shopping_cart_rounded,
                                     color: Colors.white,

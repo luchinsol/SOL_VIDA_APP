@@ -367,14 +367,15 @@ class _PreloginState extends State<Prelogin> {
                 children: [
                   Positioned.fill(
                     child: Image.asset(
-                      'lib/imagenes/diseño_final_flutter.png',
+                      'lib/imagenes/aguamarina2.png',
                       fit: BoxFit.cover,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(
                           height: 80,
@@ -390,7 +391,7 @@ class _PreloginState extends State<Prelogin> {
                             ]
                           ),
                           child: Container(
-                            width: 150,
+                            width: 130,
                             height: 150,
                             decoration: const BoxDecoration(
                                 image: DecorationImage(
@@ -400,7 +401,7 @@ class _PreloginState extends State<Prelogin> {
                         ),
                         Container(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               DecoratedBox(
                                 decoration: BoxDecoration(boxShadow: [
@@ -437,7 +438,7 @@ class _PreloginState extends State<Prelogin> {
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
-                                              BorderRadius.circular(10)),
+                                              BorderRadius.circular(18)),
                                       child: TextFormField(
                                         controller: _usuario,
                                         keyboardType:
@@ -474,7 +475,7 @@ class _PreloginState extends State<Prelogin> {
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
-                                              BorderRadius.circular(10)),
+                                              BorderRadius.circular(18)),
                                       child: TextFormField(
                                         controller: _contrasena,
                                         keyboardType:
@@ -556,7 +557,7 @@ class _PreloginState extends State<Prelogin> {
                         ),
                         Center(
                           child: Container(
-                            width: 500,
+                            width: MediaQuery.of(context).size.width,
                             height: 50,
                             child: ElevatedButton(
                                 onPressed: () async {
@@ -776,7 +777,7 @@ class _PreloginState extends State<Prelogin> {
                                 style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10))),
+                                            BorderRadius.circular(18))),
                                 child: const Text(
                                   "Iniciar Sesión",
                                   style: TextStyle(
@@ -812,7 +813,7 @@ class _PreloginState extends State<Prelogin> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
-                                    color: Color.fromARGB(255, 208, 255, 1),
+                                    color: Color.fromRGBO(84,226, 132, 1),
                                   ),
                                 ))
                           ],

@@ -41,8 +41,8 @@ class _FormucliState extends State<Formucli> {
 
 //FUTURE DEL ARCHIVO ORIGINAL
 
-  Future<dynamic> registrar(nombre, apellidos, dni, sexo, fecha, fechaAct,
-      nickname, contrasena, email, telefono, ruc) async {
+  Future<dynamic> registrar(nombre, apellidos, dni, fechaAct,
+      nickname, contrasena, email, telefono) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -55,10 +55,10 @@ class _FormucliState extends State<Formucli> {
         });
     try {
       // Parsear la fecha de nacimiento a DateTime
-      DateTime fechaNacimiento = DateFormat('d/M/yyyy').parse(fecha);
+      //DateTime fechaNacimiento = DateFormat('d/M/yyyy').parse(fecha);
 
       // Formatear la fecha como una cadena en el formato deseado (por ejemplo, 'yyyy-MM-dd')
-      String fechaFormateada = DateFormat('yyyy-MM-dd').format(fechaNacimiento);
+      //String fechaFormateada = DateFormat('yyyy-MM-dd').format(fechaNacimiento);
       String fechaActual = DateFormat('yyyy-MM-dd').format(fechaAct);
 
       var res = await http.post(Uri.parse(apiUrl + apiCreateUser),
@@ -71,11 +71,11 @@ class _FormucliState extends State<Formucli> {
             "nombre": nombre,
             "apellidos": apellidos,
             "telefono": telefono,
-            "ruc": ruc ?? "",
+            "ruc": "",
             "dni": dni,
-            "fecha_nacimiento": fechaFormateada,
+            "fecha_nacimiento": "NA",
             "fecha_creacion_cuenta": fechaActual,
-            "sexo": sexo,
+            "sexo": "NA",
             "direccion_empresa": "NA",
             "suscripcion": "Básico",
             "nombre_empresa": "NA",
@@ -121,7 +121,7 @@ class _FormucliState extends State<Formucli> {
               // Imagen de fondo
               Positioned.fill(
                 child: Image.asset(
-                  'lib/imagenes/diseño_register_final.png', // Asegúrate de tener la imagen en la carpeta assets y agregarla en pubspec.yaml
+                  'lib/imagenes/aguamarina2.png', // Asegúrate de tener la imagen en la carpeta assets y agregarla en pubspec.yaml
                   fit: BoxFit.cover,
                 ),
               ),
@@ -131,13 +131,13 @@ class _FormucliState extends State<Formucli> {
                   child: Form(
                     key: _formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
@@ -150,8 +150,8 @@ class _FormucliState extends State<Formucli> {
                               const Padding(
                                 padding: EdgeInsets.only(left: 8.0),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       'Registrate y sorprendete!',
@@ -202,9 +202,9 @@ class _FormucliState extends State<Formucli> {
                                     color: Color.fromARGB(255, 43, 48, 170),
                                   ),
                                   hintText: 'Ingrese sus Nombres',
-                                  isDense: false,
+                                  isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(18),
                                   ),
                                   filled: true,
                                   //fillColor: Colors.white.withOpacity(1),
@@ -231,9 +231,9 @@ class _FormucliState extends State<Formucli> {
                                     color: Color.fromARGB(255, 43, 48, 170),
                                   ),
                                   hintText: 'Ingrese sus Apellidos',
-                                  isDense: false,
+                                  isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(18),
                                   ),
                                   filled: true,
                                   //fillColor: Colors.white.withOpacity(1),
@@ -247,9 +247,41 @@ class _FormucliState extends State<Formucli> {
                               ),
                               const SizedBox(height: 4),
                               TextFormField(
+                                controller: _telefono,
+                                maxLength: 9,
+                                decoration: InputDecoration(
+                                  labelText: 'Teléfono',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintText: 'Ingrese su número',
+                                  isDense: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                  ),
+                                  filled: true,
+                                  counterText: ''
+                                  //fillColor: Colors.white.withOpacity(0.8),
+                                ),
+                                keyboardType: TextInputType.number,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'El campo es obligatorio';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 4),
+                              TextFormField(
                                 controller: _dni,
                                 decoration: InputDecoration(
-                                  labelText: 'Dni',
+                                  labelText: 'DNI(Opcional)',
                                   labelStyle: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
@@ -260,9 +292,9 @@ class _FormucliState extends State<Formucli> {
                                     color: Color.fromARGB(255, 43, 48, 170),
                                   ),
                                   hintText: 'Ingrese su DNI',
-                                  isDense: false,
+                                  isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(18),
                                   ),
                                   filled: true,
                                   //fillColor: Colors.white.withOpacity(1),
@@ -274,8 +306,8 @@ class _FormucliState extends State<Formucli> {
                                   return null;
                                 },
                               ),
-                              const SizedBox(height: 4),
-                              DropdownButtonFormField<String>(
+                              //const SizedBox(height: 4),
+                              /*DropdownButtonFormField<String>(
                                 value: selectedSexo,
                                 onChanged: (value) {
                                   setState(() {
@@ -307,9 +339,9 @@ class _FormucliState extends State<Formucli> {
                                   filled: true,
                                   //fillColor: Colors.white.withOpacity(1),
                                 ),
-                              ),
+                              ),*/
                               const SizedBox(height: 4),
-                              TextFormField(
+                              /*TextFormField(
                                 readOnly: true,
                                 controller: _fechaController,
                                 onTap: () async {
@@ -362,6 +394,40 @@ class _FormucliState extends State<Formucli> {
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
                                 ),
+                              ),*/
+                              //const SizedBox(height: 4),
+                              TextFormField(
+                                controller: _email,
+                                decoration: InputDecoration(
+                                  labelText: 'E-mail',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 43, 48, 170),
+                                  ),
+                                  hintText: 'Ingresa su email',
+                                  isDense: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                  ),
+                                  filled: true,
+                                  //fillColor: Colors.white.withOpacity(0.8),
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'El campo es obligatorio';
+                                  } else if (value != null &&
+                                      !(value.contains('@gmail.com') ||
+                                          value.contains('@hotmail.com'))) {
+                                    return 'No es un correo válido';
+                                  }
+                                  return null;
+                                },
                               ),
                               const SizedBox(height: 4),
                               TextFormField(
@@ -378,9 +444,9 @@ class _FormucliState extends State<Formucli> {
                                     color: Color.fromARGB(255, 43, 48, 170),
                                   ),
                                   hintText: 'Ingrese su usuario',
-                                  isDense: false,
+                                  isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(18),
                                   ),
                                   filled: true,
                                   //fillColor: Colors.white.withOpacity(1),
@@ -393,6 +459,7 @@ class _FormucliState extends State<Formucli> {
                                 },
                               ),
                               const SizedBox(height: 4),
+                              
                               TextFormField(
                                 controller: _password,
                                 keyboardType: TextInputType.visiblePassword,
@@ -411,7 +478,7 @@ class _FormucliState extends State<Formucli> {
                                   hintText: 'Ingrese una contraseña',
                                   isDense: true,
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(18),
                                   ),
                                   filled: true,
                                   //fillColor: Colors.white.withOpacity(0.8),
@@ -437,71 +504,9 @@ class _FormucliState extends State<Formucli> {
                                   return null;
                                 },
                               ),
-                              const SizedBox(height: 4),
-                              TextFormField(
-                                controller: _telefono,
-                                maxLength: 9,
-                                decoration: InputDecoration(
-                                  labelText: 'Teléfono',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingrese su número',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(0.8),
-                                ),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 4),
-                              TextFormField(
-                                controller: _email,
-                                decoration: InputDecoration(
-                                  labelText: 'E-mail',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingresa su email',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(0.8),
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  } else if (value != null &&
-                                      !(value.contains('@gmail.com') ||
-                                          value.contains('@hotmail.com'))) {
-                                    return 'No es un correo válido';
-                                  }
-                                  return null;
-                                },
-                              ),
+                              
+                              
+                              
                               const SizedBox(height: 20),
                               Container(
                                 height: 40,
@@ -510,18 +515,17 @@ class _FormucliState extends State<Formucli> {
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
                                       // Process data
+                                      // sexo,fechanacimiento,ruc
                                       await registrar(
                                           _nombres.text,
                                           _apellidos.text,
                                           _dni.text,
-                                          selectedSexo,
-                                          _fechaController.text,
                                           tiempoActual,
                                           _username.text,
                                           _password.text,
                                           _email.text,
-                                          _telefono.text,
-                                          _ruc.text);
+                                          _telefono.text
+                                         );
 
                                       if (status == 200) {
                                         Navigator.of(context).pop();
@@ -622,7 +626,7 @@ class _FormucliState extends State<Formucli> {
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .height /
-                                                    5,
+                                                    4.5,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -684,8 +688,7 @@ class _FormucliState extends State<Formucli> {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 63, 108, 232),
+                                      backgroundColor: const Color.fromRGBO(0, 77, 255, 1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       )),
@@ -724,7 +727,7 @@ class _FormucliState extends State<Formucli> {
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.yellow),
+                                    color: Color.fromRGBO(84,226,132, 1)),
                               ),
                             ),
                           ],

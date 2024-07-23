@@ -359,14 +359,13 @@ class _PromosState extends State<Promos> {
                                   Text(
                                     "Escoge tu promoción",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 1, 84, 151),
-                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontWeight: FontWeight.w400,
                                         fontSize: largoActual * 0.026),
                                   ),
                                   Text("favorita!",style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 1, 84, 151),
-                                        fontWeight: FontWeight.w500
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontWeight: FontWeight.w400
                                         ,
                                         fontSize: largoActual * 0.026),)
                                   /*Container(
@@ -540,7 +539,8 @@ class _PromosState extends State<Promos> {
                           Container(
                             padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 2, 108, 195),
+                              color: const Color.fromRGBO(
+                                        0, 106, 252, 1.000),
                               borderRadius: BorderRadius.circular(20)
                             ),
                             child: Column(
@@ -582,13 +582,13 @@ class _PromosState extends State<Promos> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: largoActual * 0.021,
                                       color:
-                                          Color.fromARGB(255, 2, 94, 165)),
+                                          Color.fromRGBO(
+                                        0, 106, 252, 1.000)),
                                 ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(right: anchoActual * 0.055),
-                                width: 80,
-                                height: 50,
+                               
                                 child: Center(
                                   child: ElevatedButton(
                                       onPressed: almenosUno
@@ -614,7 +614,7 @@ class _PromosState extends State<Promos> {
                                           elevation: MaterialStateProperty.all(8),
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  Color.fromARGB(255, 17, 123, 1))),
+                                                  Color.fromRGBO(58, 182, 0, 1))),
                                       child: Center(
                                         child: const Icon(
                                           Icons.add_shopping_cart_rounded,

@@ -1388,7 +1388,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                 height: largoActual * 0.059,
                                 width: largoActual * 0.059,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 61, 84, 207),
+                                  color: const Color.fromRGBO(
+                                        0, 106, 252, 1.000),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: IconButton(
@@ -1572,11 +1573,11 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       color: Colors.white),
                                 ),
                               ),
-
+                              // UBICACION
                               Container(
                                 width: anchoActual * 0.63,
                                 decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 20, 108, 7),
+                                  color: Color.fromRGBO(58, 182, 0, 1),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Container(
@@ -1598,7 +1599,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                     borderRadius: BorderRadius.circular(20),
                                     elevation: 20,
                                     dropdownColor:
-                                        const Color.fromARGB(255, 20, 108, 7),
+                                        const Color.fromRGBO(58, 182, 0, 1),
                                     isExpanded: true,
                                     value: _ubicacionSelected,
                                     icon: Icon(
@@ -1836,7 +1837,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                               labelColor: colorTextos,
                               unselectedLabelColor: colorTextos,
                               indicatorColor:
-                                  const Color.fromRGBO(83, 176, 68, 1.000),
+                                  const Color.fromRGBO(58, 182, 0, 1),
                               tabs: const [
                                 Tab(
                                   text: "Promociones",
@@ -1985,7 +1986,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               surfaceTintColor: Colors.white,
-                              color: Color.fromRGBO(0, 86, 207, 1),
+                              color: Color.fromRGBO(
+                                        0, 106, 252, 1.000),
                               elevation: 10,
                               child: OutlinedButton(
                                 style: const ButtonStyle(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:appsol_final/components/navegador.dart';
 
-
 class Prefinal extends StatefulWidget {
   const Prefinal({super.key});
 
@@ -16,121 +15,77 @@ class _PrefinalState extends State<Prefinal> {
     return Scaffold(
       body: PopScope(
         canPop: false,
-          onPopInvoked: (bool didPop) {
-            if (didPop) {
-              return;
-            }
-          },
+        onPopInvoked: (bool didPop) {
+          if (didPop) {
+            return;
+          }
+        },
         child: SafeArea(
-          
           child: Stack(
             children: [
               // IMAGEN ABAJO
-              Positioned(
-                  child: Container(
+              Container(
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('lib/imagenes/lavando.jpg'))),
-              )),
-          
+                        image: AssetImage('lib/imagenes/aguamarina2.png'))),
+              ),
+
               // FILTRO
-              Positioned.fill(
+              /*Positioned.fill(
                 child: Container(
                   color: const Color.fromARGB(255, 60, 125, 210)
                       .withOpacity(0.5), // Color semitransparente
                 ),
-              ),
-          
+              ),*/
+
               Container(
-                
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(15),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 100,
-                    ),
                     Container(
                       width: 100,
                       height: 100,
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('lib/imagenes/nuevecito.png'))),
+                              image: AssetImage('lib/imagenes/nuevito.png'))),
                     ),
                     const Text(
-                      "Gracias",
+                      "¡Gracias\npor permitirnos llevar vida a tu hogar!",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Text(
-                      "por llevar vida a tu hogar.",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25),
+                    const SizedBox(
+                      height: 30,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      //crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 200,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: const DecorationImage(
-                                      image: AssetImage('lib/imagenes/bodegoncito.jpg'),
-                                      fit: BoxFit.cover)),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Text(
-                              "Muy pronto",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const Text(
-                              "la Familia Sol",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const Text(
-                              "llegará con nuevos",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const Text(
-                              "productos",
-                             style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
+                        Container(
+                          height: 180,
+                          width: 180,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(20),
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      'lib/imagenes/bodegoncito.jpg'),
+                                  fit: BoxFit.cover)),
                         ),
-          
+
                         // ESPACIO ENTRE CONTAINER
                         const SizedBox(
                           width: 10,
                         ),
                         Container(
-                          height: 320,
-                          width: 160,
+                          height: 180,
+                          width: 180,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.amber,
@@ -144,27 +99,54 @@ class _PrefinalState extends State<Prefinal> {
                       height: 30,
                     ),
                     Center(
+                      child: Text(
+                        "Muy pronto\nla Familia Sol, llegará con nuevos\nproductos",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
+                      ),
+                    ),
+                    /* Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            
+                            const SizedBox(
+                              height: 20,
+                            ),
+                           
+                          ],
+                        ),*/
+
+                        const SizedBox(
+                      height: 50,
+                    ),
+                    Center(
                       child: Container(
                         width: 300,
                         height: 60,
                         child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BarraNavegacion(
-                                                      indice: 0,
-                                                      subIndice: 0,
-                                                    )),
-                                          );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const BarraNavegacion(
+                                          indice: 0,
+                                          subIndice: 0,
+                                        )),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15))),
                             child: const Text(
-                              "Menu",
-                              style: TextStyle(fontSize: 25, color: Colors.black),
+                              "Regresar al menu",
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(0, 77, 255, 1)),
                             )),
                       ),
                     ),
