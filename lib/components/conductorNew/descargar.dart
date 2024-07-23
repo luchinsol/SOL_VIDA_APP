@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:appsol_final/components/holaconductor.dart';
+import 'package:appsol_final/components/conductorinit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +13,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:path/path.dart' as path;
 import 'package:lottie/lottie.dart';
+import 'package:appsol_final/components/login.dart';
 
 class Pdf extends StatefulWidget {
   final int? rutaID;
@@ -43,7 +44,7 @@ class Pdf extends StatefulWidget {
 
 class _PdfState extends State<Pdf> {
   String pathh = "";
-  Color colorBotonesAzul = const Color.fromRGBO(0, 106, 252, 1.000);
+  Color colorBotonesAzul = const Color.fromRGBO(38,158,158,1);
 
   Future openFile(File file) async {
     final url = file.path;
@@ -103,7 +104,7 @@ class _PdfState extends State<Pdf> {
   Future<File> _createPDF(String text) async {
     // imagenes
     final ByteData logoEmpresa =
-        await rootBundle.load('lib/imagenes/logo_sol_tiny.png');
+        await rootBundle.load('lib/imagenes/nuevecito.png');
     Uint8List logoData = (logoEmpresa).buffer.asUint8List();
     List<Uint8List> fotos = [];
     //print("-----------------------------------------------");
@@ -232,6 +233,7 @@ class _PdfState extends State<Pdf> {
     final largoActual = MediaQuery.of(context).size.height;
     final userProvider = context.watch<UserProvider>();
     return Scaffold(
+      backgroundColor: Colors.grey,
       body: PopScope(
         canPop: false,
         onPopInvoked: (bool didPop) {
@@ -239,58 +241,47 @@ class _PdfState extends State<Pdf> {
             return;
           }
         },
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-            Color.fromRGBO(0, 106, 252, 1.000),
-            Color.fromRGBO(0, 106, 252, 1.000),
-            Colors.white,
-            Colors.white,
-          ], begin: Alignment.topLeft, end: Alignment.bottomCenter)),
-          child: SafeArea(
+        child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   // Expanded(child: Container()),
+                    Container(
+                //color: Colors.amber,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: anchoActual * 0.35,
+                      height: anchoActual * 0.34,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('lib/imagenes/nuevecito.png'))),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: anchoActual*0.11,),
                     Text(
-                      '¡Felicidades,\n${userProvider.user?.nombre}!',
-                      textAlign: TextAlign.center,
+                      'Felicidades por completar\ntu ruta',
+                      textAlign: TextAlign.start,
                       style: TextStyle(
-                          fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
-                          fontSize: largoActual * 0.04),
+                          fontSize: largoActual * 0.0315),
                     ),
+                    SizedBox(height: anchoActual * 0.28,),
                     Text(
-                      'Ya puedes regresar al almacen para cuadrar tus ventas.',
+                      'Ya puedes\ndescargar tu\ninforme.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                           color: Colors.white,
-                          fontSize: largoActual * 0.025),
+                          fontSize: largoActual * 0.0421),
                     ),
-                    Stack(children: [
-                      Positioned(
-                        left: anchoActual * 0.15,
-                        height: largoActual * 0.4,
-                        child: Lottie.asset('lib/imagenes/anim_1.json'),
-                      ),
-                      SizedBox(
-                        height: largoActual * 0.35,
-                        child: Lottie.asset('lib/imagenes/anim_23.json'),
-                      ),
-                      Positioned(
-                        left: anchoActual * 0.11,
-                        height: largoActual * 0.35,
-                        child: Lottie.asset('lib/imagenes/brazo.json'),
-                      ),
-                    ]),
                     SizedBox(
-                      height: largoActual * 0.05,
+                      height: largoActual * 0.09,
                     ),
                     ElevatedButton(
                       onPressed: () async {
@@ -316,23 +307,15 @@ class _PdfState extends State<Pdf> {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons
-                                .download_rounded, // Reemplaza con el icono que desees
-                            size: largoActual * 0.028,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                              width: anchoActual *
-                                  0.01), // Ajusta el espacio entre el icono y el texto según tus preferencias
-                          Text(
+                        children: [// Ajusta el espacio entre el icono y el texto según tus preferencias
+                        Container(
+                      child: Text(
                             " Descargar",
                             style: TextStyle(
                                 fontSize: largoActual * 0.025,
-                                fontWeight: FontWeight.w500,
                                 color: Colors.white),
                           ),
+                    ),
                         ],
                       ),
                     ),
@@ -341,7 +324,7 @@ class _PdfState extends State<Pdf> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HolaConductor()));
+                                builder: (context) => Conductorinit()));
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -354,17 +337,13 @@ class _PdfState extends State<Pdf> {
                             Icons.home, // Reemplaza con el icono que desees
                             size: largoActual * 0.028,
                             color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ),
+                          ),])),
                     SizedBox(
                       height: largoActual * 0.17,
                     ),
                   ]),
             ),
           ),
-        ),
       ),
     );
   }

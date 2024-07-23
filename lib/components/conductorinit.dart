@@ -494,143 +494,81 @@ class _ConductorinitState extends State<Conductorinit> {
               Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 76, 163, 175),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Text(
-                      "Hoy día no tienes\nuna ruta\nasignada,\nespera tu ruta.",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  if (tengoruta && (descargaste == false))
+                  tengoruta && (descargaste == false) ?
                     ElevatedButton(
-                      onPressed: () {
-                        if (rutaTerminadaPref) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Pdf(
-                                rutaID: finalrutaIDpref,
-                                pedidos: finaltotalPendiente,
-                                totalMonto: finaltotalMonto,
-                                totalYape: finaltotalYape,
-                                totalPlin: finaltotalPlin,
-                                totalEfectivo: finaltotalEfectivo,
-                                pedidosEntregados: finaltotalEntregado,
-                                idpedidos: finalidpedidos,
-                                pedidosTruncados: finaltotalTruncado,
-                              ),
-                            ),
-                          );
-                        } else {
-                          if (yaSeActualizoStockPref) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const HolaConductor2(),
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ActualizadoStock(),
-                              ),
-                            );
-                          }
-                        }
-                      },
-                      style: ButtonStyle(
-                        surfaceTintColor: MaterialStateProperty.all(
-                            Color.fromRGBO(83, 176, 68, 1.000)),
-                        elevation: MaterialStateProperty.all(10),
-                        minimumSize: MaterialStatePropertyAll(
-                            Size(anchoActual * 0.28, largoActual * 0.054)),
-                        backgroundColor: MaterialStateProperty.all(
-                            Color.fromRGBO(83, 176, 68, 1.000)),
-                      ),
-                      child: Text(
-                        comenzarOaqui,
-                        style: TextStyle(
-                          fontSize: largoActual * 0.021,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  else
-                    Expanded(child: Container()),
-                  SizedBox(
-                    child: tengoruta && (descargaste == false)
-                        ? ElevatedButton(
-                            onPressed: () {
-                              if (rutaTerminadaPref) {
+                          onPressed: () {
+                            if (rutaTerminadaPref) {
                                 //print("idpedidos---------------------");
                                 //print(finalidpedidos);
                                 //SI YA TERMINO LA RUTAAAA
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Pdf(
+                                          rutaID: finalrutaIDpref,
+                                          pedidos: finaltotalPendiente,
+                                          totalMonto: finaltotalMonto,
+                                          totalYape: finaltotalYape,
+                                          totalPlin: finaltotalPlin,
+                                          totalEfectivo: finaltotalEfectivo,
+                                          pedidosEntregados:
+                                              finaltotalEntregado,
+                                          idpedidos: finalidpedidos,
+                                          pedidosTruncados:
+                                              finaltotalTruncado,
+                                        )),
+                              );
+                            } else {
+                                //SI NO TERMINO LA RUTAAAAAA
+                              if (yaSeActualizoStockPref) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Pdf(
-                                            rutaID: finalrutaIDpref,
-                                            pedidos: finaltotalPendiente,
-                                            totalMonto: finaltotalMonto,
-                                            totalYape: finaltotalYape,
-                                            totalPlin: finaltotalPlin,
-                                            totalEfectivo: finaltotalEfectivo,
-                                            pedidosEntregados:
-                                                finaltotalEntregado,
-                                            idpedidos: finalidpedidos,
-                                            pedidosTruncados:
-                                                finaltotalTruncado,
-                                          )),
+                                      builder: (context) =>
+                                          const HolaConductor2()),
                                 );
                               } else {
-                                //SI NO TERMINO LA RUTAAAAAA
-                                if (yaSeActualizoStockPref) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const HolaConductor2()),
-                                  );
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ActualizadoStock()),
-                                  );
-                                }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ActualizadoStock()),
+                                );
                               }
+                            }
 
                               //QUE LO LLEVE A LA VISTA DE FORMULARIO DE LLENADO DE STOCK
-                            },
-                            style: ButtonStyle(
-                              surfaceTintColor: MaterialStateProperty.all(
-                                  Color.fromRGBO(83, 176, 68, 1.000)),
-                              elevation: MaterialStateProperty.all(10),
-                              minimumSize: MaterialStatePropertyAll(Size(
-                                  anchoActual * 0.28, largoActual * 0.054)),
-                              backgroundColor: MaterialStateProperty.all(
-                                  Color.fromRGBO(83, 176, 68, 1.000)),
-                            ),
-                            child: Text(
-                              comenzarOaqui,
-                              style: TextStyle(
-                                  fontSize: largoActual * 0.021,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white),
-                            ))
-                        : Expanded(child: Container()),
+                          },
+                          style: ButtonStyle(
+                            surfaceTintColor: MaterialStateProperty.all(
+                                Color.fromRGBO(83, 176, 68, 1.000)),
+                            elevation: MaterialStateProperty.all(10),
+                            minimumSize: MaterialStatePropertyAll(Size(
+                                anchoActual * 0.28, largoActual * 0.054)),
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromRGBO(83, 176, 68, 1.000)),
+                          ),
+                          child: Text(
+                            comenzarOaqui,
+                            style: TextStyle(
+                                fontSize: largoActual * 0.021,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white),
+                          )):Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 76, 163, 175),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Text(
+                        "Hoy día no tienes\nuna ruta\nasignada,\nespera tu ruta.",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  const SizedBox(
+                    width: 20,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -642,6 +580,62 @@ class _ConductorinitState extends State<Conductorinit> {
                   )
                 ],
               ),
+              /*if (tengoruta && (descargaste == false))
+                ElevatedButton(
+                  onPressed: () {
+                    if (rutaTerminadaPref) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Pdf(
+                            rutaID: finalrutaIDpref,
+                            pedidos: finaltotalPendiente,
+                            totalMonto: finaltotalMonto,
+                            totalYape: finaltotalYape,
+                            totalPlin: finaltotalPlin,
+                            totalEfectivo: finaltotalEfectivo,
+                            pedidosEntregados: finaltotalEntregado,
+                            idpedidos: finalidpedidos,
+                            pedidosTruncados: finaltotalTruncado,
+                          ),
+                        ),
+                      );
+                    } else {
+                      if (yaSeActualizoStockPref) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HolaConductor2(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ActualizadoStock(),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  style: ButtonStyle(
+                    surfaceTintColor: MaterialStateProperty.all(
+                        Color.fromRGBO(83, 176, 68, 1.000)),
+                    elevation: MaterialStateProperty.all(10),
+                    minimumSize: MaterialStatePropertyAll(
+                        Size(anchoActual * 0.28, largoActual * 0.054)),
+                    backgroundColor: MaterialStateProperty.all(
+                        Color.fromRGBO(83, 176, 68, 1.000)),
+                  ),
+                  child: Text(
+                    comenzarOaqui,
+                    style: TextStyle(
+                      fontSize: largoActual * 0.021,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),*/
             ],
           ),
         ),
