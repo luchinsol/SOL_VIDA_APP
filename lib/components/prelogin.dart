@@ -162,21 +162,21 @@ class _PreloginState extends State<Prelogin> {
 
   Future<dynamic> loginsol(username, password) async {
     try {
-      /*print("------loginsool");
-      print(username);*/
+      print("------loginsool");
+      print(username);
 
       var res = await http.post(Uri.parse(apiUrl + apiLogin),
           headers: {"Content-type": "application/json"},
           body: jsonEncode({"nickname": username, "contrasena": password}));
-      /*print("why");
-      print(res);*/
+      print("why");
+      print(res);
       if (res.statusCode == 200) {
         var data = json.decode(res.body);
         // CLIENTE
 
         if (data['usuario']['rol_id'] == 4) {
-          /*print("dentro del cliente");
-          print("userDataCopy");*/
+          print("dentro del cliente");
+          print("userDataCopy");
           SharedPreferences userDataCopy =
               await SharedPreferences.getInstance();
           userDataCopy.setString('token', data['token']);
@@ -379,24 +379,45 @@ class _PreloginState extends State<Prelogin> {
                         const SizedBox(
                           height: 80,
                         ),
-                        Container(
-                          width: 150,
-                          height: 150,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage('lib/imagenes/nuevito.png'))),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.transparent.withOpacity(0.35),
+                                offset: Offset(3,-7),
+                                blurRadius: 25
+                              )
+                            ]
+                          ),
+                          child: Container(
+                            width: 150,
+                            height: 150,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('lib/imagenes/nuevito.png'))),
+                          ),
                         ),
                         Container(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Inicia Sesión",
-                                style: TextStyle(
-                                    fontSize: 36,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                              DecoratedBox(
+                                decoration: BoxDecoration(boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 0, 0, 0)
+                                        .withOpacity(0.25),
+                                    offset: Offset(3, 7),
+                                    blurRadius: 15,
+                                  ),
+                                ]),
+                                child: const Text(
+                                  "Inicia Sesión",
+                                  style: TextStyle(
+                                      fontSize: 36,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               const Text(
                                 "Llevando vida a tu hogar!",
@@ -467,7 +488,7 @@ class _PreloginState extends State<Prelogin> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.grey),
-                                          hintStyle:const TextStyle(
+                                          hintStyle: const TextStyle(
                                               fontSize: 17, color: Colors.grey),
                                           suffixIcon: GestureDetector(
                                             onTap: () {
@@ -559,6 +580,7 @@ class _PreloginState extends State<Prelogin> {
                                         Navigator.of(context)
                                             .pop(); // Cerrar el primer AlertDialog
 
+                                        print("q pasa=");
                                         //SI ES CLIENTE
                                         if (rol == 4) {
                                           await tieneUbicaciones(userData.id);

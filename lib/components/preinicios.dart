@@ -2,6 +2,7 @@ import 'package:appsol_final/components/preregistro.dart';
 import 'package:appsol_final/components/prelogin.dart';
 import 'package:appsol_final/components/responsiveUI/breakpoint.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 //import 'package:solvida/componentes/responsiveUI/breakpoint.dart';
 
 class Solvida extends StatefulWidget {
@@ -38,20 +39,32 @@ class _SolvidaState extends State<Solvida> {
                           fit: BoxFit.contain,
                         ),
                       ),
-                    ),
+                    )
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   Center(
-                    child: Text(
-                      "Bienvenido a la",
-                      style: TextStyle(
-                          fontSize: texto1,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.30),
+                      offset: Offset(0, 4),
+                      blurRadius: 10,
                     ),
+                  ],
+                ),
+                child: Text(
+                  'Inicia Sesión',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
+                ),
+              ),
+            ),
                   Center(
                     child: Text(
                       "Familia Sol",
@@ -75,7 +88,7 @@ class _SolvidaState extends State<Solvida> {
                     ),
                   ),
                 ],
-              )),
+              )).animate().fade(duration: 1500.ms).slideY(),
             ),
             Container(
               //color: Colors.white,
@@ -106,7 +119,7 @@ class _SolvidaState extends State<Solvida> {
                               fontWeight: FontWeight.w700,
                               color: const Color.fromARGB(255, 61, 84, 207)),
                         )),
-                  ),
+                  ).animate().fade(delay: 0.9.ms).slideY(),
                   const SizedBox(
                     width: 5,
                   ),
@@ -134,7 +147,7 @@ class _SolvidaState extends State<Solvida> {
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         )),
-                  ),
+                  ).animate().fade(delay: 0.9.ms).slideY(),
                 ],
               ),
             ),
@@ -160,14 +173,14 @@ class _SolvidaState extends State<Solvida> {
             
             Container(
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
+                color:Color.fromRGBO(61, 85, 212, 1)
+               /* gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    const Color(0xFF3D54CF),
-                    const Color(0xFF3179D2),
-                  ],
-                ),
+                  colors: Colors.blue,
+                   // const Color(0xFF3179D2),
+                  
+                ),*/
         
         /*
                 image: DecorationImage(

@@ -198,7 +198,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
                                         color:
-                                            Color.fromARGB(255, 218, 26, 180)),
+                                            Color.fromRGBO(255, 0, 93,1)),
                                   ),
                                 ),
                               ),
@@ -302,7 +302,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       style: ButtonStyle(
                                           backgroundColor:
                                               WidgetStateProperty.all(
-                                                  Colors.red)),
+                                                  Color.fromRGBO(255, 0, 93, 1))),
                                       child: const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -420,7 +420,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       style: ButtonStyle(
                                           backgroundColor:
                                               WidgetStateProperty.all(
-                                                  Colors.red)),
+                                                 Color.fromRGBO(255, 0, 93,1))),
                                       child: const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -1753,7 +1753,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: largoActual * 0.019,
-                                              color: colorLetra),
+                                              color: Colors.black),
                                         ),
                                       ),
                                       Container(

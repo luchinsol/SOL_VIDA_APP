@@ -81,8 +81,8 @@ class MyApp extends StatelessWidget {
                   indice: 0,
                   subIndice: 0,
                 )
-              : (rol == 5 ? Conductorinit() : Solvida()))
-          : Solvida(),
+              : (rol == 5 ? Conductorinit() : Login()))
+          : Login(),
     );
   }
 }

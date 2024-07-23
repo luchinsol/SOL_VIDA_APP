@@ -193,11 +193,17 @@ class _LoginState extends State<Login> {
       );
       if (res.statusCode == 200) {
         var data = json.decode(res.body);
+        print("data.............recargas");
+        
         if (data != null) {
+          print("dif");
+          print(data);
           setState(() {
             numrecargas = data['recargas'];
           });
         } else {
+          print("null");
+          print(data);
           setState(() {
             numrecargas = '0';
           });
@@ -211,8 +217,8 @@ class _LoginState extends State<Login> {
 
   Future<dynamic> loginsol(username, password) async {
     try {
-      /*print("------loginsool");
-      print(username);*/
+      print("------loginsool");
+      print(username);
 
       var res = await http.post(Uri.parse(apiUrl + apiLogin),
           headers: {"Content-type": "application/json"},
@@ -222,6 +228,7 @@ class _LoginState extends State<Login> {
       if (res.statusCode == 200) {
         var data = json.decode(res.body);
         // CLIENTE
+        print("----------------************************200");
 
         if (data['usuario']['rol_id'] == 4) {
           /*print("dentro del cliente");
