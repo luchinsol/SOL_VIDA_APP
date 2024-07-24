@@ -174,7 +174,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height / 1.5,
+                                height:
+                                    MediaQuery.of(context).size.height / 1.5,
                                 decoration: BoxDecoration(
                                     // color: Colors.green,
                                     borderRadius: BorderRadius.circular(20),
@@ -198,8 +199,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
-                                        color:
-                                            Color.fromRGBO(255, 0, 93,1)),
+                                        color: Color.fromRGBO(255, 0, 93, 1)),
                                   ),
                                 ),
                               ),
@@ -245,7 +245,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height / 1.5,
+                                height:
+                                    MediaQuery.of(context).size.height / 1.5,
                                 decoration: BoxDecoration(
                                     // color: Colors.green,
                                     borderRadius: BorderRadius.circular(20),
@@ -305,7 +306,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       style: ButtonStyle(
                                           backgroundColor:
                                               WidgetStateProperty.all(
-                                                  Color.fromRGBO(255, 0, 93, 1))),
+                                                  Color.fromRGBO(
+                                                      255, 0, 93, 1))),
                                       child: const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -365,7 +367,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height / 1.5,
+                                height:
+                                    MediaQuery.of(context).size.height / 1.5,
                                 decoration: BoxDecoration(
                                     // color: Colors.green,
                                     borderRadius: BorderRadius.circular(20),
@@ -424,7 +427,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       style: ButtonStyle(
                                           backgroundColor:
                                               WidgetStateProperty.all(
-                                                 Color.fromRGBO(255, 0, 93,1))),
+                                                  Color.fromRGBO(
+                                                      255, 0, 93, 1))),
                                       child: const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -1392,8 +1396,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                 height: largoActual * 0.059,
                                 width: largoActual * 0.059,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(
-                                        0, 106, 252, 1.000),
+                                  color:
+                                      const Color.fromRGBO(0, 106, 252, 1.000),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: IconButton(
@@ -1408,7 +1412,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                               top: largoActual * 0.041,
                                               left: anchoActual * 0.055,
                                               right: anchoActual * 0.055),
-                                          height: largoActual * 0.17,
+                                          height: largoActual * 0.20,
                                           width: anchoActual,
                                           child: Column(
                                             crossAxisAlignment:
@@ -1513,8 +1517,6 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                       );
                                                     },
                                                   );
-
-                                                  
                                                 },
                                                 style: ButtonStyle(
                                                   surfaceTintColor:
@@ -1565,12 +1567,148 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                       ),
                                                     ]),
                                               ),
+                                              SizedBox(
+                                                  height: largoActual * 0.013),
+
+                                                  //////////// GOOGLE MAPS //////////
+                                              ElevatedButton(
+                                                onPressed: () async {
+                                                  await currentLocation();
+                                                  Navigator.pop(context);
+                                                  Navigator.pop(context);
+
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Dialog(
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              5,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                width: 50,
+                                                                height: 50,
+                                                                decoration: const BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                        image: AssetImage(
+                                                                            'lib/imagenes/nuevecito.png'))),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 19,
+                                                              ),
+                                                              Text(
+                                                                "Ubicación añadida! Revisala arriba.",
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        25,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                        255,
+                                                                        2,
+                                                                        100,
+                                                                        181)),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 19,
+                                                              ),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                    "OK",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            24,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            4,
+                                                                            93,
+                                                                            167)),
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                style: ButtonStyle(
+                                                  surfaceTintColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                  elevation:
+                                                      MaterialStateProperty.all(
+                                                          8),
+                                                  minimumSize:
+                                                      MaterialStatePropertyAll(
+                                                          Size(
+                                                              anchoActual *
+                                                                  0.28,
+                                                              largoActual *
+                                                                  0.054)),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                ),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .add_location_alt_rounded,
+                                                        color: const Color
+                                                            .fromRGBO(
+                                                            0, 106, 252, 1.000),
+                                                        size:
+                                                            largoActual * 0.034,
+                                                      ),
+                                                      Text(
+                                                        ' Agregar ubicación manualmente',
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                largoActual *
+                                                                    0.021,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: const Color
+                                                                .fromRGBO(
+                                                                0,
+                                                                106,
+                                                                252,
+                                                                1.000)),
+                                                      ),
+                                                    ]),
+                                              ),
                                             ],
                                           ),
                                         );
                                       },
                                     );
-
                                   },
                                   icon: Icon(Icons.add_location_alt_outlined,
                                       size: largoActual * 0.031,
@@ -1990,8 +2128,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
                               surfaceTintColor: Colors.white,
-                              color: const Color.fromRGBO(
-                                        0, 106, 252, 1.000),
+                              color: const Color.fromRGBO(0, 106, 252, 1.000),
                               elevation: 10,
                               child: OutlinedButton(
                                 style: const ButtonStyle(
@@ -2714,9 +2851,13 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Saldo Beneficiario",style: TextStyle(
-                                          fontWeight: FontWeight.bold,color:Colors.white,fontSize: 20
-                                        ),),
+                                        const Text(
+                                          "Saldo Beneficiario",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
                                         Text(
                                           'S/. ${userProvider.user?.saldoBeneficio}0',
                                           style: const TextStyle(
