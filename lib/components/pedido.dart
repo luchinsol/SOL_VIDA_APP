@@ -448,14 +448,14 @@ class _PedidoState extends State<Pedido> {
                             'Total',
                             style: TextStyle(
                                 color: Color.fromRGBO(0, 77, 255, 1),
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w800,
                                 fontSize: largoActual * (17 / 736)),
                           ),
                           Text(
                             'S/.${totalProvider - ahorro + envio}0',
                             style: TextStyle(
                                 color: Color.fromRGBO(0, 77, 255, 1),
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w800,
                                 fontSize: largoActual * (17 / 736)),
                           )
                         ],
@@ -615,7 +615,7 @@ class _PedidoState extends State<Pedido> {
                 ),
               );
             }),
-       appBar: PreferredSize(
+        /* appBar: PreferredSize(
         preferredSize: Size.fromHeight(largoActual * 0.08),
         child: AppBar(
           surfaceTintColor: Colors.transparent,
@@ -628,21 +628,7 @@ class _PedidoState extends State<Pedido> {
                   .updateUbicacion(miUbicacion);
             },
           ),
-          flexibleSpace: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('lib/imagenes/aguamarina2.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-             /* Container(
-                color: Color.fromARGB(255, 5, 102, 182).withOpacity(0.8), // Optional overlay for readability
-              ),*/
-            ],
-          ),
+          
           actions: [
             Container(
               margin: EdgeInsets.only(
@@ -672,30 +658,65 @@ class _PedidoState extends State<Pedido> {
             ),
           ],
         ),
-      ),
-        body: SafeArea(
-            child: Stack(
+      ),*/
+        body: Stack(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/imagenes/aguamarina2.png'),
-                  fit: BoxFit
-                      .cover, // Cambiado a BoxFit.cover para que cubra todo el Container
-                ),
+            Positioned.fill(
+              child: Image.asset(
+                'lib/imagenes/aguamarina2.png', // Asegúrate de tener la imagen en la carpeta assets y agregarla en pubspec.yaml
+                fit: BoxFit.cover,
               ),
             ),
             SingleChildScrollView(
+              padding: const EdgeInsets.only(top: 70, right: 5, left: 5,bottom: 25),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: anchoActual * 0.055),
-                    width: 80,
-                    height: 80,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('lib/imagenes/nuevito.png'))),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: anchoActual * 0.055),
+                        width: 80,
+                        height: 80,
+                        decoration: const BoxDecoration(
+                          //color: Colors.grey,
+                            image: DecorationImage(
+                                image: AssetImage('lib/imagenes/nuevito.png'))),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: largoActual * 0.018,
+                            right: anchoActual * 0.045),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50)),
+                        height: largoActual * 0.059,
+                        width: largoActual * 0.059,
+                        child: Badge(
+                          largeSize: 18,
+                          backgroundColor: colorCantidadCarrito,
+                          label: Text(cantCarrito.toString(),
+                              style: const TextStyle(fontSize: 12)),
+                          child: IconButton(
+                            onPressed: () {
+                              limpiarVariables();
+                              actualizarProviderPedido();
+                              /*
+              Provider.of<UbicacionProvider>(context, listen: false)
+                  .updateUbicacion(miUbicacion);*/
+                            },
+                            icon: const Icon(Icons.delete_rounded),
+                            color: const Color.fromRGBO(0, 106, 252, 1.000),
+                            iconSize: largoActual * 0.035,
+                          ).animate().shakeY(
+                                duration: Duration(milliseconds: 300),
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
                   //TU PEDIDO
                   Container(
@@ -1671,7 +1692,7 @@ class _PedidoState extends State<Pedido> {
               ),
             ),
           ],
-        )),
+        ),
       );
     } else {
       return Scaffold(

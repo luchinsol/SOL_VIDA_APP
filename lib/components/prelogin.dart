@@ -199,9 +199,9 @@ class _PreloginState extends State<Prelogin> {
               'quiereRetirarcopy', data['usuario']['quiereretirar']);
           userDataCopy.setString('suscripcioncopy',
               data['usuario']['suscripcion'] ?? 'Sin suscripción');
-          /*print(userDataCopy);
+          print(userDataCopy);
           print("-----------------------------------------------------------");
-          print("cli");
+          /*print("cli");
           print("userData");
           // data['usuario']['nombre']
           print(data['usuario']['id']);*/
@@ -222,8 +222,8 @@ class _PreloginState extends State<Prelogin> {
               token: data['token'],
               rolid: data['usuario']['rol_id'],
               recargas: numrecargas);
-          /*print(userData);
-          print("-----------------------------------------------------------");*/
+          print(userData);
+          print("-----------------------------------------------------------");
           setState(() {
             status = 200;
             rol = 4;
@@ -356,7 +356,7 @@ class _PreloginState extends State<Prelogin> {
   }
 
   // VISTA DEL WIDGET
-  Widget prelogeo(String tama,double ancho, double alto, double texto1) {
+  Widget prelogeo(String tama, double ancho, double alto, double texto1) {
     return Stack(
       children: [
         Positioned.fill(
@@ -371,10 +371,10 @@ class _PreloginState extends State<Prelogin> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("$tama ${MediaQuery.of(context).size.width}"),
+              //Text("$tama ${MediaQuery.of(context).size.width}"),
               Container(
-                width: ancho,
-                height: alto,
+                width: MediaQuery.of(context).size.width/3,
+                height: MediaQuery.of(context).size.height/4.5,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('lib/imagenes/nuevito.png'))),
@@ -386,16 +386,14 @@ class _PreloginState extends State<Prelogin> {
                     Text(
                       "Inicia Sesión",
                       style: TextStyle(
-                          fontSize:
-                              texto1*2.7, //MediaQuery.of(context).size.width/7.9,
+                          fontSize:MediaQuery.of(context).size.width/7.9,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Llevando vida a tu hogar!",
                       style: TextStyle(
-                          fontSize:
-                              texto1, //MediaQuery.of(context).size.width/20,
+                          fontSize: MediaQuery.of(context).size.width / 18.5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
@@ -507,7 +505,7 @@ class _PreloginState extends State<Prelogin> {
                     //color: Colors.blue,
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(
-                    left: ancho),//MediaQuery.of(context).size.width / 3),
+                    left: ancho), //MediaQuery.of(context).size.width / 3),
                 child: TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -518,11 +516,11 @@ class _PreloginState extends State<Prelogin> {
                     },
 
                     //RECUPERACION DE CONTRASEÑA DEL ARCHIVO ORIGINAL
-                    child:  Text(
+                    child: Text(
                       "¿Olvidaste contraseña?",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: texto1/1.2,
+                          fontSize: MediaQuery.of(context).size.width / 24,
                           color: const Color.fromARGB(255, 255, 255, 255)),
                     )),
               ),
@@ -531,8 +529,8 @@ class _PreloginState extends State<Prelogin> {
               ),
               Center(
                 child: Container(
-                  width: ancho*2.5,//MediaQuery.of(context).size.width,
-                  height: alto/2.85,//50,
+                  width: ancho * 2.5, //MediaQuery.of(context).size.width,
+                  height: alto / 2.85, //50,
                   child: ElevatedButton(
                       onPressed: () async {
                         //INICIAR SESIÓN DEL ARCHIVO ORIGINAL
@@ -623,7 +621,7 @@ class _PreloginState extends State<Prelogin> {
                                           Container(
                                             width: 50,
                                             height: 50,
-                                            decoration: BoxDecoration(
+                                            decoration:const BoxDecoration(
                                                 image: DecorationImage(
                                                     image: AssetImage(
                                                         'lib/imagenes/nuevecito.png'))),
@@ -681,7 +679,7 @@ class _PreloginState extends State<Prelogin> {
                                           Container(
                                             width: 50,
                                             height: 50,
-                                            decoration: BoxDecoration(
+                                            decoration:const BoxDecoration(
                                                 image: DecorationImage(
                                                     image: AssetImage(
                                                         'lib/imagenes/nuevecito.png'))),
@@ -731,11 +729,11 @@ class _PreloginState extends State<Prelogin> {
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18))),
-                      child:  Text(
+                      child: Text(
                         "Iniciar Sesión",
                         style: TextStyle(
                             color: const Color.fromRGBO(0, 77, 225, 1),
-                            fontSize: texto1*1.7,//30,
+                            fontSize: texto1 * 1.7, //30,
                             fontWeight: FontWeight.bold),
                       )),
                 ),
@@ -746,11 +744,12 @@ class _PreloginState extends State<Prelogin> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Text(
+                  Text(
                     "¿Todavía no tienes cuenta?",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: texto1*0.9,//16,
+                        fontSize:
+                            MediaQuery.of(context).size.width / 25.5, //16,
                         color: Colors.white),
                   ),
                   TextButton(
@@ -765,7 +764,9 @@ class _PreloginState extends State<Prelogin> {
                         "Registrarse",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: texto1*.9,//18,
+                          fontSize:
+                              MediaQuery.of(context).size.width / 25.5, //16,
+
                           color: Color.fromRGBO(84, 226, 132, 1),
                         ),
                       ))
@@ -788,23 +789,23 @@ class _PreloginState extends State<Prelogin> {
           child: LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth <= Breakpoint.xsmall) {
-                return prelogeo("XS",100, 85, 10);
+                return prelogeo("XS", 100, 85, 10);
               } else if (constraints.maxWidth <= Breakpoint.avgsmall) {
-                return prelogeo("avS",110,100, 13.0);
+                return prelogeo("avS", 110, 100, 13.0);
               } else if (constraints.maxWidth <= Breakpoint.small) {
-                return prelogeo("S",140, 140, 18);// PUNTO CLAVE
+                return prelogeo("S", 140, 140, 18); // PUNTO CLAVE
               } else if (constraints.maxWidth <= Breakpoint.avgmedium) {
-                return prelogeo("avM",160, 160, 18);
+                return prelogeo("avM", 160, 160, 18);
               } else if (constraints.maxWidth <= Breakpoint.medium) {
-                return prelogeo("M",220, 180,18);
+                return prelogeo("M", 220, 180, 18);
               } else if (constraints.maxWidth <= Breakpoint.avglarg) {
-                return prelogeo("avL",220, 200,18);
+                return prelogeo("avL", 220, 200, 18);
               } else if (constraints.maxWidth <= Breakpoint.large) {
-                return prelogeo("L",220, 220,18);
+                return prelogeo("L", 220, 220, 18);
               } else if (constraints.maxWidth <= Breakpoint.avgxlarge) {
-                return prelogeo("avXL",240,240,18);
+                return prelogeo("avXL", 240, 240, 18);
               } else {
-                return prelogeo("XL",260, 260, 18);
+                return prelogeo("XL", 260, 260, 18);
               }
             },
           ),

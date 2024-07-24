@@ -238,7 +238,7 @@ class _ProductosState extends State<Productos> {
                     Container(
                       margin: EdgeInsets.only(left: anchoActual * 0.055),
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
@@ -432,7 +432,7 @@ class _ProductosState extends State<Productos> {
                               Container(
                                 //margin:EdgeInsets.only(left: anchoActual * 0.055),
                                 child: Text(
-                                  "Pago de:",
+                                  "Subtotal:",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: largoActual * 0.021,
@@ -466,11 +466,13 @@ class _ProductosState extends State<Productos> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: largoActual * 0.021,
                                     color:
-                                        const Color.fromRGBO(
-                                        0, 106, 252, 1.000)),
+                                         Colors.black),
                               ),
                             ),
                             Container(
+                              width: MediaQuery.of(context).size.width/6.5,
+                                height: MediaQuery.of(context).size.width/7.5,
+                              //color: Colors.grey,
                               margin:
                                   EdgeInsets.only(right: anchoActual * 0.055),
                               child: ElevatedButton(

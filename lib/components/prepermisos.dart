@@ -210,7 +210,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
               'Error de Ubicación',
               style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
             ),
-            content: Text(
+            content: const Text(
               'Hubo un problema al obtener la ubicación. Por favor, inténtelo de nuevo.',
               style: TextStyle(fontSize: 16),
             ),
@@ -259,7 +259,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                     Container(
                       width: 50,
                       height: 50,
-                      decoration: BoxDecoration(
+                      decoration:const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage('lib/imagenes/nuevecito.png'))),
                     ),
@@ -278,7 +278,15 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.of(context).pop();
+                         Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BarraNavegacion(
+                                indice: 0,
+                                subIndice: 0,
+                              )),
+                    );
                         },
                         child: const Text(
                           "OK",
@@ -344,8 +352,8 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Se necesita acceso a la ubicación en segundo plano'),
-          content: SingleChildScrollView(
+          title:const Text('Se necesita acceso a la ubicación en segundo plano'),
+          content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
@@ -355,7 +363,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child:const Text('OK'),
               onPressed: () async {
                 Navigator.of(context).pop();
               },
@@ -511,17 +519,14 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     final userProvider = context.watch<UserProvider>();
     clienteID = userProvider.user?.id;
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
+      body: Padding(
           padding: const EdgeInsets.all(0.0),
           child: LayoutBuilder(
             builder: (context, constraints) {
               // Definir los tamaños de fuente y espaciados según el ancho de la pantalla
-              double fontSizeTitle;
-              double fontSizeSubtitle;
-              double fontSizeButtons;
+             
 
-              if (constraints.maxWidth <= Breakpoint.xsmall) {
+             /* if (constraints.maxWidth <= Breakpoint.xsmall) {
                 fontSizeTitle = 12;
                 fontSizeSubtitle = 10;
                 fontSizeButtons = 12;
@@ -545,122 +550,133 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                 fontSizeTitle = 26;
                 fontSizeSubtitle = 22;
                 fontSizeButtons = 24;
-              }
+              }*/
 
               return Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF0071BC), // Color de fondo azul
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  //crossAxisAlignment: CrossAxisAlignment.center,
+                
+                child: Stack(
                   children: [
-                    const SizedBox(height: 40),
-                    Center(
-                      child: Image.asset(
-                        'lib/imagenes/nuevito.png',
-                        height: 85,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        'Para asegurar entregas precisas, permita que AguaSol use tu ubicación todo el tiempo.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: fontSizeSubtitle,
-                          fontWeight: FontWeight.w700,
+                    Positioned.fill(
+          child: Image.asset(
+            'lib/imagenes/aguamarina2.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      //crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                       const SizedBox(height: 150),
+                        Container(
+                          width: 200,
+                          height: 100,
+                          child: Center(
+                            child: Image.asset(
+                              'lib/imagenes/nuevito.png',
+                              
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        'AguaSol recopila datos de ubicación para habilitar el reparto y programación de entregas de pedidos, incluso cuando la aplicación está cerrada o no se está utilizando.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: fontSizeSubtitle,
-                          fontWeight: FontWeight.w700,
+                        const SizedBox(height: 20),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            'Para asegurar entregas precisas, permita que AguaSol use tu ubicación todo el tiempo.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: MediaQuery.of(context).size.width/27,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('lib/imagenes/pngegg.png'))),
-                    ),
-                    const SizedBox(height: 30),
-                    Container(
-                      // color: Colors.green,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        //crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          TextButton(
-                              onPressed: () async {
-                                await _showlocationpermissiondialogo();
-                              },
-                              child: Text("Denegar",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: fontSizeButtons,
-                                    fontWeight: FontWeight.bold,
-                                  ))),
-                          TextButton(
-                              onPressed: () async {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const AlertDialog(
-                                      content: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          CircularProgressIndicator(
-                                            backgroundColor: Color.fromARGB(
-                                                255, 118, 213, 80),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Text(
-                                            "Cargando ...",
-                                            style: TextStyle(fontSize: 15),
-                                          )
-                                        ],
-                                      ),
-                                    );
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            'AguaSol recopila datos de ubicación para habilitar el reparto y programación de entregas de pedidos, incluso cuando la aplicación está cerrada o no se está utilizando.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: MediaQuery.of(context).size.width/27,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('lib/imagenes/pngegg.png'))),
+                        ),
+                        const SizedBox(height: 30),
+                        Container(
+                          // color: Colors.green,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  onPressed: () async {
+                                    await _showlocationpermissiondialogo();
                                   },
-                                );
-                                try {
-                                  await currentLocation();
-                                } catch (e) {
-                                  throw Exception('Error $e');
-                                }
-                              },
-                              child: Text("Aceptar",
-                                  style: TextStyle(
-                                    color: Colors.yellow,
-                                    fontSize: fontSizeButtons,
-                                    fontWeight: FontWeight.bold,
-                                  ))),
-                        ],
-                      ),
+                                  child: Text("Denegar",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: MediaQuery.of(context).size.width/20,
+                                        fontWeight: FontWeight.bold,
+                                      ))),
+                              TextButton(
+                                  onPressed: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const AlertDialog(
+                                          content: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              CircularProgressIndicator(
+                                                backgroundColor: Color.fromARGB(
+                                                    255, 118, 213, 80),
+                                              ),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Text(
+                                                "Cargando ...",
+                                                style: TextStyle(fontSize: 15),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                    try {
+                                      await currentLocation();
+                                    } catch (e) {
+                                      throw Exception('Error $e');
+                                    }
+                                  },
+                                  child: Text("Aceptar",
+                                      style: TextStyle(
+                                        color: Colors.yellow,
+                                       fontSize: MediaQuery.of(context).size.width/20,
+                                        fontWeight: FontWeight.bold,
+                                      ))),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                      ],
                     ),
-                    const SizedBox(height: 15),
                   ],
                 ),
               );
             },
           ),
-        ),
+        
       ),
     );
   }

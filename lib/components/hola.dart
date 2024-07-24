@@ -1766,7 +1766,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: largoActual * 0.019,
-                                              color: colorTextos),
+                                              color: Colors.black),
                                         ),
                                       ),
                                     ],
@@ -1972,7 +1972,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                           child: Text(
                             "Billetera Sol",
                             style: TextStyle(
-                                color: colorTextos,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: largoActual * 0.019),
                           ),
@@ -1980,13 +1980,13 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                         SizedBox(
                           height: largoActual * 0.009,
                         ),
-                        SizedBox(
-                          height: largoActual * 0.1,
+                        Container(
+                          height: largoActual * 0.12,
                           child: Card(
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
+                                  borderRadius: BorderRadius.circular(20)),
                               surfaceTintColor: Colors.white,
-                              color: Color.fromRGBO(
+                              color: const Color.fromRGBO(
                                         0, 106, 252, 1.000),
                               elevation: 10,
                               child: OutlinedButton(
@@ -2710,9 +2710,12 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        const Text("Saldo Beneficiario",style: TextStyle(
+                                          fontWeight: FontWeight.bold,color:Colors.white,fontSize: 20
+                                        ),),
                                         Text(
                                           'S/. ${userProvider.user?.saldoBeneficio}0',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w700,
                                               fontSize: 35),

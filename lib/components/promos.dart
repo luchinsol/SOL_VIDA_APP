@@ -336,10 +336,11 @@ class _PromosState extends State<Promos> {
                         height: largoActual * 0.01,
                       ),
                       Container(
+                        //color: Colors.grey,
                         margin:
                             EdgeInsets.only(top: 0, left: anchoActual * 0.055),
                         child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 width: 80,
@@ -549,7 +550,7 @@ class _PromosState extends State<Promos> {
                                   
                                   //margin:EdgeInsets.only(left: anchoActual * 0.055),
                                   child: Text(
-                                    "Pago de:",
+                                    "Subtotal:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: largoActual * 0.021,
@@ -582,15 +583,15 @@ class _PromosState extends State<Promos> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: largoActual * 0.021,
                                       color:
-                                          Color.fromRGBO(
-                                        0, 106, 252, 1.000)),
+                                          Colors.black),
                                 ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(right: anchoActual * 0.055),
-                               
-                                child: Center(
-                                  child: ElevatedButton(
+                                width: MediaQuery.of(context).size.width/6.5,
+                                height: MediaQuery.of(context).size.width/7.5,
+                                //color: Colors.grey,
+                                child:  ElevatedButton(
                                       onPressed: almenosUno
                                           ? () async {
                                               obtenerPromos();
@@ -615,13 +616,12 @@ class _PromosState extends State<Promos> {
                                           backgroundColor:
                                               MaterialStateProperty.all(
                                                   Color.fromRGBO(58, 182, 0, 1))),
-                                      child: Center(
-                                        child: const Icon(
+                                      child: Icon(
                                           Icons.add_shopping_cart_rounded,
                                           color: Colors.white,
-                                        ),
+                                        
                                       )),
-                                ),
+                                
                               ),
                             ],
                           ),
