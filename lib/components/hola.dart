@@ -152,7 +152,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
               child: Container(
                 //color: Colors.green,
                 height: MediaQuery.of(context).size.height /
-                    1.6, //altura del dialogo
+                    1.2, //altura del dialogo
                 child: RotatedBox(
                   quarterTurns: -1,
                   child: ListWheelScrollView(
@@ -171,9 +171,10 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                             //color: Colors.amber
                           ),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height / 2,
+                                height: MediaQuery.of(context).size.height / 1.5,
                                 decoration: BoxDecoration(
                                     // color: Colors.green,
                                     borderRadius: BorderRadius.circular(20),
@@ -194,14 +195,15 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                 child: Center(
                                   child: Text(
                                     "Código:${codigo}",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         color:
                                             Color.fromRGBO(255, 0, 93,1)),
                                   ),
                                 ),
                               ),
+                              //const Size
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 child: ElevatedButton(
@@ -240,9 +242,10 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                             //color: Colors.amber
                           ),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height / 2,
+                                height: MediaQuery.of(context).size.height / 1.5,
                                 decoration: BoxDecoration(
                                     // color: Colors.green,
                                     borderRadius: BorderRadius.circular(20),
@@ -359,9 +362,10 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                             //color: Colors.amber
                           ),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height / 2,
+                                height: MediaQuery.of(context).size.height / 1.5,
                                 decoration: BoxDecoration(
                                     // color: Colors.green,
                                     borderRadius: BorderRadius.circular(20),

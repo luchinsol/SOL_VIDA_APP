@@ -53,6 +53,9 @@ class _PrefinalState extends State<Prefinal> {
                           image: DecorationImage(
                               image: AssetImage('lib/imagenes/nuevito.png'))),
                     ),
+                    const SizedBox(
+                      height: 29,
+                    ),
                     const Text(
                       "¡Gracias\npor permitirnos llevar vida\na tu hogar!",
                       textAlign: TextAlign.center,
@@ -62,7 +65,7 @@ class _PrefinalState extends State<Prefinal> {
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 45,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
