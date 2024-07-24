@@ -20,7 +20,7 @@ class _PrefinalState extends State<Prefinal> {
             return;
           }
         },
-        child: SafeArea(
+      
           child: Stack(
             children: [
               // IMAGEN ABAJO
@@ -46,14 +46,15 @@ class _PrefinalState extends State<Prefinal> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 100,
-                      height: 100,
+                      width: MediaQuery.of(context).size.width/2.3,
+                      height: MediaQuery.of(context).size.height/5,
                       decoration: const BoxDecoration(
+                       // color: Colors.grey,
                           image: DecorationImage(
                               image: AssetImage('lib/imagenes/nuevito.png'))),
                     ),
                     const Text(
-                      "¡Gracias\npor permitirnos llevar vida a tu hogar!",
+                      "¡Gracias\npor permitirnos llevar vida\na tu hogar!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -98,7 +99,7 @@ class _PrefinalState extends State<Prefinal> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Center(
+                    const Center(
                       child: Text(
                         "Muy pronto\nla Familia Sol, llegará con nuevos\nproductos",
                         textAlign: TextAlign.center,
@@ -155,7 +156,7 @@ class _PrefinalState extends State<Prefinal> {
               ),
             ],
           ),
-        ),
+        
       ),
     );
   }
