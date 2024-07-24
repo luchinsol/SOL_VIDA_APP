@@ -41,8 +41,8 @@ class _FormucliState extends State<Formucli> {
 
 //FUTURE DEL ARCHIVO ORIGINAL
 
-  Future<dynamic> registrar(nombre, apellidos, dni, fechaAct,
-      nickname, contrasena, email, telefono) async {
+  Future<dynamic> registrar(nombre, apellidos, dni, fechaAct, nickname,
+      contrasena, email, telefono) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -72,7 +72,7 @@ class _FormucliState extends State<Formucli> {
             "apellidos": apellidos,
             "telefono": telefono,
             "ruc": "",
-            "dni": dni,
+            "dni": dni ?? "",
             "fecha_nacimiento": "NA",
             "fecha_creacion_cuenta": fechaActual,
             "sexo": "NA",
@@ -99,24 +99,10 @@ class _FormucliState extends State<Formucli> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  //VISTA PRINCIPAL RESPONSIVA
+  Widget registra(String tama,double ancho,double alto, double texto1){
     DateTime tiempoActual = DateTime.now();
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double padding = 16.0;
-          if (constraints.maxWidth >= Breakpoint.avgsmall &&
-              constraints.maxWidth < Breakpoint.small) {
-            padding = 24.0;
-          } else if (constraints.maxWidth >= Breakpoint.small &&
-              constraints.maxWidth < Breakpoint.avgmedium) {
-            padding = 32.0;
-          } else if (constraints.maxWidth >= Breakpoint.avgmedium) {
-            padding = 40.0;
-          }
-
-          return Stack(
+     return Stack(
             children: [
               // Imagen de fondo
               Positioned.fill(
@@ -125,9 +111,10 @@ class _FormucliState extends State<Formucli> {
                   fit: BoxFit.cover,
                 ),
               ),
+              //Text("${tama} ${MediaQuery.of(context).size.width}}"),
               Center(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.all(padding),
+                  padding: EdgeInsets.all(texto1),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -139,12 +126,12 @@ class _FormucliState extends State<Formucli> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Image.asset(
-                                  'lib/imagenes/nuevito.png', // Asegúrate de tener el logo en la carpeta assets y agregarla en pubspec.yaml
-                                  height: 75,
-                                ),
+                              Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'lib/imagenes/nuevito.png'))),
                               ),
                               const SizedBox(height: 20),
                               const Padding(
@@ -154,27 +141,20 @@ class _FormucliState extends State<Formucli> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Registrate y sorprendete!',
+                                      'Registrate y\nsorprendete!',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontSize: 22,
+                                        fontSize: 40,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.white,
                                       ),
                                     ),
                                     SizedBox(height: 0),
-                                    Text(
-                                      'sorprendete!',
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white,
-                                      ),
-                                    ),
                                     SizedBox(height: 8),
                                     Text(
                                       'Vive bien, vive sano!',
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 20,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -185,126 +165,149 @@ class _FormucliState extends State<Formucli> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(0.0),
                           child: Column(
                             children: [
-                              TextFormField(
-                                controller: _nombres,
-                                decoration: InputDecoration(
-                                  labelText: 'Nombres',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: TextFormField(
+                                  controller: _nombres,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Nombres',
+
+                                    labelStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.grey
+                                        //color: Color.fromARGB(255, 43, 48, 170),
+                                        ),
+                                    hintStyle: const TextStyle(
+                                        fontSize: 17, color: Colors.grey
+                                        //color: Color.fromARGB(255, 43, 48, 170),
+                                        ),
+                                    hintText: 'Ingrese sus Nombres',
+                                    isDense: true,
+                                    border: InputBorder.none,
+                                    //filled: true,
+                                    //fillColor: Colors.white.withOpacity(1),
                                   ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingrese sus Nombres',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(1),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'El campo es obligatorio';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  }
-                                  return null;
-                                },
+                              ),
+
+                              const SizedBox(height: 4),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: TextFormField(
+                                  controller: _apellidos,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Apellidos',
+                                    labelStyle: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.grey,
+                                    ),
+                                    hintStyle: const TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.grey,
+                                    ),
+                                    hintText: 'Ingrese sus Apellidos',
+                                    isDense: true,
+                                    border: InputBorder.none,
+                                    //filled: true,
+                                    //fillColor: Colors.white.withOpacity(1),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'El campo es obligatorio';
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
                               const SizedBox(height: 4),
-                              TextFormField(
-                                controller: _apellidos,
-                                decoration: InputDecoration(
-                                  labelText: 'Apellidos',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingrese sus Apellidos',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(1),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white),
+                                child: TextFormField(
+                                  controller: _telefono,
+                                  maxLength: 9,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Teléfono',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      ),
+                                      hintStyle: const TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.grey,
+                                      ),
+                                      hintText: 'Ingrese su número',
+                                      isDense: true,
+                                      border: InputBorder.none,
+                                      //filled: true,
+                                      counterText: ''
+                                      //fillColor: Colors.white.withOpacity(0.8),
+                                      ),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'El campo es obligatorio';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  }
-                                  return null;
-                                },
                               ),
                               const SizedBox(height: 4),
-                              TextFormField(
-                                controller: _telefono,
-                                maxLength: 9,
-                                decoration: InputDecoration(
-                                  labelText: 'Teléfono',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: TextFormField(
+                                  controller: _dni,
+                                  decoration: const InputDecoration(
+                                    labelText: 'DNI(Opcional)',
+                                    labelStyle: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.grey,
+                                    ),
+                                    hintStyle: const TextStyle(
+                                      fontSize: 17,
+                                      color:  Colors.grey,
+                                    ),
+                                    hintText: 'Ingrese su DNI',
+                                    isDense: true,
+                                    border: InputBorder.none,
+                                    //filled: true,
+                                    //fillColor: Colors.white.withOpacity(1),
                                   ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingrese su número',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                  ),
-                                  filled: true,
-                                  counterText: ''
-                                  //fillColor: Colors.white.withOpacity(0.8),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'El campo es obligatorio';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 4),
-                              TextFormField(
-                                controller: _dni,
-                                decoration: InputDecoration(
-                                  labelText: 'DNI(Opcional)',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingrese su DNI',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(1),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  }
-                                  return null;
-                                },
                               ),
                               //const SizedBox(height: 4),
                               /*DropdownButtonFormField<String>(
@@ -396,117 +399,128 @@ class _FormucliState extends State<Formucli> {
                                 ),
                               ),*/
                               //const SizedBox(height: 4),
-                              TextFormField(
-                                controller: _email,
-                                decoration: InputDecoration(
-                                  labelText: 'E-mail',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingresa su email',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(0.8),
+                              Container(
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white),
+                                child: TextFormField(
+                                  controller: _email,
+                                  decoration: const InputDecoration(
+                                      labelText: 'E-mail',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      ),
+                                      hintStyle: const TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.grey,
+                                      ),
+                                      hintText: 'Ingresa su email',
+                                      isDense: true,
+                                      border: InputBorder.none
+                                      //filled: true,
+                                      //fillColor: Colors.white.withOpacity(0.8),
+                                      ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'El campo es obligatorio';
+                                    } else if (value != null &&
+                                        !(value.contains('@gmail.com') ||
+                                            value.contains('@hotmail.com'))) {
+                                      return 'No es un correo válido';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                keyboardType: TextInputType.emailAddress,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  } else if (value != null &&
-                                      !(value.contains('@gmail.com') ||
-                                          value.contains('@hotmail.com'))) {
-                                    return 'No es un correo válido';
-                                  }
-                                  return null;
-                                },
                               ),
                               const SizedBox(height: 4),
-                              TextFormField(
-                                controller: _username,
-                                decoration: InputDecoration(
-                                  labelText: 'Usuario',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingrese su usuario',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(1),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 4),
-                              
-                              TextFormField(
-                                controller: _password,
-                                keyboardType: TextInputType.visiblePassword,
-                                // obscureText:_obscureText,
-                                decoration: InputDecoration(
-                                  labelText: 'Contraseña',
-                                  labelStyle: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromARGB(255, 43, 48, 170),
-                                  ),
-                                  hintText: 'Ingrese una contraseña',
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                  ),
-                                  filled: true,
-                                  //fillColor: Colors.white.withOpacity(0.8),
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _obscureText = !_obscureText;
-                                      });
-                                    },
-                                    child: Icon(
-                                      _obscureText
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
+                              Container(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white),
+                                child: TextFormField(
+                                  controller: _username,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Usuario',
+                                    labelStyle: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
                                       color: Colors.grey,
                                     ),
+                                    hintStyle: const TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.grey,
+                                    ),
+                                    hintText: 'Ingrese su usuario',
+                                    isDense: true,
+                                    border: InputBorder.none,
+                                    //filled: true,
+                                    //fillColor: Colors.white.withOpacity(1),
                                   ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'El campo es obligatorio';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                obscureText: _obscureText,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'El campo es obligatorio';
-                                  }
-                                  return null;
-                                },
                               ),
-                              
-                              
-                              
+                              const SizedBox(height: 4),
+
+                              Container(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)
+                                ),
+                                child: TextFormField(
+                                  controller: _password,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  // obscureText:_obscureText,
+                                  decoration: InputDecoration(
+                                    labelText: 'Contraseña',
+                                    labelStyle: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.grey,
+                                    ),
+                                    hintStyle: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey,
+                                    ),
+                                    hintText: 'Ingrese una contraseña',
+                                    isDense: true,
+                                    border:InputBorder.none,
+                                    //filled: true,
+                                    //fillColor: Colors.white.withOpacity(0.8),
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _obscureText = !_obscureText;
+                                        });
+                                      },
+                                      child: Icon(
+                                        _obscureText
+                                            ? Icons.visibility_outlined
+                                            : Icons.visibility_off,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  obscureText: _obscureText,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'El campo es obligatorio';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+
                               const SizedBox(height: 20),
                               Container(
                                 height: 40,
@@ -524,8 +538,7 @@ class _FormucliState extends State<Formucli> {
                                           _username.text,
                                           _password.text,
                                           _email.text,
-                                          _telefono.text
-                                         );
+                                          _telefono.text);
 
                                       if (status == 200) {
                                         Navigator.of(context).pop();
@@ -688,14 +701,15 @@ class _FormucliState extends State<Formucli> {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromRGBO(0, 77, 255, 1),
+                                      backgroundColor:
+                                          const Color.fromRGBO(0, 77, 255, 1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       )),
                                   child: const Text(
                                     "Registrarse",
                                     style: TextStyle(
-                                        fontSize: 24,
+                                        fontSize: 30,
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -705,14 +719,15 @@ class _FormucliState extends State<Formucli> {
                           ),
                         ),
                         const SizedBox(height: 16),
+                        Text('¿Ya tienes cuenta?',
+                                style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width/15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('¿Ya tienes cuenta?',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
+                            
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
@@ -725,9 +740,9 @@ class _FormucliState extends State<Formucli> {
                               child: const Text(
                                 'Inicia Sesión',
                                 style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 24,
                                     fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(84,226,132, 1)),
+                                    color: Color.fromRGBO(84, 226, 132, 1)),
                               ),
                             ),
                           ],
@@ -739,6 +754,35 @@ class _FormucliState extends State<Formucli> {
               ),
             ],
           );
+  }
+  // MAIN
+  @override
+  Widget build(BuildContext context) {
+    
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+            if (constraints.maxWidth <= Breakpoint.xsmall) {
+                return registra("XS",100, 85, 10);
+              } else if (constraints.maxWidth <= Breakpoint.avgsmall) {
+                return registra("avS",110,100, 13.0);
+              } else if (constraints.maxWidth <= Breakpoint.small) {
+                return registra("S",140, 140, 18);// PUNTO CLAVE
+              } else if (constraints.maxWidth <= Breakpoint.avgmedium) {
+                return registra("avM",160, 160, 18);
+              } else if (constraints.maxWidth <= Breakpoint.medium) {
+                return registra("M",220, 180,18);
+              } else if (constraints.maxWidth <= Breakpoint.avglarg) {
+                return registra("avL",220, 200,18);
+              } else if (constraints.maxWidth <= Breakpoint.large) {
+                return registra("L",220, 220,18);
+              } else if (constraints.maxWidth <= Breakpoint.avgxlarge) {
+                return registra("avXL",240,240,18);
+              } else {
+                return registra("XL",260, 260, 18);
+              }       
+
+         
         },
       ),
     );

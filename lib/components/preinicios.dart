@@ -31,8 +31,8 @@ class _SolvidaState extends State<Solvida> {
               children: [
                 Center(
                     child: Container(
-                  width: ancho,
-                  height: alto,
+                  width: MediaQuery.of(context).size.width/1.85,
+                  height: MediaQuery.of(context).size.height/3,
                   decoration: const BoxDecoration(
                     //color: Colors.grey,
                     image: DecorationImage(
@@ -45,63 +45,41 @@ class _SolvidaState extends State<Solvida> {
                   height: 0,
                 ),
                 Center(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.30),
-                          offset: Offset(0, 4),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: const Text(
+                  
+                    child: Text(
                       'Bienvenido a la',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: MediaQuery.of(context).size.width/12,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                  ),
+                  
                 ),
                 Center(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          offset: Offset(0, 4),
-                          blurRadius: 10)
-                    ]),
+                  
                     child: Text(
                       "Familia Sol",
                       style: TextStyle(
-                          fontSize: texto1,
+                          fontSize: MediaQuery.of(context).size.width/12,
                           color: Colors.white,
                           fontWeight: FontWeight.w600),
                     ),
-                  ),
+                  
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Center(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          offset: Offset(2, 2),
-                          blurRadius: 20)
-                    ]),
-                    child: Text(
+                  child:Text(
                       "Descubre las últimas novedades\n de la familia Sol",
                       style: TextStyle(
-                          fontSize: texto2,
+                          fontSize: MediaQuery.of(context).size.width/19.5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
-                  ),
+                  
                 ),
               ],
             )).animate().fade(duration: 1500.ms).slideY(),
@@ -113,8 +91,8 @@ class _SolvidaState extends State<Solvida> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    width: ancho / botones,
-                    height: 45,
+                    width: MediaQuery.of(context).size.width/1.3,
+                    height: MediaQuery.of(context).size.height/19,
                     child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -132,17 +110,17 @@ class _SolvidaState extends State<Solvida> {
                           "Iniciar Sesión",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: textoboton,
+                              fontSize: MediaQuery.of(context).size.width/15,
                               fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 255, 255, 255)),
+                              color: const Color.fromARGB(255, 255, 255, 255)),
                         )),
                   ).animate().fade(delay: 0.9.ms).slideY(),
                   const SizedBox(
                     height: 15,
                   ),
                   Container(
-                    width: ancho / botones,
-                    height: 45,
+                    width: MediaQuery.of(context).size.width/1.3,
+                    height: MediaQuery.of(context).size.height/19,
                     child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -152,15 +130,15 @@ class _SolvidaState extends State<Solvida> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                            backgroundColor:const Color.fromARGB(255, 255, 255, 255),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18))),
                         child: Text(
                           "Registrarse",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: textoboton,
-                              color: Color.fromRGBO(0, 77, 255, 1),
+                               fontSize: MediaQuery.of(context).size.width/15,
+                              color: const Color.fromRGBO(0, 77, 255, 1),
                               fontWeight: FontWeight.bold),
                         )),
                   ).animate().fade(delay: 0.9.ms).slideY(),
