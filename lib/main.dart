@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
                   indice: 0,
                   subIndice: 0,
                 )
-              : (rol == 5 ? Conductorinit() : Solvida()))
+              : (rol == 5 ? HolaConductor() : Solvida()))
           : Solvida(),
     );
   }

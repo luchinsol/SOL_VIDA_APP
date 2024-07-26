@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:appsol_final/components/conductorinit.dart';
+import 'package:appsol_final/components/holaconductor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -324,7 +324,7 @@ class _PdfState extends State<Pdf> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Conductorinit()));
+                                builder: (context) => HolaConductor()));
                       },
                       style: ButtonStyle(
                         backgroundColor:

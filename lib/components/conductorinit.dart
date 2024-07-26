@@ -1,6 +1,7 @@
 import 'package:appsol_final/components/actualizado_stock.dart';
 import 'package:appsol_final/components/holaconductor2.dart';
 import 'package:appsol_final/components/conductorNew/descargar.dart';
+import 'package:appsol_final/components/preinicios.dart';
 import 'package:appsol_final/models/ruta_model.dart';
 import 'package:appsol_final/provider/ruta_provider.dart';
 import 'package:flutter/material.dart';
@@ -421,7 +422,7 @@ class _ConductorinitState extends State<Conductorinit> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            Login()));
+                                                                            Solvida()));
                                                           },
                                                           child: Text(
                                                             "Si",
