@@ -50,28 +50,32 @@ class _PerfilCliente extends State<PerfilCliente> {
   }
 
   Future<dynamic> recargas(clienteID) async {
-    try {
-      var res = await http.get(
-        Uri.parse(apiUrl + '/api/cliente/recargas/' + clienteID.toString()),
-        headers: {"Content-type": "application/json"},
-      );
-      if (res.statusCode == 200) {
-        var data = json.decode(res.body);
-        if (data != null) {
+  try {
+    var res = await http.get(
+      Uri.parse(apiUrl + '/api/cliente/recargas/' + clienteID.toString()),
+      headers: {"Content-type": "application/json"},
+    );
+    if (res.statusCode == 200) {
+      var data = json.decode(res.body);
+      if (data != null) {
+        if (mounted) {
           setState(() {
             numrecargas = data['recargas'];
           });
-        } else {
+        }
+      } else {
+        if (mounted) {
           setState(() {
             numrecargas = '0';
           });
         }
       }
-    } catch (e) {
-      //print('Error en la solicitud: $e');
-      throw Exception('Error en la solicitud: $e');
     }
+  } catch (e) {
+    throw Exception('Error en la solicitud: $e');
   }
+}
+
 
   Future<dynamic> updateCliente(saldoBeneficios, suscripcion, frecuencia,
       quiereretirar, clienteID, medioretiro, bancoretiro, numerocuenta) async {

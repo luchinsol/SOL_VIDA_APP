@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:appsol_final/components/navegador.dart';
 import 'package:appsol_final/components/pedido.dart';
+import 'package:appsol_final/components/ubipersonal.dart';
 import 'package:appsol_final/models/ubicaciones_lista_model.dart';
 import 'package:appsol_final/provider/ubicaciones_list_provider.dart';
 import 'package:flutter/services.dart';
@@ -1573,87 +1574,14 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                   //////////// GOOGLE MAPS //////////
                                               ElevatedButton(
                                                 onPressed: () async {
-                                                  await currentLocation();
-                                                  Navigator.pop(context);
-                                                  Navigator.pop(context);
 
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Dialog(
-                                                        child: Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height /
-                                                              5,
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Container(
-                                                                width: 50,
-                                                                height: 50,
-                                                                decoration: const BoxDecoration(
-                                                                    image: DecorationImage(
-                                                                        image: AssetImage(
-                                                                            'lib/imagenes/nuevecito.png'))),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 19,
-                                                              ),
-                                                              Text(
-                                                                "Ubicación añadida! Revisala arriba.",
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width /
-                                                                        25,
-                                                                    color: const Color
-                                                                        .fromARGB(
-                                                                        255,
-                                                                        2,
-                                                                        100,
-                                                                        181)),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 19,
-                                                              ),
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child:
-                                                                      const Text(
-                                                                    "OK",
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            24,
-                                                                        color: Color.fromARGB(
-                                                                            255,
-                                                                            4,
-                                                                            93,
-                                                                            167)),
-                                                                  ))
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
+                                                    print("holi");
+                                                     Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            MapScreen()));
                                                 },
                                                 style: ButtonStyle(
                                                   surfaceTintColor:
@@ -1688,7 +1616,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                             largoActual * 0.034,
                                                       ),
                                                       Text(
-                                                        ' Agregar ubicación manualmente',
+                                                        ' Agregar ubicación de destino',
                                                         style: TextStyle(
                                                             fontSize:
                                                                 largoActual *
