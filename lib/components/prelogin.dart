@@ -371,7 +371,6 @@ class _PreloginState extends State<Prelogin> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              //Text("$tama ${MediaQuery.of(context).size.width}"),
               Container(
                 width: MediaQuery.of(context).size.width/3,
                 height: MediaQuery.of(context).size.height/4.5,

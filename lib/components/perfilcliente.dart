@@ -49,12 +49,44 @@ class _PerfilCliente extends State<PerfilCliente> {
     }
   }
 
+  Future<dynamic> recargas(clienteID) async {
+    try {
+      var res = await http.get(
+        Uri.parse(apiUrl + '/api/cliente/recargas/' + clienteID.toString()),
+        headers: {"Content-type": "application/json"},
+      );
+      if (res.statusCode == 200) {
+        var data = json.decode(res.body);
+        if (data != null) {
+          setState(() {
+            numrecargas = data['recargas'];
+          });
+        } else {
+          setState(() {
+            numrecargas = '0';
+          });
+        }
+      }
+    } catch (e) {
+      //print('Error en la solicitud: $e');
+      throw Exception('Error en la solicitud: $e');
+    }
+  }
+
   Future<dynamic> updateCliente(saldoBeneficios, suscripcion, frecuencia,
       quiereretirar, clienteID, medioretiro, bancoretiro, numerocuenta) async {
-    /*print("cliente----------------------------------------------");
+    print("2.- UPDAE CLEINTE---");
+
+    print("cliente----------------------------------------------");
     print(clienteID);
-    print("ruta------------------------------------------------");
-    print(apiUrl + apiCliente + clienteID.toString());*/
+    print("end point URI------------------------------------------------");
+    print(apiUrl + apiCliente + clienteID.toString());
+    print("quiereretirar");
+    print(quiereretirar);
+    print("saldo bene");
+    print(saldoBeneficios);
+    print("frencua............");
+    print(frecuencia);
     await http.put(Uri.parse(apiUrl + apiCliente + clienteID.toString()),
         headers: {"Content-type": "application/json"},
         body: jsonEncode({
@@ -66,7 +98,6 @@ class _PerfilCliente extends State<PerfilCliente> {
           "banco_retiro": bancoretiro,
           "numero_cuenta": numerocuenta
         }));
-   // print("RUTA ACTUALIZADA A ");
   }
 
   void actualizarProviderCliente(
@@ -82,6 +113,8 @@ class _PerfilCliente extends State<PerfilCliente> {
       medioretiro,
       bancoretiro,
       numerocuenta) async {
+        print("1 .- ---actualizar Provider");
+
     clienteUpdate = UserModel(
         id: clienteid,
         nombre: name,
@@ -94,9 +127,20 @@ class _PerfilCliente extends State<PerfilCliente> {
         quiereRetirar: true,
         suscripcion: suscrip,
         rolid: 4);
+        print("${clienteUpdate}");
+
     Provider.of<UserProvider>(context, listen: false).updateUser(clienteUpdate);
+
     await updateCliente(saldo, suscrip, frecuencia, true, clienteid,
         medioretiro, bancoretiro, numerocuenta);
+  }
+  
+  @override
+  void initState(){
+    super.initState();
+    final userProvider = context.read<UserProvider>();
+    final idcliente = userProvider.user?.id;
+    recargas(idcliente);
   }
 
   @override
@@ -223,7 +267,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
-                                      text: "${userProvider.user?.recargas}",
+                                      text: "${numrecargas}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: largoActual * 0.06,
@@ -516,6 +560,18 @@ class _PerfilCliente extends State<PerfilCliente> {
                                                                     ElevatedButton(
                                                                       onPressed:
                                                                           () {
+                                                                            print("-----N CUENTA BANCO-");
+                                                                            print("Provider");
+                                                                            print("${userProvider.user?.id}");
+                                                                           print("${userProvider.user?.frecuencia}");
+                                                                            print("${userProvider.user?.codigocliente}");
+                                                                           print("${userProvider.user?.sexo}");
+                                                                            print("${userProvider.user?.suscripcion}");
+                                                                           print("${userProvider.user?.fechaCreacionCuenta}");
+                                                                           print("${_selectedItem}");
+                                                                           print("${_otroItem}");
+                                                                           print("${_cuenta.text}");
+
                                                                         actualizarProviderCliente(
                                                                             userProvider.user?.id,
                                                                             userProvider.user?.nombre,
@@ -596,6 +652,19 @@ class _PerfilCliente extends State<PerfilCliente> {
                                                                     ElevatedButton(
                                                                       onPressed:
                                                                           () {
+
+                                                                             print("-----YAPE-");
+                                                                            print("Provider");
+                                                                            print("${userProvider.user?.id}");
+                                                                           print("${userProvider.user?.frecuencia}");
+                                                                            print("${userProvider.user?.codigocliente}");
+                                                                           print("${userProvider.user?.sexo}");
+                                                                            print("${userProvider.user?.suscripcion}");
+                                                                           print("${userProvider.user?.fechaCreacionCuenta}");
+                                                                           print("${_selectedItem}");
+                                                                           print("${_otroItem}");
+                                                                           print("${_cuenta.text}");
+
                                                                         actualizarProviderCliente(
                                                                             userProvider.user?.id,
                                                                             userProvider.user?.nombre,
