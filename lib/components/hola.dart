@@ -1424,7 +1424,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                 margin: const EdgeInsets.only(
                                                     left: 10),
                                                 child: Text(
-                                                  'Agregar Ubicación',
+                                                  'Agregar ubicación de destino',
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize:
@@ -1616,7 +1616,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                             largoActual * 0.034,
                                                       ),
                                                       Text(
-                                                        ' Agregar ubicación de destino',
+                                                        ' Agregar ubicación manualmente',
                                                         style: TextStyle(
                                                             fontSize:
                                                                 largoActual *
@@ -1904,8 +1904,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                               unselectedLabelStyle: TextStyle(
                                   fontSize: largoActual * 0.019,
                                   fontWeight: FontWeight.w300),
-                              labelColor: colorTextos,
-                              unselectedLabelColor: colorTextos,
+                              labelColor: Colors.black,//colorTextos,
+                              unselectedLabelColor: Colors.black,//colorTextos,
                               indicatorColor:
                                   const Color.fromRGBO(58, 182, 0, 1),
                               tabs: const [
@@ -2088,7 +2088,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                               children: [
                                                 //CONTAINER CON INFO DE LA PROMOOO
                                                 Container(
-                                                  height: largoActual * 0.64,
+                                                  height: largoActual * 0.74,
                                                   width: anchoActual * 0.8,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
@@ -2147,7 +2147,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                       255),
                                                               fontSize:
                                                                   largoActual *
-                                                                      0.021,
+                                                                      0.028,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -2525,11 +2525,15 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            SizedBox(
-                                                              height:
+                                                            Container(
+                                                              padding: EdgeInsets.all(10),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(20)
+                                                              ),
+                                                              /*height:
                                                                   largoActual *
                                                                       (17 /
-                                                                          740),
+                                                                          740),*/
                                                               child: ElevatedButton(
                                                                   style: const ButtonStyle(
                                                                       elevation: MaterialStatePropertyAll(10),
@@ -2538,7 +2542,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                       shape: MaterialStatePropertyAll(
                                                                         RoundedRectangleBorder(
                                                                             borderRadius:
-                                                                                BorderRadius.all(Radius.circular(10))),
+                                                                                BorderRadius.all(Radius.circular(20))),
                                                                       ),
                                                                       side: MaterialStatePropertyAll(BorderSide.none)),
                                                                   onPressed: () async {
@@ -2577,11 +2581,15 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                     largoActual *
                                                                         0.01),
                                                             //BOTON PARA PUBLICARLO EN TU ESTADO
-                                                            SizedBox(
-                                                              height:
+                                                            Container(
+                                                              padding: EdgeInsets.all(10),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(20)
+                                                              ),
+                                                              /*height:
                                                                   largoActual *
                                                                       (17 /
-                                                                          760),
+                                                                          760),*/
                                                               child:
                                                                   ElevatedButton(
                                                                 style:
@@ -2597,7 +2605,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                         shape:
                                                                             MaterialStatePropertyAll(
                                                                           RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                                              borderRadius: BorderRadius.all(Radius.circular(20))),
                                                                         ),
                                                                         side: MaterialStatePropertyAll(
                                                                             BorderSide.none)),

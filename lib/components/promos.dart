@@ -538,13 +538,15 @@ class _PromosState extends State<Promos> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(15),
+                            margin: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.only(left: 25,right: 25+5+5+5,top: 17,bottom: 17),
                             decoration: BoxDecoration(
                               color: const Color.fromRGBO(
                                         0, 106, 252, 1.000),
                               borderRadius: BorderRadius.circular(20)
                             ),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   
@@ -552,7 +554,7 @@ class _PromosState extends State<Promos> {
                                   child: Text(
                                     "Subtotal:",
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w400,
                                         fontSize: largoActual * 0.021,
                                         color:
                                             Color.fromARGB(255, 255, 255, 255)),
@@ -563,7 +565,7 @@ class _PromosState extends State<Promos> {
                                   child: Text(
                                     "S/.${total}0",
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.bold,
                                         fontSize: largoActual * 0.027,
                                         color: Color.fromARGB(255, 255, 255, 255)),
                                   ),
@@ -576,11 +578,11 @@ class _PromosState extends State<Promos> {
                             children: [
                               Container(
                                 margin:
-                                    EdgeInsets.only(right: anchoActual * 0.055),
+                                    EdgeInsets.only(right: anchoActual * 0.035),
                                 child: Text(
                                   "Agregar al carrito",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
                                       fontSize: largoActual * 0.021,
                                       color:
                                           Colors.black),

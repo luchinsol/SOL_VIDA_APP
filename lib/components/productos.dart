@@ -421,20 +421,21 @@ class _ProductosState extends State<Productos> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
+                          margin: EdgeInsets.only(left: 10),
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(
                                         0, 106, 252, 1.000),
                               borderRadius: BorderRadius.circular(20)),
                           child: Column(
-                          
+                          crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                //margin:EdgeInsets.only(left: anchoActual * 0.055),
+                                //margin:EdgeInsets.only(right: 15),
                                 child: Text(
                                   "Subtotal:",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w400,
                                       fontSize: largoActual * 0.021,
                                       color:
                                           Color.fromARGB(255, 255, 255, 255)),
@@ -445,7 +446,7 @@ class _ProductosState extends State<Productos> {
                                 child: Text(
                                   "S/.${total}0",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w700,
                                       fontSize: largoActual * 0.027,
                                       color:
                                           Color.fromARGB(255, 255, 255, 255)),
@@ -459,11 +460,11 @@ class _ProductosState extends State<Productos> {
                           children: [
                             Container(
                               margin:
-                                  EdgeInsets.only(right: anchoActual * 0.055),
+                                  EdgeInsets.only(right: anchoActual * 0.035),
                               child: Text(
                                 "Agregar al carrito",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: largoActual * 0.021,
                                     color:
                                          Colors.black),
@@ -474,7 +475,7 @@ class _ProductosState extends State<Productos> {
                                 height: MediaQuery.of(context).size.width/7.5,
                               //color: Colors.grey,
                               margin:
-                                  EdgeInsets.only(right: anchoActual * 0.055),
+                                  EdgeInsets.only(right: anchoActual * 0.035),
                               child: ElevatedButton(
                                   onPressed: almenosUno
                                       ? () {
