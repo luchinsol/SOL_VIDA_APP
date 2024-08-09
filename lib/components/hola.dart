@@ -149,8 +149,9 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
           builder: (context) {
             return Dialog(
               backgroundColor:
-                  const Color.fromARGB(255, 58, 108, 235).withOpacity(0.15),
+                  Colors.transparent,
               child: Container(
+                //width: MediaQuery.of(context).size.width * 0.56,
                 //color: Colors.green,
                 height: MediaQuery.of(context).size.height /
                     1.2, //altura del dialogo
@@ -174,6 +175,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Stack(
+                                children: [
                               Container(
                                 height:
                                     MediaQuery.of(context).size.height / 1.5,
@@ -185,24 +188,31 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         image: AssetImage(
                                             'lib/imagenes/codigoentra2.jpg'))),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
+                              Column(
+                                children: [
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.515,),
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: Colors.transparent,
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Center(
                                   child: Text(
-                                    "Código:${codigo}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Color.fromRGBO(255, 0, 93, 1)),
+                                  "${codigo}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: MediaQuery.of(context).size.height * 0.03,
+                                        color: Colors.redAccent),
                                   ),
                                 ),
+                              ),
+                                ],
+                              ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
                               ),
                               //const Size
                               Container(
@@ -223,7 +233,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                     },
                                     child: Icon(
                                       Icons.navigate_next,
-                                      size: 40,
+                                      size: MediaQuery.of(context).size.height * 0.04,
                                       color: Colors.blue,
                                     )).animate().shake(),
                               )
@@ -309,20 +319,23 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                               WidgetStateProperty.all(
                                                   Color.fromRGBO(
                                                       255, 0, 93, 1))),
-                                      child: const Row(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.shopping_cart_outlined,
                                             color: Colors.white,
-                                            size: 20,
+                                            size: MediaQuery.of(context).size.height * 0.025,
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width * 0.02,
                                           ),
                                           Text(
-                                            "Comprar",
+                                            "¡Comprar ahora!",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 20,
+                                                fontSize: MediaQuery.of(context).size.height * 0.023,
                                                 color: Colors.white),
                                           ),
                                         ],
@@ -343,9 +356,9 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         curve: Curves.easeInOut,
                                       );
                                     },
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.navigate_next,
-                                      size: 40,
+                                      size: MediaQuery.of(context).size.height * 0.04,
                                       color: Colors.blue,
                                     )).animate().shake(),
                               )
@@ -430,20 +443,23 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                               WidgetStateProperty.all(
                                                   Color.fromRGBO(
                                                       255, 0, 93, 1))),
-                                      child: const Row(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.shopping_cart_outlined,
                                             color: Colors.white,
-                                            size: 20,
+                                            size: MediaQuery.of(context).size.height * 0.025,
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width * 0.02,
                                           ),
                                           Text(
-                                            "Si, usar!",
+                                            "¡Sí, usar!",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 20,
+                                                fontSize: MediaQuery.of(context).size.height * 0.023,
                                                 color: Colors.white),
                                           ),
                                         ],
@@ -455,9 +471,9 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       // Termina
                                       Navigator.pop(context);
                                     },
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.waving_hand_outlined,
-                                      size: 40,
+                                      size: MediaQuery.of(context).size.height * 0.028,
                                       color: Colors.blue,
                                     )).animate().shake(),
                               )
@@ -1799,6 +1815,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
                                     width: 80,
@@ -1808,76 +1825,109 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                             image: AssetImage(
                                                 'lib/imagenes/nuevecito.png'))),
                                   ),
+                                  SizedBox(
+                                    width: anchoActual * 0.042,
+                                  ),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        // color: Colors.amber,
-                                        //width: anchoActual,
-                                        margin: EdgeInsets.only(
-                                            left: anchoActual * 0.055,
-                                            top: largoActual * 0.016,
-                                            right: 20),
-                                        child: Text(
+                                  
+                                      Text(
                                           "Bienvenid@, ${userProvider.user?.nombre?.capitalize()} a la",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: largoActual * 0.019,
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: largoActual * 0.0188,
                                               color: Colors.black),
-                                        ),
                                       ),
-                                      Container(
-                                        //color: Colors.purple,
-                                        margin: EdgeInsets.only(
-                                            left: anchoActual * 0.055),
-                                        child: Text(
+                                      Text(
                                           "Familia Sol",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: largoActual * 0.019,
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: largoActual * 0.0188,
                                               color: Colors.black),
                                         ),
-                                      ),
+                                      
                                     ],
                                   ),
                                 ],
                               ),
-                              Container(
-                                margin: EdgeInsets.only(right: 1),
-                                width: MediaQuery.of(context).size.width / 7.5,
-                                //height: 60,
-                                decoration: BoxDecoration(
-                                    //color: Colors.grey,
-                                    ),
-                                child: Column(
+                              Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      margin: EdgeInsets.only(left: 3),
-                                      // height: largoActual * 0.059,
-                                      width: largoActual * 0.059,
-                                      //color: Colors.green.shade100,
+                                    /*Container(
+                                      height: largoActual * 0.068,
+                                      color: Colors.green.shade100,
                                       child: IconButton(
                                         icon: Lottie.asset(
-                                            "lib/imagenes/infos.json"),
+                                        "lib/imagenes/infos.json"),
                                         onPressed: () async {
                                           await muestraDialogoPubli(context);
                                         },
                                       ),
                                     ),
+                                    RichText(text: TextSpan(text: '+ info', style: TextStyle(
+                                            fontSize: largoActual * 0.0177,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromRGBO(
+                                                0, 106, 252, 1.000))))
                                     Text("+ Info",
                                         style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                27,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: largoActual * 0.0177,
+                                            fontWeight: FontWeight.w500,
                                             color: Color.fromRGBO(
-                                                0, 106, 252, 1.000)))
+                                                0, 106, 252, 1.000)))*/
+                                    /*RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Container(
+                                              height: largoActual * 0.068,
+                                              //color: Colors.green.shade100,
+                                              child: IconButton(
+                                                icon: Lottie.asset(
+                                                "lib/imagenes/infos.json"),
+                                                onPressed: () async {
+                                                  await muestraDialogoPubli(context);
+                                                },
+                                              ),
+                                            ),
+                                          ),TextSpan(
+                                            text: "\n  + Info",
+                                        style: TextStyle(
+                                            fontSize: largoActual * 0.0177,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromRGBO(
+                                                0, 106, 252, 1.000))
+                                          ),
+                                        ],
+                                      ),
+                                    )*/
+                                    Stack(
+                                      children: [
+                                            Container(
+                                              height: largoActual * 0.079,
+                                              //color: Colors.green.shade100,
+                                              child: IconButton(
+                                                icon: Lottie.asset(
+                                                "lib/imagenes/infos.json"),
+                                                onPressed: () async {
+                                                  await muestraDialogoPubli(context);
+                                                },
+                                              ),
+                                            ),Text("\n\n\n    + Info",
+                                        style: TextStyle(
+                                            fontSize: largoActual * 0.016,
+                                            fontWeight: FontWeight.w800,
+                                            color: Color.fromRGBO(0, 148, 217, 1))
+                                          ),
+                                      ]
+                                    )
                                   ],
                                 ),
-                              )
+                              
                             ],
                           ),
                         ),
@@ -2034,24 +2084,24 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                         ),
                         //Expanded(child: Container()),
                         SizedBox(
-                          height: largoActual * 0.03,
+                          height: largoActual * 0.025,
                         ),
                         //BILLETERA SOL
                         Container(
-                          margin: EdgeInsets.only(left: anchoActual * 0.055),
+                          margin: EdgeInsets.only(left: anchoActual * 0.05),
                           child: Text(
                             "Billetera Sol",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: largoActual * 0.019),
+                                fontWeight: FontWeight.w600,
+                                fontSize: largoActual * 0.020),
                           ),
                         ),
                         SizedBox(
-                          height: largoActual * 0.009,
+                          height: largoActual * 0.005,
                         ),
                         Container(
-                          height: largoActual * 0.12,
+                          height: largoActual * 0.14,
                           child: Card(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
@@ -2070,16 +2120,13 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                 onPressed: () {
                                   showDialog(
                                       context: context,
-                                      barrierColor:
-                                          Colors.black.withOpacity(0.8),
+                                      /*barrierColor:
+                                          Colors.black.withOpacity(0.8),*/
                                       builder: (BuildContext context) {
                                         return Dialog(
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(5)),
-                                          insetPadding: EdgeInsets.all(
-                                            0,
-                                          ),
                                           backgroundColor: Colors.transparent,
                                           surfaceTintColor: Colors.transparent,
                                           child: Stack(
@@ -2088,7 +2135,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                               children: [
                                                 //CONTAINER CON INFO DE LA PROMOOO
                                                 Container(
-                                                  height: largoActual * 0.74,
+                                                  height: largoActual * 0.65,
                                                   width: anchoActual * 0.8,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
@@ -2126,7 +2173,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                         anchoActual * 0.06),
                                                     child: Column(
                                                       //mainAxisAlignment: MainAxisAlignment.start,
-                                                      //crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         //ESPACIO PARA QUE EL TEXTO NO SE TAPE CON LAS IMAGENES
                                                         SizedBox(
@@ -2135,11 +2182,11 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                         ),
                                                         //TEXTO QUIERES GANAR MONI
                                                         Text(
-                                                          '¿Quieres ganar dinero sin salir de tu hogar?',
+                                                          '¿Quieres ganar dinero',
                                                           textAlign:
-                                                              TextAlign.center,
+                                                              TextAlign.left,
                                                           style: TextStyle(
-                                                              color: Color
+                                                              color: const Color
                                                                   .fromARGB(
                                                                       255,
                                                                       255,
@@ -2147,196 +2194,64 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                       255),
                                                               fontSize:
                                                                   largoActual *
-                                                                      0.028,
+                                                                      0.027,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .bold),
+                                                                      .w800),
                                                         ),
-                                                        //TEXTO CON AGUA SOL PUEDES LOGRARLO
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
+                                                            Text('sin salir de tu hogar?',
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: TextStyle(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              fontSize:
+                                                                  largoActual *
+                                                                      0.027,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800),),
                                                             Text(
-                                                              '¡Con Sol Vida puedes\nlograrlo!',
+                                                              '¡Con Sol Vida puedes',
                                                               textAlign:
-                                                                  TextAlign
-                                                                      .start,
+                                                                  TextAlign.left,
                                                               style: TextStyle(
                                                                   fontStyle:
                                                                       FontStyle
-                                                                          .normal,
+                                                                          .italic,
                                                                   color: Colors
                                                                       .white,
                                                                   fontSize:
                                                                       largoActual *
-                                                                          0.015,
+                                                                          0.025,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .bold),
+                                                                          .w400),
                                                             ),
-                                                            Container(
-                                                              /*decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(10),
-    color: Colors.white
-  ),*/
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed:
-                                                                    () async {
-                                                                  final Uri
-                                                                      url =
-                                                                      Uri.parse(
-                                                                          urlExplicacion);
-                                                                  if (!await launchUrl(
-                                                                      url)) {
-                                                                    throw Exception(
-                                                                        'Could not launch $url');
-                                                                  }
-                                                                },
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                ),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    const Text(
-                                                                      "Video\nExplicativo",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                        color: Color.fromARGB(
-                                                                            255,
-                                                                            1,
-                                                                            115,
-                                                                            208),
-                                                                      ),
-                                                                    ),
-                                                                    //const SizedBox(width: 20,),
-                                                                    Container(
-                                                                      width: 35,
-                                                                      height:
-                                                                          35,
-                                                                      decoration:
-                                                                          const BoxDecoration(
-                                                                        //color:Colors.amber,
-                                                                        image:
-                                                                            DecorationImage(
-                                                                          image:
-                                                                              AssetImage('lib/imagenes/icons8-youtube-48.png'),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            )
-
-                                                            /* Container(
-                                                              /*decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(10),
-                                                                color: Colors.white
-                                                              ),*/
-                                                              child:
-                                                                  ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                            final Uri url =
-                                                                    Uri.parse(
-                                                                        urlExplicacion);
-                                                                if (!await launchUrl(
-                                                                    url)) {
-                                                                  throw Exception(
-                                                                      'Could not launch $url');
-                                                                          },
-                                                                      style: ElevatedButton
-                                                                          .styleFrom(
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(10)),
-                                                                      ),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          const Text(
-                                                                            "Video\nExplicativo",
-                                                                            style:
-                                                                                TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 1, 115, 208)),
-                                                                          ),
-                                                                          //const SizedBox(width: 20,),
-                                                                          Container(
-                                                                            width:
-                                                                                35,
-                                                                            height:
-                                                                                35,
-                                                                            decoration: const BoxDecoration(
-                                                                                //color:Colors.amber,
-                                                                                image: DecorationImage(image: AssetImage('lib/imagenes/icons8-youtube-48.png'))),
-                                                                          )
-                                                                        ],
-                                                                      )),
-                                                            ),*/
-                                                            /*Container(
-                                                              color: Colors.white,
-                                                              child: Row(
-                                                                children: [
-                                                                  const Text("Video\nExplicativo"),
-                                                                  Container(
-                                                                    width: 50,
-                                                                    height: 50,
-                                                                    decoration: const BoxDecoration(
-                                                                      image: DecorationImage(
-                                                                        image: AssetImage('lib/imagenes/icons8-youtube-48.png')
-                                                                      )
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            )*/
-                                                            //ESPACIOOO
-                                                            /*Column(
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
-                                                                Text(
-                                                                  'lograrlo!',
-                                                                  style: TextStyle(
-                                                                      fontStyle:
-                                                                          FontStyle
-                                                                              .italic,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          largoActual *
-                                                                              0.025,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400),
-                                                                ),
-                                                                SizedBox(
-                                                                  height:
+                                                            Text('logralo!',textAlign:
+                                                                  TextAlign.left,
+                                                              style: TextStyle(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
                                                                       largoActual *
-                                                                          0.046,
-                                                                ),
-                                                              ],
-                                                            ),*/
-                                                            /* InkWell(
+                                                                          0.025,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),),
+                                                            Column(children: [
+                                                              SizedBox(height: largoActual*0.005,),
+                                                            InkWell(
                                                               child: Row(
                                                                 children: [
                                                                   RichText(
@@ -2345,7 +2260,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                       children: [
                                                                         TextSpan(
                                                                           text:
-                                                                              'video',
+                                                                              '          video',
                                                                           style:
                                                                               TextStyle(
                                                                             fontWeight:
@@ -2380,16 +2295,17 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                       ],
                                                                     ),
                                                                   ),
+                                                                  SizedBox(width:anchoActual*0.0075),
                                                                   Container(
                                                                     child: Image
                                                                         .asset(
                                                                             'lib/imagenes/icons8-youtube-48.png'),
                                                                     height:
                                                                         anchoActual *
-                                                                            0.13,
+                                                                            0.08,
                                                                     width:
                                                                         anchoActual *
-                                                                            0.13,
+                                                                            0.08,
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       borderRadius:
@@ -2411,9 +2327,32 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                       'Could not launch $url');
                                                                 }
                                                               },
-                                                            ),*/
-                                                          ],
+                                                            ),
+                                                            ],),
+                                                            ],),
+                                                          
+                                                          
+                                                        /*Text('salir de tu hogar?',
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              fontSize:
+                                                                  largoActual *
+                                                                      0.028,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900),),*/
+                                                        //TEXTO CON AGUA SOL PUEDES LOGRARLO
+                                                        SizedBox(
+                                                          height: largoActual*0.025,
                                                         ),
+                                                        
 
                                                         //TEXTO EXPLICATIVO
                                                         RichText(
@@ -2478,8 +2417,8 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                               .w800)),
                                                             ])),
                                                         SizedBox(
-                                                          height: largoActual *
-                                                              0.007,
+                                                          height: largoActual*0.004
+                                                              ,
                                                         ),
                                                         RichText(
                                                             text: TextSpan(
@@ -2519,21 +2458,18 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                         SizedBox(
                                                             height:
                                                                 largoActual *
-                                                                    0.04),
+                                                                    0.029),
+
                                                         Column(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
                                                             Container(
-                                                              padding: EdgeInsets.all(10),
-                                                              decoration: BoxDecoration(
+                                                                decoration: BoxDecoration(
                                                                 borderRadius: BorderRadius.circular(20)
                                                               ),
-                                                              /*height:
-                                                                  largoActual *
-                                                                      (17 /
-                                                                          740),*/
+                                                              height: largoActual*0.04,
                                                               child: ElevatedButton(
                                                                   style: const ButtonStyle(
                                                                       elevation: MaterialStatePropertyAll(10),
@@ -2561,7 +2497,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                           size: largoActual *
                                                                               0.02,
                                                                           color:
-                                                                              colorTextos),
+                                                                              Colors.white),
                                                                       SizedBox(
                                                                           width:
                                                                               anchoActual * 0.02),
@@ -2576,20 +2512,14 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                     ],
                                                                   )),
                                                             ),
-                                                            SizedBox(
-                                                                height:
-                                                                    largoActual *
-                                                                        0.01),
+                                                            SizedBox(height: largoActual*0.011,),
                                                             //BOTON PARA PUBLICARLO EN TU ESTADO
                                                             Container(
-                                                              padding: EdgeInsets.all(10),
+                                                              
                                                               decoration: BoxDecoration(
                                                                 borderRadius: BorderRadius.circular(20)
                                                               ),
-                                                              /*height:
-                                                                  largoActual *
-                                                                      (17 /
-                                                                          760),*/
+                                                              height: largoActual*0.04,
                                                               child:
                                                                   ElevatedButton(
                                                                 style:
@@ -2777,9 +2707,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       });
                                 },
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       mainAxisAlignment:
@@ -2787,19 +2715,19 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
+                                        Text(
                                           "Saldo Beneficiario",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w600,
                                               color: Colors.white,
-                                              fontSize: 20),
+                                              fontSize: largoActual * 0.021),
                                         ),
                                         Text(
                                           'S/. ${userProvider.user?.saldoBeneficio}0',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 35),
+                                              fontSize: largoActual * 0.045),
                                         ),
                                         Text(
                                           'Retiralo hasta el: ${fechaLimite.day}/${fechaLimite.month}/${fechaLimite.year}',
@@ -2810,11 +2738,14 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         ),
                                       ],
                                     ),
+                                    SizedBox(
+                                      width: largoActual*0.04,
+                                    ),
                                     Container(
-                                        width: 130,
-                                        height: 80,
+                                      width: largoActual * 0.1,
+                                        height: largoActual * 0.13,
                                         decoration: const BoxDecoration(
-                                            // color: Colors.amber,
+                                            //color: Colors.amber,
                                             image: DecorationImage(
                                                 fit: BoxFit.cover,
                                                 image: AssetImage(
@@ -2822,8 +2753,6 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                   ],
                                 ),
                               ))
-                          /*.animate()
-                              .shake(duration: Duration(milliseconds: 700))*/
                           ,
                         ),
                       ]))),
