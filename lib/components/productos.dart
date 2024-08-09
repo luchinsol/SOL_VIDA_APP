@@ -29,7 +29,8 @@ class _ProductosState extends State<Productos> {
   double totalProvider = 0.0;
   int cantCarrito = 0;
   Color colorCantidadCarrito = Colors.black;
-  Color colorTextos = const Color.fromARGB(255, 1, 42, 76);
+  //Color colorTextos = const Color.fromARGB(255, 1, 42, 76);
+  Color colorTextos = const Color.fromARGB(255, 0, 0, 0);
   double envio = 0.0;
   //EL AHORRO ES IGUAL A 4 SOLES POR CADA BIDON NUEVO
 
@@ -250,23 +251,27 @@ class _ProductosState extends State<Productos> {
                                     image: AssetImage(
                                         'lib/imagenes/nuevecito.png'))),
                           ),
-                          const SizedBox(width: 20,),
+                          SizedBox(
+                                    width: anchoActual * 0.045,
+                                  ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Escoge tu producto",
+                                "¡Escoge tu producto",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: largoActual * 0.026),
+                                    color: colorTextos,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: largoActual* 0.024),
                               ),
                               Text(
                                 "favorito!",
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: largoActual * 0.026),
+                                    color: colorTextos,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: largoActual * 0.024),
                               ),
                               /*Container(
                                 margin:
@@ -290,7 +295,7 @@ class _ProductosState extends State<Productos> {
 
                     //CONTAINER DE LISTBUILDER
                     SizedBox(
-                      height: largoActual * 0.58,
+                      height: largoActual * 0.57,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: listProducto.length,
@@ -311,7 +316,7 @@ class _ProductosState extends State<Productos> {
                                   Container(
                                     height: largoActual * 0.3125,
                                     width: anchoActual * 0.5,
-                                    margin: const EdgeInsets.only(top: 10),
+                                    margin: EdgeInsets.only(top: largoActual *0.02),
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         image: DecorationImage(
@@ -336,8 +341,7 @@ class _ProductosState extends State<Productos> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.w400,
                                               fontSize: largoActual * 0.02,
-                                              color: const Color.fromARGB(
-                                                  255, 4, 62, 107)),
+                                              color: colorTextos),
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -348,8 +352,7 @@ class _ProductosState extends State<Productos> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: largoActual * 0.022,
-                                                  color: const Color.fromARGB(
-                                                      255, 4, 62, 107)),
+                                                  color:colorTextos),
                                             ),
                                             Text(
                                               producto.descripcion
@@ -358,8 +361,7 @@ class _ProductosState extends State<Productos> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w300,
                                                   fontSize: largoActual * 0.017,
-                                                  color: const Color.fromARGB(
-                                                      255, 4, 62, 107)),
+                                                  color: colorTextos),
                                             ),
                                           ],
                                         ),
@@ -386,8 +388,7 @@ class _ProductosState extends State<Productos> {
                                             Text(
                                               "${producto.cantidad}",
                                               style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 4, 62, 107),
+                                                  color: colorTextos,
                                                   fontSize: largoActual * 0.034,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -416,13 +417,15 @@ class _ProductosState extends State<Productos> {
                             );
                           }),
                     ),
+                    
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 10),
-                          padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.only(left: largoActual * 0.01),
+                          padding: EdgeInsets.only(left: anchoActual * 0.05,top:anchoActual * 0.02, bottom:anchoActual * 0.02),
+                          width: anchoActual*0.4,
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(
                                         0, 106, 252, 1.000),
@@ -446,8 +449,8 @@ class _ProductosState extends State<Productos> {
                                 child: Text(
                                   "S/.${total}0",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: largoActual * 0.027,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: largoActual * 0.029,
                                       color:
                                           Color.fromARGB(255, 255, 255, 255)),
                                 ),
@@ -465,14 +468,17 @@ class _ProductosState extends State<Productos> {
                                 "Agregar al carrito",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: largoActual * 0.021,
+                                    fontSize: largoActual * 0.02,
                                     color:
-                                         Colors.black),
+                                         colorTextos),
                               ),
                             ),
+                            SizedBox(
+                              height: largoActual*0.007,
+                            ),
                             Container(
-                              width: MediaQuery.of(context).size.width/6.5,
-                                height: MediaQuery.of(context).size.width/7.5,
+                              width: largoActual*0.083,
+                              height: largoActual*0.072,
                               //color: Colors.grey,
                               margin:
                                   EdgeInsets.only(right: anchoActual * 0.035),
@@ -499,9 +505,10 @@ class _ProductosState extends State<Productos> {
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Color.fromRGBO(58, 182, 0, 1))),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.add_shopping_cart_rounded,
                                     color: Colors.white,
+                                    size: anchoActual*0.073,
                                   )),
                             ),
                           ],

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:appsol_final/provider/user_provider.dart';
@@ -156,24 +157,22 @@ class _PerfilCliente extends State<PerfilCliente> {
         .add(const Duration(days: (30 * 3)));
     //TYJYUJY
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 213, 210, 210),
+      backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
         padding: EdgeInsets.all(anchoActual * 0.04),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                height: largoActual * 0.033,
-              ),
+              SizedBox(height: largoActual*0.02,),
               Row(
                 children: [
                   //FOTO DEL CLIENTE
                   Container(
                     margin: EdgeInsets.only(left: anchoActual * 0.035),
                     decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 218, 218, 218),
+                        color: Color.fromARGB(255, 220, 220, 220),
                         borderRadius: BorderRadius.circular(50)),
                     height: largoActual * 0.085,
                     width: anchoActual * 0.18,
@@ -234,7 +233,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                   */
                 ],
               ),
-
+              SizedBox(height: largoActual*0.02,),
               //CARDS DE INFOPERSONAL MEMBRE SOL CUPONES
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -279,7 +278,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: "\nrecargas",
+                                      text: "\nRecargas",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: largoActual * 0.016,
@@ -294,13 +293,42 @@ class _PerfilCliente extends State<PerfilCliente> {
                                           color: colorTitulos),
                                     )
                                   ]))),
+                                  SizedBox(width: anchoActual*0.034,),
                               Container(
-                                height: largoActual * 0.12,
-                                width: anchoActual * 0.231,
+                                height: largoActual * 0.08,
+                                width: anchoActual * 0.24,
                                 //color: Colors.grey,
-                                child: Lottie.asset(
-                                  'lib/imagenes/Animation - 1718738830493.json',
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  /*gradient:
+                                                          const LinearGradient(
+                                                        colors: [
+                                                          Color.fromRGBO(0, 106,
+                                                              252, 1.000),
+                                                          Color.fromRGBO(0, 106,
+                                                              252, 1.000),
+                                                          Color.fromRGBO(0, 106,
+                                                              252, 1.000),
+                                                          Color.fromRGBO(
+                                                              150, 198, 230, 1),
+                                                          Colors.white,
+                                                          Colors.white,
+                                                        ],
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                      ),*/
+                                  //color: Colors.transparent,
+                                  image: DecorationImage(
+                                    image: AssetImage('lib/imagenes/playa.jpg'),
+                                    fit: BoxFit.cover,
+                                    opacity: 0.69,
+                                    )
                                 ),
+                                /*child: Lottie.asset(
+                                  'lib/imagenes/Animation - 1718738830493.json',
+                                ),*/
                               ),
                             ],
                           )),
@@ -314,7 +342,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                         margin: EdgeInsets.only(left: anchoActual * 0.05),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        surfaceTintColor: Colors.white,
+                        //surfaceTintColor: Colors.white,
                         color: Colors.white,
                         elevation: 8,
                         child: Container(
@@ -344,7 +372,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                   ),
                 ],
               ),
-
+              SizedBox(height: largoActual*0.03,),
               //BILLETERA SOL
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -361,7 +389,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                     ),
                   ),
                   SizedBox(
-                    height: largoActual * 0.19,
+                    height: largoActual * 0.17,
                     child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -786,6 +814,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                   ),
                 ],
               ),
+              SizedBox(height: largoActual*0.03,),
               //CONFIGURACION
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
