@@ -1914,15 +1914,28 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                 icon: Lottie.asset(
                                                 "lib/imagenes/infos.json"),
                                                 onPressed: () async {
+                                                  print("inffff");
                                                   await muestraDialogoPubli(context);
                                                 },
                                               ),
-                                            ),Text("\n\n\n    + Info",
-                                        style: TextStyle(
-                                            fontSize: largoActual * 0.016,
-                                            fontWeight: FontWeight.w800,
-                                            color: Color.fromRGBO(0, 148, 217, 1))
-                                          ),
+                                            ),
+                                            
+                                            Column(
+                                              children: [
+                                                const SizedBox(height:70),
+                                                Container(
+                                                  margin: EdgeInsets.only(left:18),
+                                                  //color: Colors.pink,
+                                                 // height: 50,
+                                                  child: Text("+ Info",
+                                                                                          style: TextStyle(
+                                                  fontSize: largoActual * 0.016,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Color.fromRGBO(0, 148, 217, 1))
+                                                                                            ),
+                                                ),
+                                              ],
+                                            ),
                                       ]
                                     )
                                   ],
