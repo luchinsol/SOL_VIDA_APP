@@ -1581,7 +1581,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            MapScreen()));
+                                                                            MapScreen(clienteId: widget.clienteId)));
                                                 },
                                                 style: ButtonStyle(
                                                   surfaceTintColor:
