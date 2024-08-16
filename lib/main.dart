@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:appsol_final/components/conductorinit.dart';
 import 'package:appsol_final/components/login.dart';
 import 'package:appsol_final/components/navegador.dart';
+import 'package:appsol_final/components/newdriver.dart';
 import 'package:appsol_final/components/preinicios.dart';
 import 'package:appsol_final/models/user_model.dart';
+import 'package:appsol_final/provider/card_provider.dart';
 import 'package:appsol_final/provider/pedido_provider.dart';
 import 'package:appsol_final/provider/ruta_provider.dart';
 import 'package:appsol_final/provider/ubicacion_provider.dart';
@@ -55,6 +57,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => UbicacionProvider()),
         ChangeNotifierProvider(create: (context) => UbicacionListProvider()),
         ChangeNotifierProvider(create: (context) => RutaProvider()),
+        ChangeNotifierProvider(create: (context) => CardpedidoProvider())
       ],
       child: MyApp(estalogeado: estalogeado, rol: rol),
     ),
@@ -81,7 +84,7 @@ class MyApp extends StatelessWidget {
                   indice: 0,
                   subIndice: 0,
                 )
-              : (rol == 5 ? HolaConductor() : Solvida()))
+              : (rol == 5 ? Driver() : Solvida()))
           : Solvida(),
     );
   }

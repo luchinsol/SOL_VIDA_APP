@@ -172,6 +172,8 @@ class _HolaConductorState extends State<HolaConductor> {
   }
 
   Future<dynamic> getRutas() async {
+    print("conductor en holaconductor");
+    print(conductorIDpref.toString());
     var res = await http.get(
       Uri.parse(apiUrl + apiLastRutaCond + conductorIDpref.toString()),
       headers: {"Content-type": "application/json"},
@@ -285,7 +287,7 @@ class _HolaConductorState extends State<HolaConductor> {
     SharedPreferences rutaPreference = await SharedPreferences.getInstance();
     SharedPreferences rutaFinalizada = await SharedPreferences.getInstance();
 
-    socket.on(
+   /* socket.on(
       'creadoRuta',
       (data) {
         setState(() {
@@ -298,7 +300,7 @@ class _HolaConductorState extends State<HolaConductor> {
           rutaFinalizada.setBool("finalizado", rutaTerminadaPref);
         });
       },
-    );
+    );*/
     socket.on(
       'ruteando',
       (data) {

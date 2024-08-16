@@ -161,6 +161,8 @@ class _ConductorinitState extends State<Conductorinit> {
   }
 
   Future<dynamic> getRutas() async {
+    print("conductor id .......");
+    print(conductorIDpref.toString());
     var res = await http.get(
       Uri.parse(apiUrl + apiLastRutaCond + conductorIDpref.toString()),
       headers: {"Content-type": "application/json"},
@@ -274,7 +276,7 @@ class _ConductorinitState extends State<Conductorinit> {
     SharedPreferences rutaPreference = await SharedPreferences.getInstance();
     SharedPreferences rutaFinalizada = await SharedPreferences.getInstance();
 
-    socket.on(
+   /* socket.on(
       'creadoRuta',
       (data) {
         setState(() {
@@ -287,7 +289,7 @@ class _ConductorinitState extends State<Conductorinit> {
           rutaFinalizada.setBool("finalizado", rutaTerminadaPref);
         });
       },
-    );
+    );*/
     socket.on(
       'ruteando',
       (data) {

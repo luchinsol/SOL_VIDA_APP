@@ -372,7 +372,7 @@ class _HolaConductor2State extends State<HolaConductor2> {
       //print("Error de socket, $error");
     });
     SharedPreferences rutaPreference = await SharedPreferences.getInstance();
-    socket.on(
+    /*socket.on(
       'creadoRuta',
       (data) {
         /*print("------esta es lA RUTA");
@@ -383,7 +383,7 @@ class _HolaConductor2State extends State<HolaConductor2> {
           rutaPreference.setInt("Ruta", rutaID);
         });
       },
-    );
+    );*/
     socket.on(
       'ruteando',
       (data) {

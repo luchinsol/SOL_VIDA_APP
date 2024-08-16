@@ -1,4 +1,5 @@
 import 'package:appsol_final/components/formulario.dart';
+import 'package:appsol_final/components/newdriver.dart';
 import 'package:appsol_final/components/preregistro.dart';
 import 'package:appsol_final/components/holaconductor.dart';
 import 'package:appsol_final/components/navegador.dart';
@@ -592,7 +593,7 @@ class _PreloginState extends State<Prelogin> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const HolaConductor()),
+                                          const Driver()),
                                 );
 
                                 //SI ES GERENTE
