@@ -649,7 +649,9 @@ class _Driver1State extends State<Driver1> {
                                              apellidos: listPedidosbyRuta[index].apellidos,
                                               telefono: listPedidosbyRuta[index].telefono,
                                                tipo: listPedidosbyRuta[index].tipo,
-                                                precio: listPedidosbyRuta[index].montoTotal);
+                                                precio: listPedidosbyRuta[index].montoTotal,
+                                                beneficiadoid:  listPedidosbyRuta[index].beneficiadoID,
+                                                comentarios: listPedidosbyRuta[index].comentario);
 
                                         cardpedidoProvider.updateCard(carta);
                                         

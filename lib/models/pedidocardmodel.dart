@@ -8,6 +8,8 @@ class Cardpedidomodel{
   String telefono;
   String tipo;
   double precio;
+  int? beneficiadoid;
+  String comentarios;
 
 
   Cardpedidomodel({
@@ -19,6 +21,8 @@ class Cardpedidomodel{
     required this.apellidos,
     required this.telefono,
     required this.tipo,
-    required this.precio
+    required this.precio,
+    required this.beneficiadoid,
+    required this.comentarios
   });
 }
