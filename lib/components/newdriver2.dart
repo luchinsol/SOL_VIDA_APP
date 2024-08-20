@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:appsol_final/components/newdriver1.dart';
 import 'package:appsol_final/components/newdriver3.dart';
+import 'package:appsol_final/components/socketcentral/socketcentral.dart';
 import 'package:appsol_final/models/pedido_conductor_model.dart';
 import 'package:appsol_final/models/pedido_detalle_model.dart';
 import 'package:appsol_final/provider/card_provider.dart';
+import 'package:appsol_final/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -40,6 +42,8 @@ class _NavegacionState extends State<Navegacion> {
   String apiUrl = dotenv.env['API_URL'] ?? '';
   String apiPedidosConductor = '/api/pedido_conductor/';
   String apiDetallePedido = '/api/detallepedido/';
+  String updatedeletepedido = '/api/revertirpedidocan/';
+
   List<Pedido> listPedidosbyRuta = [];
   int cantidadpedidos = 0;
   List<String> nombresproductos = [];
@@ -49,7 +53,9 @@ class _NavegacionState extends State<Navegacion> {
   Map<String, int> grouped = {};
 
   String groupedJson ="na";
+  String mensajedelete = "No procesa";
   int activeOrderIndex = 0;
+  String motivo = "NA";
   // variables
   LatLng _currentPosition = const LatLng(-16.4014, -71.5343);
   double _currentBearing = 0.0;
@@ -57,6 +63,58 @@ class _NavegacionState extends State<Navegacion> {
 
   BitmapDescriptor? _originIcon;
   BitmapDescriptor? _destinationIcon;
+  int anulados = 0;
+  
+  void _showdialoganulados() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.red,
+            title: anulados> 0 ? const Text('Atención se anuló el pedido',
+            style: TextStyle(
+              color: Colors.white
+            ),) : const Text("No hay pedidos anulados",style: TextStyle(color: Colors.white),),
+            content:anulados > 0 ? const Text('Se añadió un pedido más a tu ruta.',
+            style: TextStyle(color: Colors.white),) :
+             const Text("Continúa con tus pedidos.",style: TextStyle(color: Colors.white),),
+            actions: <Widget>[
+              TextButton(
+                child:const Text('OK',style: TextStyle(color: Colors.white),),
+                onPressed: () {
+                   setState(() {
+                    anulados = 0;
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
+
+  Future<dynamic> anularPedido(int? idpedido, String motivo) async {
+    //print("*****************************dentro de anular");
+    try {
+      var res = await http.delete(
+          Uri.parse(apiUrl + updatedeletepedido + idpedido.toString()),
+          headers: {"Content-type": "application/json"},
+          body: jsonEncode({"motivoped": "conductor: $motivo"}));
+
+      if (res.statusCode == 200) {
+        if (mounted) {
+          setState(() {
+            mensajedelete = "Pedido revertido o eliminado";
+          });
+        }
+      }
+    } catch (error) {
+      throw Exception("$error");
+    }
+  }
 
  Future<void> _loadMarkerIcons() async {
     _originIcon = await BitmapDescriptor.asset(
@@ -76,12 +134,35 @@ class _NavegacionState extends State<Navegacion> {
     _loadMarkerIcons();
     // getPolypoints();
     _getCurrentLocation();
+    final socketService = SocketService();
+    socketService.listenToEvent('pedidoanulado', (data) async {
+      print("----anulando ---- pedido");
+      print("dentro del evento");
+SharedPreferences rutaidget = await SharedPreferences.getInstance();
+   int? rutaid = rutaidget.getInt('rutaIDNEW');
+   
+   print(rutaid);
+
+   if(rutaid == data['ruta_id']){
+        print("---entro a ala ruta_od");
+        showDialog(context: context,
+         builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Hola"),
+          );
+          
+          
+         });
+   }
+    });
   }
+  
   @override
   void dispose() {
     _mapController?.dispose();
     super.dispose();
   }
+  
   double _toRadians(double degree) {
     return degree * pi / 180;
   }
@@ -104,7 +185,7 @@ class _NavegacionState extends State<Navegacion> {
   }
 
   Future<void> _getCurrentLocation() async {
-    print("-------------------------Llamando a current position");
+   // print("-------------------------Llamando a current position");
     Location location = Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
@@ -182,7 +263,7 @@ class _NavegacionState extends State<Navegacion> {
         widget.destination.latitude > 90 ||
         widget.destination.longitude < -180 ||
         widget.destination.longitude > 180) {
-      print("Las coordenadas ingresadas están fuera de rango.");
+      //print("Las coordenadas ingresadas están fuera de rango.");
       return;
     }
 
@@ -232,11 +313,13 @@ class _NavegacionState extends State<Navegacion> {
     );
   }
 
-  Future<void> _makePhoneCall() async {
+  Future<void> _makePhoneCall(String telefonopedido) async {
+    //print("alo");
+    //print(telefonopedido);
     final Uri _phoneUri = Uri(
       scheme: 'tel',
       path:
-          '1234567890', // Cambia esto al número de teléfono que quieras marcar
+          telefonopedido, // Cambia esto al número de teléfono que quieras marcar
     );
 
     if (!await launchUrl(_phoneUri)) {
@@ -249,36 +332,38 @@ class _NavegacionState extends State<Navegacion> {
          final cardpedidoProvider = Provider.of<CardpedidoProvider>(context, listen: false);
 
     return Scaffold(
+      backgroundColor:const Color.fromARGB(255, 93, 93, 94),
       appBar: AppBar(
-        toolbarHeight: 100,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 76, 76, 77),
+        toolbarHeight: MediaQuery.of(context).size.height/18,
+       iconTheme: const IconThemeData(
+        color: Colors.white
+       ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
               "Navegación",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 29),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white, fontSize: 29),
             ),
              Badge(
-                    largeSize: 18,
-                    backgroundColor: const Color.fromARGB(255, 243, 33, 82),
-                    label: Text("1",
-                        style: const TextStyle(fontSize: 12)),
-                    child: IconButton(
-                      onPressed: () {
-                       showDialog(context: context,
-                        builder: (BuildContext context){
-                          return AlertDialog(
-                            title: Text("Hola"),
-                            content: Text("Se añadio un pedido más a tu ruta"),
-                          );
-                        });
-                      },
-                      icon: const Icon(Icons.notifications_none),
-                      color: Color.fromARGB(255, 97, 44, 183),
-                      iconSize: 20,
-                    ),
-                  ),
+              largeSize: 18,
+              backgroundColor: anulados > 0 ? const Color.fromARGB(255, 243, 33, 82) :  Color.fromARGB(255, 0, 0, 0),
+              label: Text(anulados.toString(),
+                  style: const TextStyle(fontSize: 12)),
+              child: IconButton(
+                onPressed: () {
+                  //getPedidosConductor();
+                  _showdialoganulados();
+                 
+                  
+                },
+                icon: const Icon(Icons.notifications_none,color: Colors.white,),
+                color: Color.fromARGB(255, 255, 255, 255),
+                iconSize: MediaQuery.of(context).size.width/13.5,
+              ),
+            ),
+            
           ],
         ),
       ),
@@ -286,7 +371,7 @@ class _NavegacionState extends State<Navegacion> {
         children: [
           Container(
             padding: const EdgeInsets.all(9),
-            height: MediaQuery.of(context).size.height / 1.28,
+            height: MediaQuery.of(context).size.height / 1.22,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               //color: Color.fromARGB(255, 62, 74, 98)
@@ -371,7 +456,7 @@ class _NavegacionState extends State<Navegacion> {
               onPressed: () {
                 _tiltMap();
               },
-              child: Icon(
+              child:const Icon(
                 Icons.navigation_outlined,
                 color: Colors.white,
               ),
@@ -394,7 +479,7 @@ class _NavegacionState extends State<Navegacion> {
                     color: Color.fromARGB(255, 69, 68, 123)),
                 child: ListView(
                   controller: controller,
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   children: [
                     Center(
                       child: Text(
@@ -463,6 +548,194 @@ class _NavegacionState extends State<Navegacion> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Container(
+                                width: MediaQuery.of(context).size.width / 3.5,
+                                height: MediaQuery.of(context).size.height / 23,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                      255, 255, 61, 7),
+                                              title: const Row(
+                                                children: [
+                                                  Icon(Icons.warning_amber,color: Colors.white,),
+                                                  SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  Text("Anular pedido",style: TextStyle(
+                                                    color: Colors.white
+                                                  ),),
+                                                ],
+                                              ),
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Text(
+                                                    "La entrega del pedido se anulará",
+                                                    style: TextStyle(
+                                                      color:Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  const SizedBox(height: 20),
+                                                  TextField(
+                                                    onChanged: (value) {
+                                                      motivo =
+                                                          value; // Actualiza el motivo cuando el usuario escribe
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          'Ingrese el motivo de la cancelación',
+                                                      filled: true,
+                                                      fillColor: Colors.white,
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () async {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return const AlertDialog(
+                                                            content: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                CircularProgressIndicator(
+                                                                  backgroundColor:
+                                                                      Color.fromARGB(
+                                                                          255,
+                                                                          118,
+                                                                          213,
+                                                                          80),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 20,
+                                                                ),
+                                                                Text(
+                                                                  "Cargando ...",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                      Navigator.pop(context);
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return const AlertDialog(
+                                                            content: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                CircularProgressIndicator(
+                                                                  backgroundColor:
+                                                                      Color.fromARGB(
+                                                                          255,
+                                                                          118,
+                                                                          213,
+                                                                          80),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 20,
+                                                                ),
+                                                                Text(
+                                                                  "Cargando ...",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+
+                                                      await anularPedido(
+                                                          cardpedidoProvider
+                                                              .pedido?.id,
+                                                          motivo);
+                                                      //Navigator.pop(context);
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    Driver1()),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      "Continuar",
+                                                      style: TextStyle(
+                                                          color: Color.fromARGB(255, 236, 253, 4)),
+                                                    )),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child:const Text(
+                                                      "Cancelar",
+                                                      style: TextStyle(
+                                                          color: Color.fromARGB(255, 255, 255, 255)),
+                                                    )),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                                const Color.fromARGB(
+                                                    255, 255, 0, 0))),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Anular",
+                                          style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  35,
+                                              color: const Color.fromARGB(
+                                                  255, 255, 255, 255)),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Icon(
+                                          Icons.cancel_outlined,
+                                          color: const Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              30,
+                                        )
+                                      ],
+                                    )),
+                              ),
+                             /* Container(
                                 width: MediaQuery.of(context).size.width / 3.5,
                                 height: MediaQuery.of(context).size.height / 23,
                                 child: ElevatedButton(
@@ -551,7 +824,7 @@ class _NavegacionState extends State<Navegacion> {
                                         )
                                       ],
                                     )),
-                              ),
+                              ),*/
                             ],
                           ),
                           const SizedBox(
@@ -836,7 +1109,9 @@ class _NavegacionState extends State<Navegacion> {
                                 height: MediaQuery.of(context).size.height / 23,
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    _makePhoneCall();
+                                    //print("------llamandoooo aloooo ");
+                                   // print(cardpedidoProvider.pedido!.telefono);
+                                    _makePhoneCall(cardpedidoProvider.pedido!.telefono);
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStateProperty.all(

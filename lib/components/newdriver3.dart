@@ -25,54 +25,67 @@ class Cobrar extends StatefulWidget {
 class _CobrarState extends State<Cobrar> {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
   String apiPedidosConductor = '/api/pedido_conductor/';
   String apiUrl = dotenv.env['API_URL'] ?? '';
-
   File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+  List<File> _images = [];
+  String? tipoPago;
+  final List<String> _tipoPagoItems = ['Yape', 'Plin', 'Otro'];
+
   Future<dynamic> updateEstadoPedido(
       estadoNuevo, foto, observacion, tipoPago, pedidoID, beneficiado) async {
+       
+        try{
+          print("update..........pedido");
+    print("$estadoNuevo$foto$observacion$tipoPago$pedidoID$beneficiado");
     if (pedidoID != 0) {
       await http.put(Uri.parse("$apiUrl$apiPedidosConductor$pedidoID"),
           headers: {"Content-type": "application/json"},
           body: jsonEncode({
             "estado": estadoNuevo,
             "foto": foto,
-            "observacion": observacion,
+            "observacion": observacion == '' ? "NA" : observacion,
             "tipo_pago": tipoPago,
             "beneficiado_id": beneficiado,
           }));
     } else {
       //print('papas fritas');
     }
+        }
+        catch(error){
+          throw Exception("$error");
+        }
+    
   }
 
-  Future<void> _takePicture() async {
-    // Obtener el directorio de documentos de la aplicación
+  Future<void> _takePicture(String pedidoID) async {
     final directory = await getApplicationDocumentsDirectory();
-    final picturesDirectory = Directory(path.join(directory.path, 'pictures'));
+    final dateStr = DateTime.now().toIso8601String().split('T')[0];
+    final picturesDirectory =
+        Directory(path.join(directory.path, 'pictures', dateStr));
+    //final picturesDirectory = Directory(path.join(directory!.path, 'Pictures', 'MyApp', dateStr));
 
-    // Crear el directorio si no existe
+    print("********* tomando foot");
+    print("$directory$dateStr$picturesDirectory");
+    print("*********");
     if (!await picturesDirectory.exists()) {
       await picturesDirectory.create(recursive: true);
     }
 
-    // Tomar la foto
     final pickedFile = await _picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      // Crear un nuevo archivo en el directorio de fotos
-      final String fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final String fileName =
+          '$pedidoID-${DateTime.now().millisecondsSinceEpoch}.jpg';
       final String filePath = path.join(picturesDirectory.path, fileName);
       final File newImage = await File(pickedFile.path).copy(filePath);
 
-      // Actualizar el estado del widget
       setState(() {
         _imageFile = newImage;
+        _images.add(newImage);
       });
 
-      // Puedes mostrar un mensaje o realizar alguna acción después de guardar la foto
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Foto guardada en $filePath')),
       );
@@ -88,22 +101,26 @@ class _CobrarState extends State<Cobrar> {
     final cardpedidoProvider =
         Provider.of<CardpedidoProvider>(context, listen: false);
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 93, 93, 94),
       appBar: AppBar(
-        toolbarHeight: 100,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Color.fromARGB(255, 76, 76, 77),
+        toolbarHeight: MediaQuery.of(context).size.height/18,
+        iconTheme: const IconThemeData(
+          color: Colors.white
+        ),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               "Cobro",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 29),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 29,color: Colors.white),
             ),
           ],
         ),
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        color: Color.fromARGB(255, 79, 87, 128),
+        //color: Color.fromARGB(255, 79, 87, 128),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -161,33 +178,175 @@ class _CobrarState extends State<Cobrar> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
+                const SizedBox(
+                  height: 20,
+                ),
+                
+ const SizedBox(
+                  height: 20,
+                ),
                 // VIRTUAL
+         
                 Center(
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.2,
                     height: MediaQuery.of(context).size.height / 20,
                     child: ElevatedButton(
                         onPressed: () async {
-                          _takePicture();
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Center(
+                                      child: Text("Método de pago")),
+                                  content: Container(
+                                    height: MediaQuery.of(context).size.height/2.83,
+                                    child: Column(
+                                      children: [
+                                        const Text("¿El cliente agrego productos al pedido?",style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                        ),),
+                                        const SizedBox(
+                                            height: 18,
+                                          ),
+                                        const Text(
+                                              "Escribe el o los productos que se agregaron al pedido"),
+                                          TextField(
+                                            controller: _controller,
+                                            decoration: const InputDecoration(
+                                                hintText:
+                                                    'Ej.3 bidones adicionales'),
+                                          ),
+                                          const SizedBox(
+                                            height: 18,
+                                          ),
+                                          const Text("Precio del producto agregado",textAlign: TextAlign.left,),
+                                          TextField(
+                                            controller: _controller2,
+                                            keyboardType: TextInputType.number,
+                                            decoration:const InputDecoration(
+                                                hintText: 'S/.0.00'),
+                                          ),
+                                          const SizedBox(
+                                            height: 18,
+                                          ),
+                                          const Text(
+                                              "¿El cliente solo desea cancelar?",style: TextStyle(
+                                                fontWeight: FontWeight.w900
+                                              ),),
+                                        StatefulBuilder(builder:
+                                            (BuildContext context,
+                                                StateSetter setState) {
+                                          return Container(
+                                            //color: Colors.blue,
+                                            height:
+                                                MediaQuery.of(context).size.height /
+                                                    12,
+                                            child: Center(
+                                              child: DropdownButton(
+                                                hint: const Text('Tipo de pago'),
+                                                value: tipoPago,
+                                                items: _tipoPagoItems
+                                                    .map((String value) {
+                                                  return DropdownMenuItem<String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (String? newValue) {
+                                                  setState(() {
+                                                    tipoPago = newValue;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("Cancelar")),
+                                        TextButton(
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return  const AlertDialog(
+                                                    title:
+                                                       CircularProgressIndicator(
+                                                      backgroundColor:
+                                                          Colors.blue,
+                                                      strokeWidth: 4.0,
+                                                    ),
+                                                  );
+                                                });
+                                            updateEstadoPedido(
+                                                "entregado",
+                                                null,
+                                                _controller.text+_controller2.text,
+                                                tipoPago,
+                                                cardpedidoProvider.pedido?.id,
+                                                cardpedidoProvider
+                                                    .pedido?.beneficiadoid);
+                                            
+
+                                            _takePicture(cardpedidoProvider
+                                                .pedido!.id
+                                                .toString());
+
+                                            //  Navigator.pop(context);
+                                                                                            
+
+                                              
+                                             
+                                            Navigator.push(context,
+                                            MaterialPageRoute(builder: (BuildContext context)=> Driver1()));
+                                          },
+                                          child: Text("OK"),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              });
                         },
-                        child: const Row(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            Colors.pink
+                          )
+                        ),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "Pago virtual",
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width/20,
+                                color: Color.fromARGB(255, 255, 255, 255)),
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             Icon(
                               Icons.camera_alt_outlined,
-                              color: Colors.purple,
+                              color: Color.fromARGB(255, 255, 255, 255),
                             )
                           ],
                         )),
                   ),
                 ),
+
                 const SizedBox(
                   height: 20,
                 ),
@@ -200,77 +359,118 @@ class _CobrarState extends State<Cobrar> {
                     child: ElevatedButton(
                       onPressed: () {
                         showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Pago efectivo"),
-                                content: Text(
-                                  "El pago de S/.${cardpedidoProvider.pedido?.precio} es en forma de efectivo",
-                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                ),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Center(
-                                                    child: Text(
-                                                        "Pago confirmado")),
-                                                content: Icon(
-                                                  Icons.check_circle_outline,
-                                                  size: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      5,
-                                                  color: Colors.green,
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const Driver1()),
-                                                        );
-                                                        //await update pedido a pagado
-                                                      },
-                                                      child: Center(
-                                                          child: Text("OK"))),
-                                                ],
-                                              );
-                                            });
-                                      },
-                                      child: Text("OK")),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("Cancelar"))
-                                ],
-                              );
-                            });
-                      },
-                      child: Row(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Center(
+                                      child: Text("Método de pago")),
+                                  content: Container(
+                                    height: MediaQuery.of(context).size.height/3.5,
+                                    child: Column(
+                                      children: [
+                                        const Text("¿El cliente agrego productos al pedido?",style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                        ),),
+                                        const SizedBox(
+                                            height: 18,
+                                          ),
+                                        const Text(
+                                              "Escribe el o los productos que se agregaron al pedido"),
+                                          TextField(
+                                            controller: _controller,
+                                            decoration: const InputDecoration(
+                                                hintText:
+                                                    'Ej.3 bidones adicionales'),
+                                          ),
+                                          const SizedBox(
+                                            height: 18,
+                                          ),
+                                          const Text("Precio del producto agregado",textAlign: TextAlign.left,),
+                                          TextField(
+                                            controller: _controller2,
+                                            keyboardType: TextInputType.number,
+                                            decoration:const InputDecoration(
+                                                hintText: 'S/.0.00'),
+                                          ),
+                                          const SizedBox(
+                                            height: 28,
+                                          ),
+                                          const Text(
+                                              "¿El cliente solo desea cancelar?",style: TextStyle(
+                                                fontWeight: FontWeight.w900
+                                              ),),
+                                        
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("Cancelar")),
+                                        TextButton(
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return  AlertDialog(
+                                                    title:
+                                                       CircularProgressIndicator(
+                                                      backgroundColor:
+                                                          Colors.blue,
+                                                      strokeWidth: 4.0,
+                                                    ),
+                                                  );
+                                                });
+                                            updateEstadoPedido(
+                                                "entregado",
+                                                null,
+                                                _controller.text+_controller2.text,
+                                                "efectivo",
+                                                cardpedidoProvider.pedido?.id,
+                                                cardpedidoProvider
+                                                    .pedido?.beneficiadoid);
+                                            
+
+                                            
+                                                                                            Navigator.pop(context);
+
+                                              
+                                             
+                                            Navigator.push(context,
+                                            MaterialPageRoute(builder: (BuildContext context)=> Driver1()));
+                                          },
+                                          child: Text("OK"),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              }); },
+                      child:Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Pago efectivo",
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(
+                               fontSize: MediaQuery.of(context).size.width/20,
+                              color: Color.fromARGB(255, 82, 82, 82)),
                           ),
                           const SizedBox(
                             width: 10,
                           ),
-                          Icon(Icons.currency_exchange_outlined)
+                          Icon(Icons.currency_exchange_outlined,color: Color.fromARGB(255, 82, 82, 82),)
                         ],
                       ),
                       style: ButtonStyle(
                           backgroundColor:
-                              WidgetStateProperty.all(Colors.green)),
+                              WidgetStateProperty.all(Color.fromARGB(255, 221, 221, 132))),
                     ),
                   ),
                 ),
@@ -278,107 +478,7 @@ class _CobrarState extends State<Cobrar> {
                   height: 20,
                 ),
 
-                // AUMENTAR EL PEDIDO
-                Center(
-                  child: Text(
-                    "¿El cliente realizó un pedido más?",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    height: MediaQuery.of(context).size.height / 20,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Describre"),
-                                  content: Container(
-                                    height: MediaQuery.of(context).size.height /
-                                        5.5,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                            "Escribe el o los productos que se agregaron al pedido"),
-                                        TextField(
-                                          controller: _controller,
-                                          decoration: InputDecoration(
-                                              hintText:
-                                                  'Ej. Compro 3 bidones adicionales'),
-                                        ),
-                                        const SizedBox(
-                                          height: 14,
-                                        ),
-                                        Text("Actualiza el monto total"),
-                                        TextField(
-                                          controller: _controller2,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                              hintText: 'S/.0.00'),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  title: const Text(
-                                                    "Pedido actualizado y cancelado",
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  content: Icon(
-                                                    Icons.check_circle_outline,
-                                                    color: Colors.green,
-                                                    size: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        5,
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const Driver1(),
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: Text("OK"))
-                                                  ],
-                                                );
-                                              });
-                                        },
-                                        child: Text("Confirmar")),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Cancelar"))
-                                  ],
-                                );
-                              });
-                        },
-                        child: Text(
-                          "Aumentar monto",
-                          style: TextStyle(color: Colors.black),
-                        )),
-                  ),
-                ),
+               
               ],
             ),
           ],

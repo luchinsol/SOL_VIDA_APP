@@ -248,7 +248,7 @@ class _ConductorinitState extends State<Conductorinit> {
       throw Exception('Error en la solicitud: $e');
     }
   }
-
+/*
   void connectToServer() async {
     // Reemplaza la URL con la URL de tu servidor Socket.io
     socket = io.io(apiUrl, <String, dynamic>{
@@ -308,12 +308,12 @@ class _ConductorinitState extends State<Conductorinit> {
     });
     //  }
   }
-
+*/
   @override
   void initState() {
     super.initState();
     _initialize();
-    connectToServer();
+    //connectToServer();
   }
 
   @override

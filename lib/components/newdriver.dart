@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:appsol_final/components/newdriver1.dart';
+import 'package:appsol_final/components/newdriverstock1.dart';
 import 'package:appsol_final/components/preinicios.dart';
+import 'package:appsol_final/components/socketcentral/socketcentral.dart';
 import 'package:appsol_final/models/pedido_conductor_model.dart';
+import 'package:appsol_final/models/pedidoinforme_model.dart';
 import 'package:appsol_final/models/ruta_model.dart';
 import 'package:appsol_final/provider/ruta_provider.dart';
 import 'package:appsol_final/provider/user_provider.dart';
@@ -8,12 +13,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
+import 'package:path/path.dart' as path;
+import 'package:printing/printing.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path/path.dart' as path;
 
 class Driver extends StatefulWidget {
   const Driver({super.key});
@@ -33,11 +47,313 @@ class _DriverState extends State<Driver> {
   String apiPedidosConductor = '/api/pedido_conductor/';
   String apiLastRutaCond = '/api/rutakastcond/';
   String apiDetallePedido = '/api/detallepedido/';
-
+  String apipedidoinforme = '/api/fecharutapedido/';
+  TextEditingController _pdffecha = TextEditingController();
+  List<Pedidoinforme> informegeneral = [];
   Future<void> _initialize() async {
     await getRutas();
     // await cargarPreferencias();
   }
+
+  Future<void> createPdf(List<Pedidoinforme> pedidos) async {
+    final pdf = pw.Document();
+
+    // Define cuántos elementos quieres por página
+    const int itemsPerPage = 4;
+    final int pageCount = (pedidos.length / itemsPerPage).ceil();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+// Página 1: Solo el título
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.center,
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              children: [
+                pw.Center(
+                  child: pw.Text(
+                    "Informe de pedidos",
+                    style: pw.TextStyle(
+                        fontSize: 24, fontWeight: pw.FontWeight.bold),
+                  ),
+                ),
+                pw.Center(
+                  child: pw.Text("${userProvider.user?.nombre}",
+                      style: pw.TextStyle(
+                          fontSize: 24, fontWeight: pw.FontWeight.bold)),
+                ),
+                pw.Center(
+                  child: pw.Text("${userProvider.user?.apellidos}",
+                      style: pw.TextStyle(
+                          fontSize: 24, fontWeight: pw.FontWeight.bold)),
+                )
+              ]);
+        },
+      ),
+    );
+    for (int i = 0; i < pageCount; i++) {
+      final startIndex = i * itemsPerPage;
+      final endIndex = (startIndex + itemsPerPage > pedidos.length)
+          ? pedidos.length
+          : startIndex + itemsPerPage;
+
+      final pagePedidos = pedidos.sublist(startIndex, endIndex);
+
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.ListView.builder(
+              itemCount: pagePedidos.length,
+              itemBuilder: (context, index) {
+                final pedido = pagePedidos[index];
+                return pw.Container(
+                  padding: const pw.EdgeInsets.all(8),
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('ID: ${pedido.id}'),
+                      pw.Text('Ruta ID: ${pedido.ruta_id}'),
+                      pw.Text('Fecha: ${pedido.fecha}'),
+                      pw.Text('Tipo: ${pedido.tipo}'),
+                      pw.Text('Estado: ${pedido.estado}'),
+                      pw.Text('Observación: ${pedido.observacion}'),
+                      pw.Text('Tipo Pago: ${pedido.tipo_pago}'),
+                      pw.Divider(),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      );
+    }
+
+    // Guardar el PDF o imprimirlo
+    await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdf.save(),
+    );
+  }
+
+  Future<dynamic> pedidosInforme(String fecha) async {
+    print("---------------//// pedidos informe /////------------");
+    try {
+      SharedPreferences userPreference = await SharedPreferences.getInstance();
+      int? iduser = userPreference.getInt('userID');
+      print("usuario condctor: $iduser");
+      var res = await http.post(
+          Uri.parse(apiUrl + apipedidoinforme + iduser.toString()),
+          headers: {"Content-type": "application/json"},
+          body: jsonEncode({"fecha_ruta": fecha}));
+      if (res.statusCode == 200) {
+        var data = json.decode(res.body);
+        List<Pedidoinforme> tempedido = data.map<Pedidoinforme>((item) {
+          return Pedidoinforme(
+              id: item['id'],
+              ruta_id: item['ruta_id'],
+              fecha: item['fecha'],
+              tipo: item['tipo'],
+              estado: item['estado'],
+              observacion: item['observacion'] ?? "NA",
+              tipo_pago: item['tipo_pago'] ?? "NA");
+        }).toList();
+        if (mounted) {
+          setState(() {
+            informegeneral = tempedido;
+          });
+        }
+
+        print("----------inform----------");
+        print(informegeneral.length);
+        // Crear PDF con los pedidos obtenidos
+        await createPdf(tempedido);
+
+        return tempedido;
+      }
+    } catch (error) {
+      throw Exception("Error $error");
+    }
+  }
+
+  /* Future<void> _createPdf(String dateStr) async {
+    final pdf = pw.Document();
+    final directory = await getApplicationDocumentsDirectory();
+    final picturesDirectory =
+        Directory(path.join(directory.path, 'pictures', dateStr));
+
+    if (await picturesDirectory.exists()) {
+      final imageFiles = picturesDirectory
+          .listSync()
+          .where((item) => item is File)
+          .map((item) => item as File)
+          .toList();
+
+      for (var image in imageFiles) {
+        final imageFile = pw.MemoryImage(image.readAsBytesSync());
+        pdf.addPage(
+          pw.Page(
+            build: (pw.Context context) {
+              return pw.Center(
+                child: pw.Image(imageFile),
+              );
+            },
+          ),
+        );
+      }
+
+      final pdfFile =
+          File(path.join(directory.path, 'pictures', 'reporte_$dateStr.pdf'));
+      await pdfFile.writeAsBytes(await pdf.save());
+
+      await Printing.sharePdf(
+          bytes: await pdf.save(), filename: 'reporte_$dateStr.pdf');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('PDF creado en ${pdfFile.path}')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No hay fotos para la fecha $dateStr')),
+      );
+    }
+  }*/
+
+  /*
+  Future<void> _createPdf(String dateStr) async {
+  final pdf = pw.Document();
+  final directory = await getApplicationDocumentsDirectory();
+  final picturesDirectory = Directory(path.join(directory.path, 'pictures', dateStr));
+
+  if (await picturesDirectory.exists()) {
+    final imageFiles = picturesDirectory
+        .listSync()
+        .where((item) => item is File)
+        .map((item) => item as File)
+        .toList();
+
+    if (imageFiles.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No hay fotos para la fecha $dateStr')),
+      );
+      return;
+    }
+
+    for (var image in imageFiles) {
+      final imageFile = pw.MemoryImage(image.readAsBytesSync());
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Center(
+              child: pw.Image(imageFile),
+            );
+          },
+        ),
+      );
+    }
+
+    final pdfFile = File(path.join(directory.path, 'pictures', 'reporte_$dateStr.pdf'));
+    await pdfFile.writeAsBytes(await pdf.save());
+
+    await Printing.sharePdf(
+      bytes: await pdf.save(),
+      filename: 'reporte_$dateStr.pdf',
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('PDF creado en ${pdfFile.path}')),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('No hay fotos para la fecha $dateStr')),
+    );
+  }
+}*/
+
+/*Future<void> _createPdf(String dateStr) async {
+  // Obtener los datos de los pedidos
+  List<Pedidoinforme> pedidos = await pedidosInforme(dateStr);
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+  final pdf = pw.Document();
+  final directory = await getApplicationDocumentsDirectory();
+  final picturesDirectory = Directory(path.join(directory.path, 'pictures', dateStr));
+
+  // Agregar la información de los pedidos al PDF
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) {
+        return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Informe de Pedidos', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.Text("${userProvider.user?.nombre}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.Text("${userProvider.user?.apellidos}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 20),
+             pw.Wrap(
+                children: pedidos.map((pedido) {
+                  return pw.Container(
+                    width: double.infinity,
+                    margin: pw.EdgeInsets.only(bottom: 10),
+                    padding: pw.EdgeInsets.all(10),
+                    decoration: pw.BoxDecoration(
+                      border: pw.Border.all(color: PdfColors.black),
+                    ),
+                    child: pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Text('ID: ${pedido.id}'),
+                        pw.Text('Ruta ID: ${pedido.ruta_id}'),
+                        pw.Text('Fecha: ${pedido.fecha}'),
+                        pw.Text('Tipo: ${pedido.tipo}'),
+                        pw.Text('Estado: ${pedido.estado}'),
+                        pw.Text('Observación: ${pedido.observacion}'),
+                        pw.Text('Tipo de Pago: ${pedido.tipo_pago}'),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+          ],
+        );
+      },
+    ),
+  );
+
+  // Verificar si hay fotos y agregarlas al PDF si existen
+  if (await picturesDirectory.exists()) {
+    final imageFiles = picturesDirectory
+        .listSync()
+        .where((item) => item is File)
+        .map((item) => item as File)
+        .toList();
+
+    for (var image in imageFiles) {
+      final imageFile = pw.MemoryImage(image.readAsBytesSync());
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Center(
+              child: pw.Image(imageFile),
+            );
+          },
+        ),
+      );
+    }
+  }
+
+  final pdfFile = File(path.join(directory.path, 'pictures', 'reporte_$dateStr.pdf'));
+  await pdfFile.writeAsBytes(await pdf.save());
+
+  await Printing.sharePdf(
+    bytes: await pdf.save(),
+    filename: 'reporte_$dateStr.pdf',
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('PDF creado en ${pdfFile.path}')),
+  );
+}*/
 
   Future<dynamic> getRutas() async {
     print(".......1");
@@ -81,42 +397,40 @@ class _DriverState extends State<Driver> {
     }
   }
 
-  cargarPreferencias() async {
-    print("----------2");
-    SharedPreferences rutaidget = await SharedPreferences.getInstance();
-
-    rutaidget.setInt('rutaIDNEW', idRuta);
-    print("seteandooo");
-    print("seteo :$idRuta");
-    print(rutaidget.setInt('rutaIDNEW', idRuta));
+  @override
+  void dispose() {
+    super.dispose();
   }
 
+/*
   void connectToServer() {
-    print("-------------3");
-    // Reemplaza la URL con la URL de tu servidor Socket.io
     socket = io.io(apiUrl, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': true,
       'reconnect': true,
-      'reconnectionAttempts': 5,
-      'reconnectionDelay': 1000,
+      'reconnectionAttempts': 10,
+      'reconnectionDelay': 500,
+      'reconnectionDelayMax': 2000,
     });
+
     socket.connect();
+
     socket.onConnect((_) {
-      //print('Conexión establecida: CONDUCTOR');
-      // Inicia la transmisión de ubicación cuando se conecta
-      //iniciarTransmisionUbicacion();
+      // print('Conexión establecida: CONDUCTOR');
     });
+
     socket.onDisconnect((_) {
       // print('Conexión desconectada: CONDUCTOR');
     });
+
     socket.onConnectError((error) {
-      //print("Error de conexión $error");
+      // Manejar error de conexión
     });
+
     socket.onError((error) {
-      //print("Error de socket, $error");
+      // Manejar otros errores
     });
-    //SharedPreferences rutaPreference = await SharedPreferences.getInstance();
+
     socket.on(
       'creadoRuta',
       (data) async {
@@ -131,9 +445,9 @@ class _DriverState extends State<Driver> {
           setState(() {
             //seteo las preferncias para las demas vistas
             idRuta = data['id'];
- 
 
-    rutaidget.setInt('rutaIDNEW', idRuta);
+            rutaidget.setInt('rutaIDNEW', idRuta);
+
             idconductor = data['conductor_id'];
             fechacreacion = data['fecha_creacion'];
           });
@@ -144,30 +458,39 @@ class _DriverState extends State<Driver> {
         }
       },
     );
-    /* socket.on(
-      'ruteando',
-      (data) {
-        if (data == true) {
-         // _initialize();
-        }
-      },
-    );
-    socket.on('Llama tus Pedidos :)', (data) {
-      setState(() {
-        puedoLlamar = true;
-      });
-      if (puedoLlamar == true) {
-        _initialize();
-      }
-    });*/
-    //  }
   }
-
+*/
   @override
   void initState() {
     super.initState();
+    //pedidosInforme();
     // Inicializa la localización para español
-    connectToServer();
+    // connectToServer();
+    final socketService = SocketService();
+    socketService.listenToEvent('creadoRuta', (data) async {
+      SharedPreferences rutaidget = await SharedPreferences.getInstance();
+      print("------esta es la RUTA");
+      print(data);
+
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      if (data['conductor_id'] == userProvider.user?.id) {
+        print("entro al fi");
+        setState(() {
+          //seteo las preferncias para las demas vistas
+          idRuta = data['id'];
+
+          rutaidget.setInt('rutaIDNEW', idRuta);
+
+          idconductor = data['conductor_id'];
+          fechacreacion = data['fecha_creacion'];
+        });
+        print("----datos de creado ruta");
+        print(idRuta);
+        print(idconductor);
+        print(fechacreacion);
+      }
+    });
     _initialize();
 
     // cargarPreferencias();
@@ -197,19 +520,32 @@ class _DriverState extends State<Driver> {
     final rutaProvider = context.watch<RutaProvider>();
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 213, 213, 213),
-      appBar: AppBar(),
+      backgroundColor: Color.fromARGB(255, 93, 93, 94),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 76, 76, 77),
+        toolbarHeight: MediaQuery.of(context).size.height/18,
+        
+      ),
       drawer: Drawer(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         shadowColor: const Color.fromARGB(255, 255, 255, 255),
         child: ListView(
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255)),
-              child: Text(
-                "Menu",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Conductor",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.width / 26),
+                  ),
+                  Text("${userProvider.user?.nombre}")
+                ],
               ),
             ),
             ListTile(
@@ -222,9 +558,9 @@ class _DriverState extends State<Driver> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return const AlertDialog(
-                        title: Text("Nombre:Jorge Cabrera Chivay"),
-                        content: Text("Código de empleado:AAA-AAA"),
+                      return AlertDialog(
+                        title: Text("${userProvider.user?.nombre}"),
+                        content: Text("${userProvider.user?.apellidos}"),
                       );
                     });
               },
@@ -262,28 +598,30 @@ class _DriverState extends State<Driver> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                         Text(
                           "Bienvenid@",
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: MediaQuery.of(context).size.width/20,
+                               fontWeight: FontWeight.bold,color: Colors.white),
                         ),
                         Text(
-                          "Cond# ${userProvider.user?.id}-${userProvider.user?.nombre}",
-                          style: TextStyle(fontSize: 26),
+                          "Hola,${userProvider.user?.nombre}",
+                          style: TextStyle(fontSize: MediaQuery.of(context).size.width/18,color: Colors.white),
                         )
                       ],
                     ),
                     const SizedBox(
                       width: 19,
                     ),
-                    /* Container(
-                      //height: 100,
-                      //width: 100,
+                     Container(
+                      height: MediaQuery.of(context).size.height/18,
+                      width: MediaQuery.of(context).size.height/18,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 141, 141, 141)
+                        image: DecorationImage(image: AssetImage(
+                          'lib/imagenes/nuevito.png'
+                        ))
                       ),
-                      child: Text("Vehículo asignado:"),
-                    )*/
+                    )
                   ],
                 ),
               ),
@@ -422,13 +760,15 @@ class _DriverState extends State<Driver> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 35,
               ),
               Container(
-                height: 70,
+                height: MediaQuery.of(context).size.height / 15,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext contex)=> Stock1()));
+                  },
                   style: ButtonStyle(
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
@@ -453,11 +793,11 @@ class _DriverState extends State<Driver> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 35,
               ),
               Container(
-                height: 70,
+                height: MediaQuery.of(context).size.height / 15,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -488,7 +828,106 @@ class _DriverState extends State<Driver> {
                     ],
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 35,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Informe de pedidos"),
+                          content: Container(
+                            height: MediaQuery.of(context).size.height / 7,
+                            child: Column(
+                              children: [
+                                const Text("Debe ingresar la fecha"),
+                                TextField(
+                                  controller: _pdffecha,
+                                  decoration: const InputDecoration(
+                                      label: Text("Fecha"),
+                                      hintText: 'AAAA-MM-DD'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  // LO SACO DEL OTRO SHOW DIALOG
+                                  Navigator.pop(context);
+
+                                  // LO INSERTO EN ESTE NUEVO
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const AlertDialog(
+                                        content: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            CircularProgressIndicator(
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 102, 28, 59),
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Text(
+                                              "Creando ...",
+                                              style: TextStyle(fontSize: 15),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  // LLAMO METODO
+
+                                  print("------${_pdffecha.text}------");
+                                  pedidosInforme(_pdffecha.text);
+                                  // _createPdf(_pdffecha.text);
+
+                                  Navigator.pop(context);
+                                },
+                                child: Text("OK")),
+                            TextButton(
+                                onPressed: () {Navigator.pop(context);}, child: Text("Cancelar"))
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ButtonStyle(
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                      backgroundColor: WidgetStateProperty.all(
+                          Color.fromARGB(255, 230, 23, 81))),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Informe",
+                        style: TextStyle(
+                            fontSize: 19,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      Icon(
+                        Icons.picture_as_pdf_outlined,
+                        size: 50,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                      //const SizedBox(width: 0,)
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

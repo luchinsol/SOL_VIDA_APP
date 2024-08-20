@@ -260,7 +260,7 @@ class _HolaConductorState extends State<HolaConductor> {
     }
   }
 
-  void connectToServer() async {
+  /*void connectToServer() async {
     // Reemplaza la URL con la URL de tu servidor Socket.io
     socket = io.io(apiUrl, <String, dynamic>{
       'transports': ['websocket'],
@@ -318,13 +318,13 @@ class _HolaConductorState extends State<HolaConductor> {
       }
     });
     //  }
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
     _initialize();
-    connectToServer();
+    //connectToServer();
   }
 
   @override

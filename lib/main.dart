@@ -5,9 +5,11 @@ import 'package:appsol_final/components/login.dart';
 import 'package:appsol_final/components/navegador.dart';
 import 'package:appsol_final/components/newdriver.dart';
 import 'package:appsol_final/components/preinicios.dart';
+import 'package:appsol_final/components/socketcentral/socketcentral.dart';
 import 'package:appsol_final/models/user_model.dart';
 import 'package:appsol_final/provider/card_provider.dart';
 import 'package:appsol_final/provider/pedido_provider.dart';
+import 'package:appsol_final/provider/residuosprovider.dart';
 import 'package:appsol_final/provider/ruta_provider.dart';
 import 'package:appsol_final/provider/ubicacion_provider.dart';
 import 'package:appsol_final/provider/ubicaciones_list_provider.dart';
@@ -22,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appsol_final/components/holaconductor.dart';
 
 late List<CameraDescription> camera;
+late SocketService socketService;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +52,10 @@ Future<void> main() async {
   UserProvider userProvider = UserProvider();
   await userProvider.initUser();
 
+    // Inicializar el servicio de Socket.IO
+  SocketService();
+  
+
   runApp(
     MultiProvider(
       providers: [
@@ -57,7 +64,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => UbicacionProvider()),
         ChangeNotifierProvider(create: (context) => UbicacionListProvider()),
         ChangeNotifierProvider(create: (context) => RutaProvider()),
-        ChangeNotifierProvider(create: (context) => CardpedidoProvider())
+        ChangeNotifierProvider(create: (context) => CardpedidoProvider()),
+        ChangeNotifierProvider(create: (context) => ResiduoProvider())
       ],
       child: MyApp(estalogeado: estalogeado, rol: rol),
     ),

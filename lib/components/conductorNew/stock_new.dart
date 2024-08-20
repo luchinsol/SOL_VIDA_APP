@@ -24,7 +24,7 @@ class ActualizadoStock extends StatefulWidget {
 
 class _ActualizadoStockState extends State<ActualizadoStock> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late io.Socket socket;
+
   String apiUrl = dotenv.env['API_URL'] ?? '';
   String apiPedidosConductor = '/api/pedido_conductor/';
   String apiDetallePedido = '/api/detallepedidoRuta/';
@@ -291,12 +291,7 @@ class _ActualizadoStockState extends State<ActualizadoStock> {
     _initialize();
   }
 
-  @override
-  void dispose() {
-    socket.disconnect();
-    socket.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {

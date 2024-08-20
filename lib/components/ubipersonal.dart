@@ -1042,7 +1042,7 @@ class _MapScreenState extends State<MapScreen> {
             padding: const EdgeInsets.all(25.0),
             child: Container(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // LOGO DE SOL
@@ -1147,7 +1147,7 @@ class _MapScreenState extends State<MapScreen> {
                     height: 20,
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height / 2.5,
+                    height: MediaQuery.of(context).size.height / 1.85,
                     width: MediaQuery.of(context).size.width / 1.1,
                     padding: EdgeInsets.all(19),
                     decoration: BoxDecoration(
@@ -1181,6 +1181,7 @@ class _MapScreenState extends State<MapScreen> {
                   const SizedBox(
                     height: 15,
                   ),
+/*
                   Container(
                     child: const Text(
                       "Nombra tu ubicación",
@@ -1374,7 +1375,7 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                   const SizedBox(
                     height: 10 + 5,
-                  ),
+                  ),*/
                   Container(
                     decoration: BoxDecoration(
                         //color: Color.fromRGBO(58, 182, 0, 1),
