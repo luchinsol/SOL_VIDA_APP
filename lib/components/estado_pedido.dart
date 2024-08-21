@@ -177,10 +177,17 @@ class _EstadoPedido extends State<EstadoPedido> with TickerProviderStateMixin {
     final largoActual = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
+      body: PopScope(
+          canPop: false,
+          onPopInvoked: (bool didPop) {
+            if (didPop) {
+              return;
+            }
+          },
       /*appBar: AppBar(
         backgroundColor: Colors.white,
       ),*/
-      body: SafeArea(
+      child: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -486,6 +493,6 @@ class _EstadoPedido extends State<EstadoPedido> with TickerProviderStateMixin {
           ),
         ]),
       )),
-    );
+    ));
   }
 }

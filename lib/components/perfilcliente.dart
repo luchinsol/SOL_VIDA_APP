@@ -158,7 +158,17 @@ class _PerfilCliente extends State<PerfilCliente> {
     //TYJYUJY
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: PopScope(
+          canPop: false,
+          onPopInvoked: (bool didPop) {
+            if (didPop) {
+              return;
+            }
+          },
+      /*appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),*/
+      child: SafeArea(
           child: Padding(
         padding: EdgeInsets.all(anchoActual * 0.04),
         child: Column(
@@ -1022,7 +1032,7 @@ class _PerfilCliente extends State<PerfilCliente> {
               ),
             ]),
       )),
-    );
+    ));
   }
 
   void _showThankYouDialog(BuildContext context) {
