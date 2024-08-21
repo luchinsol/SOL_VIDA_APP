@@ -88,12 +88,12 @@ class MyApp extends StatelessWidget {
       //home: estalogeado && rol == 4 ? BarraNavegacion(indice: 0,subIndice: 0,) : (estalogeado && rol == 5 ? HolaConductor() :Login()),
       home: estalogeado
           ? (rol == 4
-              ? BarraNavegacion(
+              ? const BarraNavegacion(
                   indice: 0,
                   subIndice: 0,
                 )
-              : (rol == 5 ? Driver() : Solvida()))
-          : Solvida(),
+              : (rol == 5 ? const Driver() : const Solvida()))
+          : const Solvida(),
     );
   }
 }

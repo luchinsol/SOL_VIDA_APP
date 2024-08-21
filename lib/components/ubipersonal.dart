@@ -542,7 +542,7 @@ class _MapScreenState extends State<MapScreen> {
   String apiZona = '/api/zona';
 
   Future<void> _updateMapLocation() async {
-    print("3---------UPDATE");
+    //print("3---------UPDATE");
     _mapController?.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(target: _currentPosition, zoom: 14.0),
@@ -560,8 +560,8 @@ class _MapScreenState extends State<MapScreen> {
       );
     });
 
-    print("------------------>UBICACION ACTUALIZADA CON LA");
-    print(_marker!.position);
+    //print("------------------>UBICACION ACTUALIZADA CON LA");
+    //print(_marker!.position);
 
     /*await obtenerDireccion(
         _currentPosition.latitude, _currentPosition.longitude);*/
@@ -572,7 +572,7 @@ class _MapScreenState extends State<MapScreen> {
         _currentPosition.longitude,
       );
 
-      print("SI FUNCIONA ESTA TODO BIENNNNNNNNNN");
+    //  print("SI FUNCIONA ESTA TODO BIENNNNNNNNNN");
       /*
       print(puntoEnPoligono(
         _currentPosition.latitude,
@@ -611,11 +611,10 @@ class _MapScreenState extends State<MapScreen> {
         );*/
       }*/
     } catch (e) {
-      print("Error in reverse geocoding: $e");
+     // print("Error in reverse geocoding: $e");
     }
 
-    print(
-        "Updated location: ${_currentPosition.latitude}, ${_currentPosition.longitude}");
+   // print("Updated location: ${_currentPosition.latitude}, ${_currentPosition.longitude}");
   }
 
   Future<void> obtenerDireccion(x, y) async {
@@ -691,10 +690,10 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _addLocation() async {
     // obtener
-    print("2-------ADD--LOCATION");
+   // print("2-------ADD--LOCATION");
     String name = _nameController.text;
     //if (name.isNotEmpty) {
-    print('Ubicación guardada: $name - $_currentPosition');
+  //  print('Ubicación guardada: $name - $_currentPosition');
     await obtenerDireccion(
         _currentPosition.latitude, _currentPosition.longitude);
     try {
@@ -717,21 +716,21 @@ class _MapScreenState extends State<MapScreen> {
       }*/
       //await _updateMapLocation();
     } catch (e) {
-      print("Error in reverse geocoding: $e");
+     // print("Error in reverse geocoding: $e");
       //}
     }
   }
 
   Future<void> nuevaUbicacion() async {
-    print("nueva ....................");
+  /*  print("nueva ....................");
     print(widget.clienteId);
-    print(distrito);
+    print(distrito);*/
     await creadoUbicacion(widget.clienteId, distrito);
     await getUbicaciones(widget.clienteId);
   }
 
   Future<dynamic> getZonas() async {
-    print("2.--------GET- ZONAS------");
+   // print("2.--------GET- ZONAS------");
     var res = await http.get(
       Uri.parse(apiUrl + apiZona),
       headers: {"Content-type": "application/json"},
@@ -843,7 +842,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<dynamic> getUbicaciones(clienteID) async {
-    print("1.-------GET-UBICACIONES----");
+    //print("1.-------GET-UBICACIONES----");
     setState(() {
       listUbicacionesObjetos = [];
       ubicacionesString = [];
@@ -869,8 +868,8 @@ class _MapScreenState extends State<MapScreen> {
         }).toList();
         if (mounted) {
           setState(() {
-            print(".... lista d ubicaciones");
-            print(tempUbicacion.first.distrito);
+           // print(".... lista d ubicaciones");
+            //print(tempUbicacion.first.distrito);
             listUbicacionesObjetos = tempUbicacion;
           });
           for (var i = 0; i < listUbicacionesObjetos.length; i++) {
@@ -891,14 +890,14 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<dynamic> creadoUbicacion(clienteId, distrito) async {
-    print(".....................creando.................");
+    /*print(".....................creando.................");
     print(distrito);
     print(latitudUser);
     print(longitudUser);
     print(direccionNueva);
     print(clienteId);
     print(distrito);
-    print(zonaIDUbicacion);
+    print(zonaIDUbicacion);*/
     await http.post(Uri.parse("$apiUrl/api/ubicacion"),
         headers: {"Content-type": "application/json"},
         body: jsonEncode({
@@ -948,9 +947,9 @@ class _MapScreenState extends State<MapScreen> {
       //SE CUENTA LA CANTIDAD DE INTERSECCIONES EN CADA ZONA
       for (var i = 0; i < listZonas.length; i++) {
         //se revisa para cada zona
+       /* print('');
         print('');
-        print('');
-        print('Ahora se cuenta la cantidad de intersecciones');
+        print('Ahora se cuenta la cantidad de intersecciones');*/
         var zonaID = listZonas[i].id;
         //print('Primero en la zona $zonaID');
         int intersecciones = 0;
@@ -960,17 +959,17 @@ class _MapScreenState extends State<MapScreen> {
           }
         });
         if (intersecciones > 0) {
-          print('Nª intersecciones = $intersecciones en la Zona $zonaID');
+         // print('Nª intersecciones = $intersecciones en la Zona $zonaID');
           if (intersecciones % 2 == 0) {
-            print('- Es una cantidad PAR, ESTA AFUERA');
+          //  print('- Es una cantidad PAR, ESTA AFUERA');
             setState(() {
               zonaIDUbicacion = null;
             });
           } else {
             setState(() {
-              print('- Es una cantidad IMPAR, ESTA DENTRO');
+             // print('- Es una cantidad IMPAR, ESTA DENTRO');
               zonaIDUbicacion = zonaID;
-              print(zonaIDUbicacion);
+              //print(zonaIDUbicacion);
             });
             //es impar ESTA AFUERA
             break;
@@ -1006,7 +1005,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    print("1 .... init");
+   // print("1 .... init");
     super.initState();
     _marker = Marker(
       markerId: MarkerId('currentLocation'),
@@ -1014,13 +1013,13 @@ class _MapScreenState extends State<MapScreen> {
       draggable: true,
       onDragEnd: (newPosition) {
         _currentPosition = newPosition;
-        print("UBICACION OBTENIDA DESDE ON DRAG END");
-        print(_currentPosition);
+      //  print("UBICACION OBTENIDA DESDE ON DRAG END");
+      //  print(_currentPosition);
         //obtenerDireccion(_currentPosition.latitude, _currentPosition.longitude);
       },
     );
-    print("UBICACION OBTENIDA DEL MARCADOR");
-    print(_currentPosition);
+   // print("UBICACION OBTENIDA DEL MARCADOR");
+    //print(_currentPosition);
     getUbicaciones(widget.clienteId);
     getZonas();
   }
@@ -1109,9 +1108,9 @@ class _MapScreenState extends State<MapScreen> {
                             double.parse(prediction.lng ?? '0'),
                           );
                           _updateMapLocation();
-                          print("UBICACION OBTENIDA A TRAVES DE PREDICCION");
+                         // print("UBICACION OBTENIDA A TRAVES DE PREDICCION");
                           //print(_updateMapLocation);
-                          print(_currentPosition);
+                         // print(_currentPosition);
                         });
                       },
                       itemClick: (Prediction prediction) {
@@ -1428,7 +1427,7 @@ class _MapScreenState extends State<MapScreen> {
                           );
                         } catch (e) {
                           // Manejo de errores
-                          print("Error al guardar la ubicación: $e");
+                          //print("Error al guardar la ubicación: $e");
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

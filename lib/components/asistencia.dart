@@ -70,7 +70,7 @@ class _AsistenciaState extends State<Asistencia> {
                                   "955372038",
                                   style: TextStyle(
                                       fontSize: largoActual * 0.04,
-                                      color: Color.fromARGB(255, 6, 57, 100)),
+                                      color:const Color.fromARGB(255, 6, 57, 100)),
                                 )).animate().fade(delay: 000.ms).shake(),
                           ),
                           Container(

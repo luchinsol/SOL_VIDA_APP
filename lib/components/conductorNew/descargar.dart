@@ -324,7 +324,7 @@ class _PdfState extends State<Pdf> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HolaConductor()));
+                                builder: (context) => const HolaConductor()));
                       },
                       style: ButtonStyle(
                         backgroundColor:

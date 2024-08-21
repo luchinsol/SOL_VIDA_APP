@@ -37,8 +37,8 @@ class _CobrarState extends State<Cobrar> {
       estadoNuevo, foto, observacion, tipoPago, pedidoID, beneficiado) async {
        
         try{
-          print("update..........pedido");
-    print("$estadoNuevo$foto$observacion$tipoPago$pedidoID$beneficiado");
+   //       print("update..........pedido");
+    //print("$estadoNuevo$foto$observacion$tipoPago$pedidoID$beneficiado");
     if (pedidoID != 0) {
       await http.put(Uri.parse("$apiUrl$apiPedidosConductor$pedidoID"),
           headers: {"Content-type": "application/json"},
@@ -66,9 +66,9 @@ class _CobrarState extends State<Cobrar> {
         Directory(path.join(directory.path, 'pictures', dateStr));
     //final picturesDirectory = Directory(path.join(directory!.path, 'Pictures', 'MyApp', dateStr));
 
-    print("********* tomando foot");
-    print("$directory$dateStr$picturesDirectory");
-    print("*********");
+    //print("********* tomando foot");
+   // print("$directory$dateStr$picturesDirectory");
+    //print("*********");
     if (!await picturesDirectory.exists()) {
       await picturesDirectory.create(recursive: true);
     }

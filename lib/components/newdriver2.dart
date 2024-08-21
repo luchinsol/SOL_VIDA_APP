@@ -136,15 +136,15 @@ class _NavegacionState extends State<Navegacion> {
     _getCurrentLocation();
     final socketService = SocketService();
     socketService.listenToEvent('pedidoanulado', (data) async {
-      print("----anulando ---- pedido");
-      print("dentro del evento");
+     // print("----anulando ---- pedido");
+     // print("dentro del evento");
 SharedPreferences rutaidget = await SharedPreferences.getInstance();
    int? rutaid = rutaidget.getInt('rutaIDNEW');
    
-   print(rutaid);
+ //  print(rutaid);
 
    if(rutaid == data['ruta_id']){
-        print("---entro a ala ruta_od");
+   //     print("---entro a ala ruta_od");
         if (context.mounted) {
   showDialog(
     context: context,
@@ -311,12 +311,12 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
           });
         });
       } else if (result.status == "ZERO_RESULTS") {
-        print("No se encontraron resultados para la ruta.");
+      //  print("No se encontraron resultados para la ruta.");
       } else {
-        print("Error al obtener la ruta: ${result.status}");
+        //print("Error al obtener la ruta: ${result.status}");
       }
     } catch (e) {
-      print("Error al obtener la ruta: $e");
+      //print("Error al obtener la ruta: $e");
     }
   }
 

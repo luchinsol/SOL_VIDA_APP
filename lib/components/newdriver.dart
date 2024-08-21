@@ -137,11 +137,11 @@ class _DriverState extends State<Driver> {
   }
 
   Future<dynamic> pedidosInforme(String fecha) async {
-    print("---------------//// pedidos informe /////------------");
+    //print("---------------//// pedidos informe /////------------");
     try {
       SharedPreferences userPreference = await SharedPreferences.getInstance();
       int? iduser = userPreference.getInt('userID');
-      print("usuario condctor: $iduser");
+      //print("usuario condctor: $iduser");
       var res = await http.post(
           Uri.parse(apiUrl + apipedidoinforme + iduser.toString()),
           headers: {"Content-type": "application/json"},
@@ -164,8 +164,8 @@ class _DriverState extends State<Driver> {
           });
         }
 
-        print("----------inform----------");
-        print(informegeneral.length);
+       // print("----------inform----------");
+       // print(informegeneral.length);
         // Crear PDF con los pedidos obtenidos
         await createPdf(tempedido);
 
@@ -356,15 +356,15 @@ class _DriverState extends State<Driver> {
 }*/
 
   Future<dynamic> getRutas() async {
-    print(".......1");
+    //print(".......1");
     SharedPreferences userPreference = await SharedPreferences.getInstance();
     SharedPreferences rutaidget = await SharedPreferences.getInstance();
     int? iduser = userPreference.getInt('userID');
 
-    print("id user");
-    print(iduser);
+    //print("id user");
+    //print(iduser);
 
-    print("get ruta");
+    //print("get ruta");
 
     var res = await http.get(
       Uri.parse(apiUrl + apiLastRutaCond + iduser.toString()),
@@ -372,7 +372,7 @@ class _DriverState extends State<Driver> {
     );
     try {
       if (res.statusCode == 200) {
-        print("paso el estado");
+      //  print("paso el estado");
         var data = json.decode(res.body);
         RutaModel tempRutaModel = RutaModel(
             id: data['id'],
@@ -383,8 +383,8 @@ class _DriverState extends State<Driver> {
             placaVehiculo: data['placa']);
         if (mounted) {
           setState(() {
-            print("temprutamodel id");
-            print(tempRutaModel.id);
+           // print("temprutamodel id");
+           // print(tempRutaModel.id);
             idRuta = tempRutaModel.id;
             rutaidget.setInt('rutaIDNEW', idRuta);
             fechacreacion = tempRutaModel.fechaCreacion;
@@ -469,13 +469,13 @@ class _DriverState extends State<Driver> {
     final socketService = SocketService();
     socketService.listenToEvent('creadoRuta', (data) async {
       SharedPreferences rutaidget = await SharedPreferences.getInstance();
-      print("------esta es la RUTA");
-      print(data);
+     // print("------esta es la RUTA");
+     // print(data);
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
 
       if (data['conductor_id'] == userProvider.user?.id) {
-        print("entro al fi");
+        //print("entro al fi");
         setState(() {
           //seteo las preferncias para las demas vistas
           idRuta = data['id'];
@@ -485,10 +485,10 @@ class _DriverState extends State<Driver> {
           idconductor = data['conductor_id'];
           fechacreacion = data['fecha_creacion'];
         });
-        print("----datos de creado ruta");
-        print(idRuta);
-        print(idconductor);
-        print(fechacreacion);
+       // print("----datos de creado ruta");
+       // print(idRuta);
+       // print(idconductor);
+       // print(fechacreacion);
       }
     });
     _initialize();
@@ -520,9 +520,9 @@ class _DriverState extends State<Driver> {
     final rutaProvider = context.watch<RutaProvider>();
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 93, 93, 94),
+      backgroundColor: const Color.fromARGB(255, 93, 93, 94),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 76, 76, 77),
+        backgroundColor: const Color.fromARGB(255, 76, 76, 77),
         toolbarHeight: MediaQuery.of(context).size.height/18,
         
       ),
@@ -616,7 +616,7 @@ class _DriverState extends State<Driver> {
                      Container(
                       height: MediaQuery.of(context).size.height/18,
                       width: MediaQuery.of(context).size.height/18,
-                      decoration: BoxDecoration(
+                      decoration:const BoxDecoration(
                         image: DecorationImage(image: AssetImage(
                           'lib/imagenes/nuevito.png'
                         ))
@@ -685,7 +685,7 @@ class _DriverState extends State<Driver> {
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 153, 152, 152)),
+                    color: const Color.fromARGB(255, 153, 152, 152)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -711,8 +711,8 @@ class _DriverState extends State<Driver> {
                                 : Icons.report_gmailerrorred_outlined,
                             size: MediaQuery.of(context).size.width / 10,
                             color: idRuta != 0
-                                ? Color.fromARGB(255, 39, 62, 166)
-                                : Color.fromARGB(255, 246, 47, 8),
+                                ? const Color.fromARGB(255, 39, 62, 166)
+                                : const Color.fromARGB(255, 246, 47, 8),
                           ),
                           Text(
                             idRuta != 0
@@ -739,8 +739,8 @@ class _DriverState extends State<Driver> {
                                 : Icons.no_transfer_outlined,
                             size: MediaQuery.of(context).size.width / 10,
                             color: nombreauto != '-/-'
-                                ? Color.fromARGB(255, 39, 62, 166)
-                                : Color.fromARGB(255, 246, 47, 8),
+                                ? const Color.fromARGB(255, 39, 62, 166)
+                                : const Color.fromARGB(255, 246, 47, 8),
                           ),
                           Text(
                             nombreauto != '-/-'
@@ -748,8 +748,8 @@ class _DriverState extends State<Driver> {
                                 : "Espera tu unidad",
                             style: TextStyle(
                                 color: nombreauto != '-/-'
-                                    ? Color.fromARGB(255, 255, 255, 255)
-                                    : Color.fromARGB(255, 246, 47, 8),
+                                    ? const Color.fromARGB(255, 255, 255, 255)
+                                    : const Color.fromARGB(255, 246, 47, 8),
                                 fontSize:
                                     MediaQuery.of(context).size.width / 25,
                                 fontWeight: FontWeight.w700),
@@ -809,7 +809,7 @@ class _DriverState extends State<Driver> {
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                       backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 48, 36, 153))),
+                          const Color.fromARGB(255, 48, 36, 153))),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -840,7 +840,7 @@ class _DriverState extends State<Driver> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Informe de pedidos"),
+                          title:const Text("Informe de pedidos"),
                           content: Container(
                             height: MediaQuery.of(context).size.height / 7,
                             child: Column(
@@ -890,15 +890,15 @@ class _DriverState extends State<Driver> {
 
                                   // LLAMO METODO
 
-                                  print("------${_pdffecha.text}------");
+                                 // print("------${_pdffecha.text}------");
                                   pedidosInforme(_pdffecha.text);
                                   // _createPdf(_pdffecha.text);
 
                                   Navigator.pop(context);
                                 },
-                                child: Text("OK")),
+                                child: const Text("OK")),
                             TextButton(
-                                onPressed: () {Navigator.pop(context);}, child: Text("Cancelar"))
+                                onPressed: () {Navigator.pop(context);}, child:const Text("Cancelar"))
                           ],
                         );
                       },
@@ -908,7 +908,7 @@ class _DriverState extends State<Driver> {
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                       backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 230, 23, 81))),
+                          const Color.fromARGB(255, 230, 23, 81))),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

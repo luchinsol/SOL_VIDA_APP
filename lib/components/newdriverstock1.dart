@@ -108,13 +108,13 @@ class _Stock1State extends State<Stock1> {
     setState(() {
       activeOrderIndex++;
     });
-    print("get pedidos conduc");
+    //print("get pedidos conduc");
     SharedPreferences rutaidget = await SharedPreferences.getInstance();
     SharedPreferences userPreference = await SharedPreferences.getInstance();
     int? iduser = userPreference.getInt('userID');
     int? rutaidnew = rutaidget.getInt('rutaIDNEW');
-    print("datos de getpedidos : ${rutaidget.getInt('rutaIDNEW')}");
-    print("datos id user: ${iduser}");
+    //print("datos de getpedidos : ${rutaidget.getInt('rutaIDNEW')}");
+    //print("datos id user: ${iduser}");
 
     var res = await http.get(
       Uri.parse("$apiUrl$apiPedidosConductor$rutaidnew/${iduser.toString()}"),
@@ -161,13 +161,13 @@ class _Stock1State extends State<Stock1> {
   }
 
   Future<dynamic> getDetalleXUnPedido(pedidoID) async {
-    print("-----detalle pedido");
+   // print("-----detalle pedido");
     if (pedidoID != 0) {
       var res = await http.get(
         Uri.parse(apiUrl + apiDetallePedido + pedidoID.toString()),
         headers: {"Content-type": "application/json"},
       );
-      print(apiUrl + apiDetallePedido + pedidoID.toString());
+     // print(apiUrl + apiDetallePedido + pedidoID.toString());
       try {
         if (res.statusCode == 200) {
           var data = json.decode(res.body);
@@ -196,7 +196,7 @@ class _Stock1State extends State<Stock1> {
               grouped[nombreProd] = cantidad;
             }
           }
-          print("ENTRANDO A PEDIDOSSSSSSSSSSSSSS");
+         // print("ENTRANDO A PEDIDOSSSSSSSSSSSSSS");
           // print(grouped);
           // Crear la lista de resultados
 
@@ -207,7 +207,7 @@ class _Stock1State extends State<Stock1> {
           groupedJson = jsonEncode(result);
 
           // Imprimir el resultado
-          print("IMPRIMIDA FINAL DETALLES -------------------");
+        //  print("IMPRIMIDA FINAL DETALLES -------------------");
           //print(groupedJson);
           /*r (var i = 0; i < listProducto.length; i++) {
               if (listProducto[i].cantidad != 0) {
@@ -263,7 +263,7 @@ class _Stock1State extends State<Stock1> {
       int selectedQuantity = selectedQuantities[index] ?? 0;
       int requiredQuantity = productosglobales[product.nombre] ?? 0;
 
-      print("valores entregados------------->");
+    //  print("valores entregados------------->");
       //print(product);
       //print(selectedQuantity);
       //print(requiredQuantity);
@@ -315,7 +315,7 @@ class _Stock1State extends State<Stock1> {
           false, // El usuario debe hacer clic en el botón para cerrar el diálogo
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Información'),
+          title:const Text('Información'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -470,7 +470,7 @@ class _Stock1State extends State<Stock1> {
         throw Exception('Error en la solicitud: ${res.statusCode}');
       }
     } catch (error) {
-      print('Error al obtener productos: $error');
+      //print('Error al obtener productos: $error');
       throw error;
     }
   }
@@ -483,7 +483,7 @@ class _Stock1State extends State<Stock1> {
         isLoading = false;
       });
     } catch (error) {
-      print('Error al cargar productos: $error');
+    //  print('Error al cargar productos: $error');
       setState(() {
         isLoading = false;
       });
@@ -534,9 +534,9 @@ class _Stock1State extends State<Stock1> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 93, 93, 94),
+        backgroundColor:const Color.fromARGB(255, 93, 93, 94),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 76, 76, 77),
+          backgroundColor:const Color.fromARGB(255, 76, 76, 77),
           toolbarHeight: MediaQuery.of(context).size.height / 18,
           iconTheme: const IconThemeData(color: Colors.white),
           leading: IconButton(
@@ -559,11 +559,11 @@ class _Stock1State extends State<Stock1> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 12),
+             const SizedBox(height: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -593,7 +593,7 @@ class _Stock1State extends State<Stock1> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 12),
+                 const SizedBox(height: 12),
                   Row(
                     children: [
                       Container(
@@ -680,7 +680,7 @@ class _Stock1State extends State<Stock1> {
                           return Container(
                             width: MediaQuery.of(context).size.width * 0.9,
                             margin: const EdgeInsets.only(top: 8, bottom: 8),
-                            padding: EdgeInsets.all(8),
+                            padding:const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 236, 210, 134),
                               borderRadius: BorderRadius.circular(8),
@@ -750,9 +750,8 @@ class _Stock1State extends State<Stock1> {
                                           if (productosglobales.containsKey(nombreproductonew)) {
                                              setState(() {
                                               productoResiduo[nombreproductonew] = selectedQuantities[index]! - productosglobales[nombreproductonew];
-                                              print(
-                                                "-------resi duo os ----------");
-                                             print(productoResiduo[nombreproductonew]);
+                                             // print(  "-------resi duo os ----------");
+                                            // print(productoResiduo[nombreproductonew]);
                                             });
                                             
                                             
@@ -760,15 +759,14 @@ class _Stock1State extends State<Stock1> {
                                             // Handle the case where the key is not found
                                             setState((){
                                               productoResiduo[nombreproductonew] = selectedQuantities[index]!;
-                                              print(
-                                                "-------resi duo os else----------");
-                                             print(productoResiduo[nombreproductonew]);
+                                             // print( "-------resi duo os else----------");
+                                            // print(productoResiduo[nombreproductonew]);
                                             });
                                             
                                           }
                                           // FINALIZA CON TODOS LOS DATOS
-                                          print("final resultado");
-                                          print(productoResiduo.length);
+                                         // print("final resultado");
+                                         // print(productoResiduo.length);
                                           residuoProvider.updateResiduo(ResiduosModel(
                                               listaproductos: getproducts, // o la lista de productos que corresponda
                                               residuos: productoResiduo,
@@ -799,7 +797,7 @@ class _Stock1State extends State<Stock1> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Abastecimiento"),
+                            title: const Text("Abastecimiento"),
                             content: Text(mensaje),//Text("La cantidad debe ser mayor a la solicitada por los pedidos. Stock insuficiente en al menos un producto, se procede a actualizar."),
                             actions: [
                               TextButton(onPressed: ()async{
@@ -808,7 +806,7 @@ class _Stock1State extends State<Stock1> {
                                   int selectedQuantity = selectedQuantities[index] ?? 0;
                                   int requiredQuantity = productosglobales[product.nombre] ?? 0;
 
-                                  print("valores entregados------------->");
+                                 // print("valores entregados------------->");
                                   //print(product);
                                   //print(selectedQuantity);
                                   //print(requiredQuantity);
@@ -840,11 +838,11 @@ class _Stock1State extends State<Stock1> {
     }
                                 Navigator.pop(context);
                               },
-                               child: Text("OK")),
+                               child: const Text("OK")),
                               TextButton(onPressed: (){
                                 Navigator.pop(context);
                               },
-                               child: Text("Cancelar"))
+                               child:const Text("Cancelar"))
                             ],
                           );
                         });
@@ -853,7 +851,7 @@ class _Stock1State extends State<Stock1> {
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                       backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 33, 37, 139))),
+                          const Color.fromARGB(255, 33, 37, 139))),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

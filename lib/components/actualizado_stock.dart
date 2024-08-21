@@ -535,12 +535,12 @@ class _ActualizadoStockState extends State<ActualizadoStock> {
                       SizedBox(
                           child: ElevatedButton(
                               onPressed: () async {
-                               print("YAAAAAAAAAAAAAAAAA");
+                               //print("YAAAAAAAAAAAAAAAAA");
                                 for (var i = 0; i < listProducto.length; i++) {
                                   var cantidad =
                                       listProducto[i].cantidadStock.text;
-                                      print("list signo");
-                                      print(listProducto[i].signo);
+                                     // print("list signo");
+                                     // print(listProducto[i].signo);
                                   if (listProducto[i].signo == '') {
                                     if (cantidad.isEmpty) {
                                       //faltan producto
@@ -560,8 +560,8 @@ class _ActualizadoStockState extends State<ActualizadoStock> {
                                     }
                                   }
                                 }
-                                print("el pase");
-                                print(puedoPasarAHola2);
+                               // print("el pase");
+                               // print(puedoPasarAHola2);
                                 if (puedoPasarAHola2) {
                                   for (var j = 0;
                                       j < listProducto.length;
@@ -579,7 +579,7 @@ class _ActualizadoStockState extends State<ActualizadoStock> {
                                           "actualizado", true);
                                     }
                                   }
-                                  print("PASARRRR");
+                                  //print("PASARRRR");
                                   Navigator.push(
                                     // ignore: use_build_context_synchronously
                                     context,
@@ -593,12 +593,12 @@ class _ActualizadoStockState extends State<ActualizadoStock> {
                               },
                               style: ButtonStyle(
                                 surfaceTintColor: MaterialStateProperty.all(
-                                    Color.fromRGBO(83, 176, 68, 1.000)),
+                                    const Color.fromRGBO(83, 176, 68, 1.000)),
                                 elevation: MaterialStateProperty.all(10),
                                 minimumSize: MaterialStatePropertyAll(Size(
                                     anchoActual * 0.28, largoActual * 0.054)),
                                 backgroundColor: MaterialStateProperty.all(
-                                    Color.fromRGBO(83, 176, 68, 1.000)),
+                                    const Color.fromRGBO(83, 176, 68, 1.000)),
                               ),
                               child: Text(
                                 '¡Listdddo!',

@@ -80,7 +80,7 @@ class _PerfilCliente extends State<PerfilCliente> {
 
   Future<dynamic> updateCliente(saldoBeneficios, suscripcion, frecuencia,
       quiereretirar, clienteID, medioretiro, bancoretiro, numerocuenta) async {
-    print("2.- UPDAE CLEINTE---");
+   /* print("2.- UPDAE CLEINTE---");
 
     print("cliente----------------------------------------------");
     print(clienteID);
@@ -91,7 +91,7 @@ class _PerfilCliente extends State<PerfilCliente> {
     print("saldo bene");
     print(saldoBeneficios);
     print("frencua............");
-    print(frecuencia);
+    print(frecuencia);*/
     await http.put(Uri.parse(apiUrl + apiCliente + clienteID.toString()),
         headers: {"Content-type": "application/json"},
         body: jsonEncode({
@@ -118,7 +118,7 @@ class _PerfilCliente extends State<PerfilCliente> {
       medioretiro,
       bancoretiro,
       numerocuenta) async {
-        print("1 .- ---actualizar Provider");
+      //  print("1 .- ---actualizar Provider");
 
     clienteUpdate = UserModel(
         id: clienteid,
@@ -132,7 +132,7 @@ class _PerfilCliente extends State<PerfilCliente> {
         quiereRetirar: true,
         suscripcion: suscrip,
         rolid: 4);
-        print("${clienteUpdate}");
+       // print("${clienteUpdate}");
 
     Provider.of<UserProvider>(context, listen: false).updateUser(clienteUpdate);
 
@@ -182,7 +182,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                   Container(
                     margin: EdgeInsets.only(left: anchoActual * 0.035),
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 220, 220, 220),
+                        color: const Color.fromARGB(255, 220, 220, 220),
                         borderRadius: BorderRadius.circular(50)),
                     height: largoActual * 0.085,
                     width: anchoActual * 0.18,
@@ -330,7 +330,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                                             .bottomCenter,
                                                       ),*/
                                   //color: Colors.transparent,
-                                  image: DecorationImage(
+                                  image:const DecorationImage(
                                     image: AssetImage('lib/imagenes/playa.jpg'),
                                     fit: BoxFit.cover,
                                     opacity: 0.69,
@@ -602,7 +602,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                                                     ElevatedButton(
                                                                       onPressed:
                                                                           () {
-                                                                            print("-----N CUENTA BANCO-");
+                                                                          /*  print("-----N CUENTA BANCO-");
                                                                             print("Provider");
                                                                             print("${userProvider.user?.id}");
                                                                            print("${userProvider.user?.frecuencia}");
@@ -612,7 +612,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                                                            print("${userProvider.user?.fechaCreacionCuenta}");
                                                                            print("${_selectedItem}");
                                                                            print("${_otroItem}");
-                                                                           print("${_cuenta.text}");
+                                                                           print("${_cuenta.text}");*/
 
                                                                         actualizarProviderCliente(
                                                                             userProvider.user?.id,
@@ -695,7 +695,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                                                       onPressed:
                                                                           () {
 
-                                                                             print("-----YAPE-");
+                                                                         /*    print("-----YAPE-");
                                                                             print("Provider");
                                                                             print("${userProvider.user?.id}");
                                                                            print("${userProvider.user?.frecuencia}");
@@ -705,7 +705,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                                                            print("${userProvider.user?.fechaCreacionCuenta}");
                                                                            print("${_selectedItem}");
                                                                            print("${_otroItem}");
-                                                                           print("${_cuenta.text}");
+                                                                           print("${_cuenta.text}");*/
 
                                                                         actualizarProviderCliente(
                                                                             userProvider.user?.id,
@@ -1040,12 +1040,12 @@ class _PerfilCliente extends State<PerfilCliente> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Gracias'),
-          content: Text(
+          title: const Text('Gracias'),
+          content:const Text(
               'Se realizará el depósito mediante el método de pago que eligió dentro del plazo de una semana'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -196,7 +196,7 @@ class _EstadoPedido extends State<EstadoPedido> with TickerProviderStateMixin {
             height: largoActual * 0.060,
             width: anchoActual,
             decoration: BoxDecoration(
-                color: Color.fromARGB(129, 192, 192, 192),
+                color: const Color.fromARGB(129, 192, 192, 192),
                 borderRadius: BorderRadius.circular(20)),
             child: TabBar(
                 indicatorSize: TabBarIndicatorSize.tab,

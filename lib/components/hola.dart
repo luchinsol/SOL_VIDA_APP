@@ -1688,7 +1688,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                         const Color.fromRGBO(58, 182, 0, 1),
                                     isExpanded: true,
                                     value: _ubicacionSelected,
-                                    icon: Icon(
+                                    icon:const Icon(
                                       Icons.arrow_drop_down,
                                       color: Colors
                                           .white, // Cambia aquí el color de la flecha
@@ -1810,7 +1810,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                         //BIENVENIDA DEL CLIENTE
                         Container(
                           //color: Colors.amber,
-                          margin: EdgeInsets.only(top: 10),
+                          margin:const EdgeInsets.only(top: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1914,7 +1914,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                 icon: Lottie.asset(
                                                 "lib/imagenes/infos.json"),
                                                 onPressed: () async {
-                                                  print("inffff");
+                                                //  print("inffff");
                                                   await muestraDialogoPubli(context);
                                                 },
                                               ),
@@ -1931,7 +1931,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
                                                                                           style: TextStyle(
                                                   fontSize: largoActual * 0.016,
                                                   fontWeight: FontWeight.w800,
-                                                  color: Color.fromRGBO(0, 148, 217, 1))
+                                                  color: const Color.fromRGBO(0, 148, 217, 1))
                                                                                             ),
                                                 ),
                                               ],

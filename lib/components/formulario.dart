@@ -535,7 +535,7 @@ class _FormuState extends State<Formu> {
                             });*/
                             if (status == 200) {
                               Navigator.of(context).pop();
-                              print("----entro al 200");
+                             // print("----entro al 200");
                               showDialog(
                                 context: context,
                                 builder: (context) {
@@ -551,7 +551,7 @@ class _FormuState extends State<Formu> {
                                     builder: (context) => const Login()),
                               );
                             }else if(status == 401){
-                              print("entro al 40");
+                             // print("entro al 40");
                               Navigator.of(context).pop();
                               showDialog(
                                   context: context,

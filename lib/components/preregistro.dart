@@ -61,8 +61,8 @@ class _FormucliState extends State<Formucli> {
       // Formatear la fecha como una cadena en el formato deseado (por ejemplo, 'yyyy-MM-dd')
       //String fechaFormateada = DateFormat('yyyy-MM-dd').format(fechaNacimiento);
       String fechaActual = DateFormat('yyyy-MM-dd').format(fechaAct);
-        print(".........");
-        print("${nickname},${contrasena},$email,$nombre,$apellidos,$telefono,$fechaAct}");
+     //   print(".........");
+       // print("${nickname},${contrasena},$email,$nombre,$apellidos,$telefono,$fechaAct}");
       var res = await http.post(Uri.parse(apiUrl + apiCreateUser),
           headers: {"Content-type": "application/json"},
           body: jsonEncode({
@@ -87,8 +87,8 @@ class _FormucliState extends State<Formucli> {
             "banco_retiro": "NA",
             "numero_cuenta": "NA"
           }));
-          print("res----");
-          print(res.body);
+        //  print("res----");
+         // print(res.body);
       if (res.statusCode == 200) {
         setState(() {
           status = 200;
@@ -132,7 +132,7 @@ class _FormucliState extends State<Formucli> {
                       children: [
                         Container(
                           height: 100,
-                          decoration: BoxDecoration(
+                          decoration:const BoxDecoration(
                               image: DecorationImage(
                                   image:
                                       AssetImage('lib/imagenes/nuevito.png'))),
@@ -301,12 +301,12 @@ class _FormucliState extends State<Formucli> {
                               //filled: true,
                               //fillColor: Colors.white.withOpacity(1),
                             ),
-                            validator: (value) {
+                            /*validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'El campo es obligatorio';
                               }
                               return null;
-                            },
+                            },*/
                           ),
                         ),
                         //const SizedBox(height: 4),
@@ -400,7 +400,7 @@ class _FormucliState extends State<Formucli> {
                               ),*/
                         //const SizedBox(height: 4),
                         Container(
-                          padding: EdgeInsets.only(left: 20, right: 20),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.white),
@@ -541,7 +541,7 @@ class _FormucliState extends State<Formucli> {
 
                                 if (status == 200) {
                                   Navigator.of(context).pop();
-                                  print("----entro al 200");
+                                 // print("----entro al 200");
                                   showDialog(
                                       context: context,
                                       builder: (context) {
@@ -616,7 +616,7 @@ class _FormucliState extends State<Formucli> {
                                     },
                                   );
                                 } else if (status == 401) {
-                                  print("entro al 40");
+                                 // print("entro al 40");
                                   Navigator.of(context).pop();
                                   showDialog(
                                     context: context,

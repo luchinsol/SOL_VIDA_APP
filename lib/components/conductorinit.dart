@@ -161,8 +161,8 @@ class _ConductorinitState extends State<Conductorinit> {
   }
 
   Future<dynamic> getRutas() async {
-    print("conductor id .......");
-    print(conductorIDpref.toString());
+   // print("conductor id .......");
+   // print(conductorIDpref.toString());
     var res = await http.get(
       Uri.parse(apiUrl + apiLastRutaCond + conductorIDpref.toString()),
       headers: {"Content-type": "application/json"},
@@ -365,7 +365,7 @@ class _ConductorinitState extends State<Conductorinit> {
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 56, 141, 144),
+                                color: const Color.fromARGB(255, 56, 141, 144),
                                 borderRadius: BorderRadius.circular(50)),
                             child: IconButton(
                                 onPressed: () {
@@ -374,7 +374,7 @@ class _ConductorinitState extends State<Conductorinit> {
                                       builder: (BuildContext context) {
                                         return Dialog(
                                           child: Container(
-                                            padding: EdgeInsets.all(20),
+                                            padding: const EdgeInsets.all(20),
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height /
@@ -383,7 +383,7 @@ class _ConductorinitState extends State<Conductorinit> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Center(
+                                               const Center(
                                                     child: Text(
                                                   "¿Estas seguro que deseas salir?",
                                                   style: TextStyle(
@@ -393,7 +393,7 @@ class _ConductorinitState extends State<Conductorinit> {
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 )),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 50,
                                                 ),
                                                 Container(
@@ -407,7 +407,7 @@ class _ConductorinitState extends State<Conductorinit> {
                                                             Navigator.pop(
                                                                 context);
                                                           },
-                                                          child: Text(
+                                                          child:const Text(
                                                             "No",
                                                             style: TextStyle(
                                                                 color:
@@ -426,7 +426,7 @@ class _ConductorinitState extends State<Conductorinit> {
                                                                         (context) =>
                                                                             Solvida()));
                                                           },
-                                                          child: Text(
+                                                          child: const Text(
                                                             "Si",
                                                             style: TextStyle(
                                                                 color: Colors
@@ -450,7 +450,7 @@ class _ConductorinitState extends State<Conductorinit> {
                                   size: 40,
                                   color: Colors.white,
                                 ))),
-                        Text(
+                        const Text(
                           "Cerrar sesión",
                           style: TextStyle(
                               color: Colors.white,
@@ -474,12 +474,12 @@ class _ConductorinitState extends State<Conductorinit> {
                   children: [
                     Text(
                       "Bienvenid@ ${userProvider.user?.nombre}!",
-                      style: TextStyle(
+                      style:const TextStyle(
                           fontSize: 25,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                    const Text(
                       "a la Familia Sol",
                       style: TextStyle(
                           fontSize: 40,
@@ -544,12 +544,12 @@ class _ConductorinitState extends State<Conductorinit> {
                           },
                           style: ButtonStyle(
                             surfaceTintColor: MaterialStateProperty.all(
-                                Color.fromRGBO(83, 176, 68, 1.000)),
+                               const Color.fromRGBO(83, 176, 68, 1.000)),
                             elevation: MaterialStateProperty.all(10),
                             minimumSize: MaterialStatePropertyAll(Size(
                                 anchoActual * 0.28, largoActual * 0.054)),
                             backgroundColor: MaterialStateProperty.all(
-                                Color.fromRGBO(83, 176, 68, 1.000)),
+                               const Color.fromRGBO(83, 176, 68, 1.000)),
                           ),
                           child: Text(
                             comenzarOaqui,
@@ -558,11 +558,11 @@ class _ConductorinitState extends State<Conductorinit> {
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white),
                           )):Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 76, 163, 175),
                           borderRadius: BorderRadius.circular(20)),
-                      child: Text(
+                      child:const  Text(
                         "Hoy día no tienes\nuna ruta\nasignada,\nespera tu ruta.",
                         style: TextStyle(
                             color: Colors.white,

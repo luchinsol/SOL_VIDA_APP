@@ -58,24 +58,24 @@ class _RecuperacionState extends State<Recuperacion> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Restablecer contraseña"),
+        title: const Text("Restablecer contraseña"),
         backgroundColor: Colors.blue, // Establecer el color de fondo del AppBar
       ),
       body: Container(
-        margin: EdgeInsets.all(40),
+        margin:const  EdgeInsets.all(40),
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text(
+              const Text(
                 "Introduce tu nombre de usuario o correo o número de teléfono",
               ),
-              SizedBox(height: 7),
+             const SizedBox(height: 7),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Usuario o correo o número de teléfono',
                 ),
                 validator: (value) {

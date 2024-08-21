@@ -172,8 +172,8 @@ class _HolaConductorState extends State<HolaConductor> {
   }
 
   Future<dynamic> getRutas() async {
-    print("conductor en holaconductor");
-    print(conductorIDpref.toString());
+    //print("conductor en holaconductor");
+    //print(conductorIDpref.toString());
     var res = await http.get(
       Uri.parse(apiUrl + apiLastRutaCond + conductorIDpref.toString()),
       headers: {"Content-type": "application/json"},

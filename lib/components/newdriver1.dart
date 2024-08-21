@@ -116,13 +116,13 @@ class _Driver1State extends State<Driver1> {
     setState(() {
       activeOrderIndex++;
     });
-    print("get pedidos conduc");
+    //print("get pedidos conduc");
     SharedPreferences rutaidget = await SharedPreferences.getInstance();
     SharedPreferences userPreference = await SharedPreferences.getInstance();
     int? iduser = userPreference.getInt('userID');
     int? rutaid = rutaidget.getInt('rutaIDNEW');
-    print("datos ruta : ${rutaidget.getInt('rutaIDNEW')}");
-    print("datos id usuario: ${iduser}");
+  //  print("datos ruta : ${rutaidget.getInt('rutaIDNEW')}");
+    //print("datos id usuario: ${iduser}");
 
     var res = await http.get(
       Uri.parse("$apiUrl$apiPedidosConductor$rutaid/${iduser.toString()}"),
@@ -155,7 +155,7 @@ class _Driver1State extends State<Driver1> {
             cantidadpedidos = listPedidosbyRuta.length;
           });
         }
-        print("----pedidos lista conductor");
+      //  print("----pedidos lista conductor");
        // print(listPedidosbyRuta);
       }
     } catch (error) {
@@ -164,13 +164,13 @@ class _Driver1State extends State<Driver1> {
   }
 
   Future<dynamic> getDetalleXUnPedido(pedidoID) async {
-    print("-----detalle pedido");
+    //print("-----detalle pedido");
     if (pedidoID != 0) {
       var res = await http.get(
         Uri.parse(apiUrl + apiDetallePedido + pedidoID.toString()),
         headers: {"Content-type": "application/json"},
       );
-      print(res.body);
+     // print(res.body);
       try {
         if (res.statusCode == 200) {
           var data = json.decode(res.body);
@@ -208,7 +208,7 @@ class _Driver1State extends State<Driver1> {
           groupedJson = jsonEncode(result);
 
           // Imprimir el resultado
-          print(groupedJson);
+        //  print(groupedJson);
           /*r (var i = 0; i < listProducto.length; i++) {
               if (listProducto[i].cantidad != 0) {
                 var salto = '\n';

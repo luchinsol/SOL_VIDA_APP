@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:appsol_final/components/login.dart';
 import 'package:appsol_final/components/navegador.dart';
+import 'package:appsol_final/components/preinicios.dart';
 import 'package:appsol_final/models/zona_model.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart' as location_package;
@@ -40,7 +41,7 @@ class _NewpassState extends State<Newpass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 21, 90, 146),
+        backgroundColor: const Color.fromARGB(255, 21, 90, 146),
         body: SafeArea(
             child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -49,8 +50,8 @@ class _NewpassState extends State<Newpass> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
+                  padding: const EdgeInsets.all(20),
+                  child:const Text(
                     "Por favor ingresa una nueva contraseña.",
                     style: TextStyle(
                         fontSize: 20,
@@ -63,7 +64,7 @@ class _NewpassState extends State<Newpass> {
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(20),
+                        padding:const EdgeInsets.all(20),
                         child: TextFormField(
                           controller: _pass,
                           keyboardType: TextInputType.visiblePassword,
@@ -72,13 +73,13 @@ class _NewpassState extends State<Newpass> {
                             labelText: 'Nueva Contraseña',
                             hintText: 'Crea una nueva contraseña',
                             border: InputBorder.none,
-                            labelStyle: TextStyle(
+                            labelStyle:const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                             ),
                             hintStyle:
-                                TextStyle(fontSize: 20, color: Colors.grey),
+                               const TextStyle(fontSize: 20, color: Colors.grey),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -102,7 +103,7 @@ class _NewpassState extends State<Newpass> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: TextFormField(
                           controller: _newpass,
                           keyboardType: TextInputType.visiblePassword,
@@ -110,12 +111,12 @@ class _NewpassState extends State<Newpass> {
                           decoration: InputDecoration(
                             labelText: 'Repetir Contraseña',
                             hintText: 'Confirme contraseña',
-                            labelStyle: TextStyle(
+                            labelStyle:const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                             ),
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               fontSize: 20,
                               color: Colors.grey,
                             ),
@@ -189,7 +190,7 @@ class _NewpassState extends State<Newpass> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Login()),
+                                  builder: (context) => const Solvida()),
                             );
                           }
                         }
@@ -197,7 +198,7 @@ class _NewpassState extends State<Newpass> {
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.greenAccent)),
-                      child: Text(
+                      child: const Text(
                         "Cambiar contraseña",
                         style: TextStyle(color: Colors.black),
                       )),

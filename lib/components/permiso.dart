@@ -143,7 +143,7 @@ class _PermisoState extends State<Permiso> {
             setState(() {
               //print('- Es una cantidad IMPAR, ESTA DENTRO');
               zonaIDUbicacion = zonaID;
-              print(zonaIDUbicacion);
+              //print(zonaIDUbicacion);
             });
             //es impar ESTA AFUERA
             break;
@@ -233,14 +233,14 @@ class _PermisoState extends State<Permiso> {
               surfaceTintColor: Colors.white,
               title: Text(
                 tituloUbicacion,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w400,
                     color: Colors.black),
               ),
               content: Text(
                 contenidoUbicacion,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                style:const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               actions: <Widget>[
                 TextButton(
@@ -336,10 +336,10 @@ class _PermisoState extends State<Permiso> {
         body: SafeArea(
       child: Column(
         children: [
-          SizedBox(
+        const  SizedBox(
             height: 30,
           ),
-          Icon(
+         const Icon(
             Icons.location_on_outlined,
             size: 45,
             color: Colors.blueAccent,
@@ -349,15 +349,15 @@ class _PermisoState extends State<Permiso> {
             child: Center(
               child: Column(
                 children: [
-                  Text(
+                 const  Text(
                     "Usa tu ubicación",
                     textAlign: TextAlign.justify,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
-                  SizedBox(height: 20),
+                 const SizedBox(height: 20),
                   RichText(
                     textAlign: TextAlign.justify,
-                    text: TextSpan(
+                    text:const TextSpan(
                       style: TextStyle(fontSize: 14, color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(text: "Para asegurar entregas precisas, "),
@@ -373,12 +373,12 @@ class _PermisoState extends State<Permiso> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                const  SizedBox(height: 20),
+                const  Text(
                     "AguaSol recopila datos de ubicación para habilitar el rastreo en tiempo real del reparto, notificaciones de entrega y programación de entregas incluso cuando la aplicación está cerrada o no se está utilizando.",
                     textAlign: TextAlign.justify,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Container(
@@ -387,14 +387,14 @@ class _PermisoState extends State<Permiso> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.amber,
-                      image: DecorationImage(
+                      image:const DecorationImage(
                         image: AssetImage('lib/imagenes/pngegg.png'),
                         fit: BoxFit.cover, // O ajusta según tus necesidades
                       ),
                     ),
                     // Aquí puedes colocar el resto de tu contenido
                   ),
-                  SizedBox(
+                const  SizedBox(
                     height: 30,
                   ),
                   Container(
@@ -403,7 +403,7 @@ class _PermisoState extends State<Permiso> {
                       children: [
                         TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child:const Text(
                               "Denegar",
                               style: TextStyle(
                                   color: Colors.blueAccent,
@@ -414,7 +414,7 @@ class _PermisoState extends State<Permiso> {
                             onPressed: () async {
                               await currentLocation();
                             },
-                            child: Text("Aceptar",
+                            child:const Text("Aceptar",
                                 style: TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 20,

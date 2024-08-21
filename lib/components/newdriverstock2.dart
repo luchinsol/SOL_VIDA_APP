@@ -45,29 +45,29 @@ class _Stock2State extends State<Stock2> {
     
     SharedPreferences productoResiduopref = await SharedPreferences.getInstance();
     try{
-      print("--------------------sobrantes------------");
+     // print("--------------------sobrantes------------");
       if(residuoProvider.residuos!=null){
         cantidadProductos =  residuoProvider.residuos!.listaproductos.length;
-          print("----cantidad productos $cantidadProductos");
+        //  print("----cantidad productos $cantidadProductos");
          for(var i=0;i<cantidadProductos;i++){
           
           String nombreProducto = residuoProvider.residuos!.listaproductos[i].nombre;
-          print("nombre->$nombreProducto");
+       //   print("nombre->$nombreProducto");
          
           setState(() {
             residuofinal[nombreProducto] = productoResiduopref.getInt(nombreProducto);//residuoProvider.residuos!.residuos[nombreProducto];
             
           });
-           print("---resifuofinal ${residuofinal[nombreProducto]}");
+         //  print("---resifuofinal ${residuofinal[nombreProducto]}");
          }
 
       }
     
-      print("list ade producost");
+     /* print("list ade producost");
       print(residuoProvider.residuos?.listaproductos);
       print("---residuos en sobrantes");
       print(residuoProvider.residuos?.residuos);
-      print(residuoProvider.residuos?.residuos.length);
+      print(residuoProvider.residuos?.residuos.length);*/
     } 
     catch(error){
       throw Exception("$error");
@@ -96,9 +96,9 @@ class _Stock2State extends State<Stock2> {
      return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 93, 93, 94),
+        backgroundColor: const Color.fromARGB(255, 93, 93, 94),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 76, 76, 77),
+          backgroundColor: const Color.fromARGB(255, 76, 76, 77),
           toolbarHeight: MediaQuery.of(context).size.height / 18,
           iconTheme: const IconThemeData(color: Colors.white),
           leading: IconButton(
@@ -120,7 +120,7 @@ class _Stock2State extends State<Stock2> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.all(16),
+          padding:const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -185,12 +185,12 @@ class _Stock2State extends State<Stock2> {
                  ListView.builder(
                   itemCount:  residuoProvider.residuos!.listaproductos.length,
                   itemBuilder: (context, index) {
-                      print("------------------------------//////");
+                    /*  print("------------------------------//////");
                       print(residuoProvider.residuos);
                       print("-----ya pe");
 
                       print(residuoProvider.residuos!.listaproductos.length);
-                      print(residuoProvider.residuos!.listaproductos[0]);
+                      print(residuoProvider.residuos!.listaproductos[0]);*/
 
                     String nombreFinal = residuoProvider.residuos!.listaproductos[index].nombre;
                     

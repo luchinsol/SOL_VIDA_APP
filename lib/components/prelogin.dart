@@ -164,21 +164,21 @@ class _PreloginState extends State<Prelogin> {
 
   Future<dynamic> loginsol(username, password) async {
     try {
-      print("------loginsool");
-      print(username);
+     // print("------loginsool");
+     // print(username);
 
       var res = await http.post(Uri.parse(apiUrl + apiLogin),
           headers: {"Content-type": "application/json"},
           body: jsonEncode({"nickname": username, "contrasena": password}));
-      print("why");
-      print(res);
+    //  print("why");
+    //  print(res);
       if (res.statusCode == 200) {
         var data = json.decode(res.body);
         // CLIENTE
 
         if (data['usuario']['rol_id'] == 4) {
-          print("dentro del cliente");
-          print("userDataCopy");
+         // print("dentro del cliente");
+         // print("userDataCopy");
           SharedPreferences userDataCopy =
               await SharedPreferences.getInstance();
           userDataCopy.setString('token', data['token']);
@@ -200,8 +200,8 @@ class _PreloginState extends State<Prelogin> {
               'quiereRetirarcopy', data['usuario']['quiereretirar']);
           userDataCopy.setString('suscripcioncopy',
               data['usuario']['suscripcion'] ?? 'Sin suscripción');
-          print(userDataCopy);
-          print("-----------------------------------------------------------");
+        //  print(userDataCopy);
+         // print("-----------------------------------------------------------");
           /*print("cli");
           print("userData");
           // data['usuario']['nombre']
@@ -223,8 +223,8 @@ class _PreloginState extends State<Prelogin> {
               token: data['token'],
               rolid: data['usuario']['rol_id'],
               recargas: numrecargas);
-          print(userData);
-          print("-----------------------------------------------------------");
+         // print(userData);
+         // print("-----------------------------------------------------------");
           setState(() {
             status = 200;
             rol = 4;
@@ -767,7 +767,7 @@ class _PreloginState extends State<Prelogin> {
                           fontSize:
                               MediaQuery.of(context).size.width / 25.5, //16,
 
-                          color: Color.fromRGBO(84, 226, 132, 1),
+                          color: const Color.fromRGBO(84, 226, 132, 1),
                         ),
                       ))
                 ],
@@ -785,7 +785,7 @@ class _PreloginState extends State<Prelogin> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         body: Padding(
-          padding: EdgeInsets.all(0.0),
+          padding: const EdgeInsets.all(0.0),
           child: LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth <= Breakpoint.xsmall) {
