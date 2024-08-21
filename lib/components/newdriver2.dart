@@ -145,14 +145,37 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
 
    if(rutaid == data['ruta_id']){
         print("---entro a ala ruta_od");
-        showDialog(context: context,
+        if (context.mounted) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.red,
+        title:const Text('Un pedido ha sido anulado',style: TextStyle(color: Colors.white),),
+        content:const Text('Un pedido con el que estabas trabajando ha sido cancelado. Por favor, revisa tu lista de pedidos.',style: TextStyle(color: Colors.white)),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Cierra el diálogo
+             Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const Driver1())); // Navega a la lista de pedidos
+            },
+            child:const Text('Ver Pedidos',style: TextStyle(color: Colors.white)),
+          ),
+          
+        ],
+      );
+    },
+  );
+}
+
+        /*showDialog(context: context,
          builder: (BuildContext context){
-          return AlertDialog(
-            title: Text("Hola"),
-          );
+          return const AlertDialog(
+            backgroundColor: Colors.red,
+            title: Text('Atención se anuló un pedido de tu ruta. Revísalo' ));
           
           
-         });
+         });*/
    }
     });
   }

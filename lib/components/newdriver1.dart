@@ -540,7 +540,8 @@ class _Driver1State extends State<Driver1> {
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 2.5,
-                                        child: ElevatedButton(
+                                        child:  listPedidosbyRuta[index]
+                                                    .estado!='anulado' ? ElevatedButton(
                                             onPressed: () async {
                                               await getDetalleXUnPedido(
                                                   listPedidosbyRuta[index].id);
@@ -782,13 +783,14 @@ class _Driver1State extends State<Driver1> {
                                                   color: Colors.black,
                                                 )
                                               ],
-                                            )),
+                                            )):null,
                                       ),
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 2.5,
-                                        child: ElevatedButton(
+                                        child: listPedidosbyRuta[index]
+                                                    .estado!='anulado' ? ElevatedButton(
                                           onPressed: () {
                                             double latitudp =
                                                 listPedidosbyRuta[index]
@@ -860,7 +862,7 @@ class _Driver1State extends State<Driver1> {
                                                   color: Colors.white),
                                             ],
                                           ),
-                                        ),
+                                        ):null,
                                       )
                                     ],
                                   )

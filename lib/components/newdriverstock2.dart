@@ -36,45 +36,49 @@ class _Stock2State extends State<Stock2> {
     {'name': 'Recargas', 'current': 5},
   ];*/
   List<int> valoresFinales = []; 
+  int cantidadProductos = 0 ;
+  Map<String,dynamic>residuofinal = {};
 
-  Future<dynamic>getSobrantes()async{
+  getSobrantes()async{
    final residuoProvider = Provider.of<ResiduoProvider>(context, listen: false);
-
-    SharedPreferences sobrantesCopy = await SharedPreferences.getInstance();
+   // final datosResiduosfinales = 
+    
+    SharedPreferences productoResiduopref = await SharedPreferences.getInstance();
     try{
-      for(var i=0;i<residuoProvider.residuos!.listaproductos.length;i++){
-        String nombreProducto = residuoProvider.residuos!.listaproductos[i].nombre; // botella 3l
-
-        int valorSeleccionadoProducto =  residuoProvider.residuos!.residuos[nombreProducto]; 
-        if(valorSeleccionadoProducto>0){
-           sobrantesCopy.setInt(nombreProducto, valorSeleccionadoProducto);
-
-        }
-
-          // valor botella 3l
-       
+      print("--------------------sobrantes------------");
+      if(residuoProvider.residuos!=null){
+        cantidadProductos =  residuoProvider.residuos!.listaproductos.length;
+          print("----cantidad productos $cantidadProductos");
+         for(var i=0;i<cantidadProductos;i++){
+          
+          String nombreProducto = residuoProvider.residuos!.listaproductos[i].nombre;
+          print("nombre->$nombreProducto");
+         
+          setState(() {
+            residuofinal[nombreProducto] = productoResiduopref.getInt(nombreProducto);//residuoProvider.residuos!.residuos[nombreProducto];
+            
+          });
+           print("---resifuofinal ${residuofinal[nombreProducto]}");
+         }
 
       }
+    
+      print("list ade producost");
+      print(residuoProvider.residuos?.listaproductos);
+      print("---residuos en sobrantes");
+      print(residuoProvider.residuos?.residuos);
+      print(residuoProvider.residuos?.residuos.length);
     } 
     catch(error){
       throw Exception("$error");
     }
   }
-  _cargarpreferencias()async{
-    final residuoProvider = Provider.of<ResiduoProvider>(context, listen: false);
-     SharedPreferences sobrantesCopy = await SharedPreferences.getInstance();
-       for(var i=0;i<residuoProvider.residuos!.listaproductos.length;i++){
-         String nombreProducto = residuoProvider.residuos!.listaproductos[i].nombre;
-         int? valor = sobrantesCopy.getInt(nombreProducto);
-         valoresFinales.add(valor!);
-      }
-     
-  }
+ 
 
   @override
   void initState(){
     getSobrantes();
-    _cargarpreferencias();
+  //  _cargarpreferencias();
     super.initState();
 
   }
@@ -88,9 +92,8 @@ class _Stock2State extends State<Stock2> {
 
   @override
   Widget build(BuildContext context) {
-    final residuoProvider = context.watch<ResiduoProvider>();
-    // int cantidadProductos = residuoProvider.residuos!.listaproductos.length;
-    return WillPopScope(
+    final residuoProvider = Provider.of<ResiduoProvider>(context, listen: false);
+     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 93, 93, 94),
@@ -176,8 +179,10 @@ class _Stock2State extends State<Stock2> {
                // color: Colors.white,
                 width: MediaQuery.of(context).size.width * 0.93,
                 height: MediaQuery.of(context).size.width * 1.05,
-                child:residuoProvider.residuos != null && valoresFinales.isNotEmpty &&
-                 residuoProvider.residuos!.listaproductos.isNotEmpty ? ListView.builder(
+                child:residuoProvider.residuos != null && 
+                residuofinal.isNotEmpty &&
+                 residuoProvider.residuos!.listaproductos.isNotEmpty ? 
+                 ListView.builder(
                   itemCount:  residuoProvider.residuos!.listaproductos.length,
                   itemBuilder: (context, index) {
                       print("------------------------------//////");
@@ -187,7 +192,7 @@ class _Stock2State extends State<Stock2> {
                       print(residuoProvider.residuos!.listaproductos.length);
                       print(residuoProvider.residuos!.listaproductos[0]);
 
-                      print(valoresFinales[0]);
+                    String nombreFinal = residuoProvider.residuos!.listaproductos[index].nombre;
                     
                     return Container(
                       margin: const EdgeInsets.only(top: 9,bottom: 8),
@@ -216,7 +221,7 @@ class _Stock2State extends State<Stock2> {
                                 width: 70,
                                 child: Center(
                                   child: Text(
-                                    '${valoresFinales[index]}',
+                                    '${residuofinal[nombreFinal] ?? '0'}',
                                     style:const TextStyle(
                                       fontSize: 32,
                                       fontWeight: FontWeight.bold,
@@ -230,7 +235,7 @@ class _Stock2State extends State<Stock2> {
                       ),
                     );
                   },
-                ) : Center(child: Text("Todavía no hay sobrantes"),),
+                ) : Center(child: Text("Todavía no hay sobrantes",style: TextStyle(fontSize: MediaQuery.of(context).size.width/20,fontWeight: FontWeight.bold)),),
               ),
 
               const SizedBox(height: 16),

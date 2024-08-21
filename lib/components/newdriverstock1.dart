@@ -53,7 +53,7 @@ class _Stock1State extends State<Stock1> {
   Map<String, int> cantidadTotalPorProducto = {};
   String productos = '/api/products';
   List<ProductoSimple> getproducts = [];
-
+  String mensaje  = "La cantidad debe ser mayor a la solicitada por los pedidos.\n Stock insuficiente en al menos un producto, se procede a actualizar.";
   Map<String, dynamic> productosglobales = {};
   Map<String, dynamic> productoResiduo = {};
 
@@ -275,12 +275,10 @@ class _Stock1State extends State<Stock1> {
 
       // Actualizar el stock para cada producto
       try {
-
         await updateStock(selectedQuantity, product.id);
-     
 
         // Actualizar los datos locales
-       /* setState(() {
+        /* setState(() {
           selectedQuantities[index] = selectedQuantity;
           productosglobales[product.nombre] = selectedQuantity;
           getproducts[index] = ProductoSimple(
@@ -298,7 +296,7 @@ class _Stock1State extends State<Stock1> {
 
     if (hasInsufficientStock) {
       await _showDialog(
-          'La cantidad debe ser mayor a la solicitada por los pedidos. Hay insuficiente stock en al menos un producto y se procede a actualizar.');
+          'La cantidad debe ser mayor a la solicitada por los pedidos. Stock insuficiente en al menos un producto, se procede a actualizar.');
     } else {
       await _showDialog('Listo, prepárate para la ruta.');
     }
@@ -327,24 +325,24 @@ class _Stock1State extends State<Stock1> {
           ),
           actions: <Widget>[
             TextButton(
-              child:const Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
-                
-                
-                residuoProvider.updateResiduo(
-                  ResiduosModel(
-                    listaproductos: getproducts,
-                     residuos: productoResiduo));
-                Navigator.push(context,MaterialPageRoute(builder: (BuildContext context)=>const Driver())); // Cierra el diálogo
+                residuoProvider.updateResiduo(ResiduosModel(
+                    listaproductos: getproducts, residuos: productoResiduo));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const Driver())); // Cierra el diálogo
               },
             ),
-            TextButton(onPressed: (){
-              residuoProvider.updateResiduo(
-                  ResiduosModel(
-                    listaproductos: getproducts,
-                     residuos: productoResiduo));
-              Navigator.pop(context);
-            }, child:const Text("Continuar"))
+            TextButton(
+                onPressed: () {
+                  residuoProvider.updateResiduo(ResiduosModel(
+                      listaproductos: getproducts, residuos: productoResiduo));
+                  Navigator.pop(context);
+                },
+                child: const Text("Continuar"))
           ],
         );
       },
@@ -518,9 +516,21 @@ class _Stock1State extends State<Stock1> {
         false); // Previene el comportamiento predeterminado de retroceso
   }
 
+  savedpreferencesResiduos(Map<String, dynamic> residuos, List<ProductoSimple> productos)async{
+       SharedPreferences productoResiduopref = await SharedPreferences.getInstance();
+       // Itera sobre la lista de nombres y guarda en SharedPreferences
+        for (int i = 0; i < productos.length; i++) {
+          String nombreClave = productos[i].nombre; // Asegúrate de que ProductoSimple tenga una propiedad 'nombre'
+          if (residuos.containsKey(nombreClave)) {
+            productoResiduopref.setInt(nombreClave, residuos[nombreClave]!);
+          }
+        }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final residuoProvider = context.watch<ResiduoProvider>();
+    final residuoProvider =
+        Provider.of<ResiduoProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -615,8 +625,8 @@ class _Stock1State extends State<Stock1> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                   // color: Colors.white,
-                    width: MediaQuery.of(context).size.width/2.6,
+                    // color: Colors.white,
+                    width: MediaQuery.of(context).size.width / 2.6,
                     child: const Text(
                       'Productos',
                       style: TextStyle(
@@ -696,86 +706,78 @@ class _Stock1State extends State<Stock1> {
                                   ),
                                 ),
                                 // SizedBox(width: 5),
-                                Container(
-                                  // color: Colors.white,
-                                  width:
-                                      MediaQuery.of(context).size.width / 4.5,
-                                  child: Text(
-                                    "${productosglobales[nombreproductoobtenido] ?? '0'} ", // valor de cantidad
+                               Container(
+  width: MediaQuery.of(context).size.width / 4.5,
+  child: productosglobales[nombreproductoobtenido] != null
+      ? (productosglobales[nombreproductoobtenido]! > 0
+          ? Text(
+              "${productosglobales[nombreproductoobtenido]!}",
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width / 25,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+              ),
+              textAlign: TextAlign.center,
+            )
+          : const Text('0', // Muestra 0 si la cantidad es 0
+              style: TextStyle(
+                fontSize: 16.0, // Ajusta el tamaño según tus necesidades
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+              ),
+              textAlign: TextAlign.center,
+            ))
+      : Container(
+         width: MediaQuery.of(context).size.width / 6,
+        child: const CircularProgressIndicator(color: Colors.black)),
+),
 
-                                    //"Holaaa",
-                                    style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.width /
-                                              25,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Poppins',
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
                                 //SizedBox(width: 16),
                                 Container(
                                   color: Colors.white,
                                   width: MediaQuery.of(context).size.width / 5,
                                   child: DropdownButton<int>(
                                     value: (selectedQuantities[index] ?? 0),
-                                    //?? productosglobales[nombreproductoobtenido] ?? 0
                                     items: dropdownItems,
-                                    /*List.generate(1000, (index) => index)
-                                        .map((int value) {
-                                      return DropdownMenuItem<int>(
-                                        value: value,
-                                        child: Text(
-                                          '$value',
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                25,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Poppins',
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),*/
                                     onChanged: (int? newValue) {
                                       if (newValue != null) {
-                                        setState(() {
-                                          //print("------drop ddonw ");
-                                          //print("valor seleccionado : ${newValue}");
-                                          // print("-------------");
+                                       
                                           selectedQuantities[index] = newValue;
-                                          //Map<String, dynamic> productoResiduo = {};
 
                                           String nombreproductonew =
                                               getproducts[index].nombre;
-                                          // MAP DE PRODCUTO = BIDON
-                                          // VALOR DD - VALOR PRODUCTOGLOBAL
 
-                                          if (productosglobales
-                                              .containsKey(nombreproductonew)) {
-                                            productoResiduo[nombreproductonew] =
-                                                selectedQuantities[index]! -
-                                                    productosglobales[
-                                                        nombreproductonew];
+                                          if (productosglobales.containsKey(nombreproductonew)) {
+                                             setState(() {
+                                              productoResiduo[nombreproductonew] = selectedQuantities[index]! - productosglobales[nombreproductonew];
+                                              print(
+                                                "-------resi duo os ----------");
+                                             print(productoResiduo[nombreproductonew]);
+                                            });
+                                            
+                                            
                                           } else {
                                             // Handle the case where the key is not found
-                                            productoResiduo[nombreproductonew] =
-                                                selectedQuantities[index]!;
+                                            setState((){
+                                              productoResiduo[nombreproductonew] = selectedQuantities[index]!;
+                                              print(
+                                                "-------resi duo os else----------");
+                                             print(productoResiduo[nombreproductonew]);
+                                            });
+                                            
                                           }
-                                        });
+                                          // FINALIZA CON TODOS LOS DATOS
+                                          print("final resultado");
+                                          print(productoResiduo.length);
+                                          residuoProvider.updateResiduo(ResiduosModel(
+                                              listaproductos: getproducts, // o la lista de productos que corresponda
+                                              residuos: productoResiduo,
+                                          ));
 
-                                        //productosglobales[
-                                        //   nombreproductoobtenido] = newValue;
-                                        //productosglobales[nombreproductoobtenido] = newValue;
+                                          savedpreferencesResiduos(productoResiduo, getproducts);
 
-                                        /* getproducts[index] = ProductoSimple(
-                                            id: getproducts[index].id,
-                                            nombre: getproducts[index].nombre,
-                                            precio: getproducts[index].precio,
-                                            descripcion: newValue.toString(),
-                                          );*/
+                                          
+                                       
                                       }
                                     },
                                   ),
@@ -785,14 +787,68 @@ class _Stock1State extends State<Stock1> {
                           );
                         },
                       )
-                    : Center(child: CircularProgressIndicator()),
+                    : const Center(child: CircularProgressIndicator(color: Colors.white,)),
               ),
               const SizedBox(height: 16),
               // BOTONES
               Container(
                 height: MediaQuery.of(context).size.height / 15,
                 child: ElevatedButton(
-                  onPressed: _confirmarAbastecimiento,
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Abastecimiento"),
+                            content: Text(mensaje),//Text("La cantidad debe ser mayor a la solicitada por los pedidos. Stock insuficiente en al menos un producto, se procede a actualizar."),
+                            actions: [
+                              TextButton(onPressed: ()async{
+                                for (int index = 0; index < getproducts.length; index++) {
+                                  ProductoSimple product = getproducts[index];
+                                  int selectedQuantity = selectedQuantities[index] ?? 0;
+                                  int requiredQuantity = productosglobales[product.nombre] ?? 0;
+
+                                  print("valores entregados------------->");
+                                  //print(product);
+                                  //print(selectedQuantity);
+                                  //print(requiredQuantity);
+                                  //print(product.id);
+
+                                  if (requiredQuantity > selectedQuantity) {
+                                    mensaje = "Listo, preparate para tu ruta";
+                                  }
+
+                                  // Actualizar el stock para cada producto
+                                  try {
+                                    await updateStock(selectedQuantity, product.id);
+
+                                    // Actualizar los datos locales
+                                    /* setState(() {
+                                      selectedQuantities[index] = selectedQuantity;
+                                      productosglobales[product.nombre] = selectedQuantity;
+                                      getproducts[index] = ProductoSimple(
+                                        id: product.id,
+                                        nombre: product.nombre,
+                                        precio: product.precio,
+                                        descripcion: selectedQuantity.toString(),
+                                      );
+        });*/
+      } catch (e) {
+        //print("Error al actualizar el stock para ${product.nombre}: $e");
+        // Puedes manejar el error aquí, por ejemplo, mostrando un mensaje al usuario
+      }
+    }
+                                Navigator.pop(context);
+                              },
+                               child: Text("OK")),
+                              TextButton(onPressed: (){
+                                Navigator.pop(context);
+                              },
+                               child: Text("Cancelar"))
+                            ],
+                          );
+                        });
+                  }, // _confirmarAbastecimiento,
                   style: ButtonStyle(
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
@@ -823,14 +879,10 @@ class _Stock1State extends State<Stock1> {
                 height: MediaQuery.of(context).size.height / 15,
                 child: ElevatedButton(
                   onPressed: () {
-                    residuoProvider.updateResiduo(ResiduosModel(
-                      listaproductos: getproducts,
-                       residuos: productoResiduo));
+
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const Stock2()
-                      ),
+                      MaterialPageRoute(builder: (context) => const Stock2()),
                     );
                   },
                   style: ButtonStyle(
