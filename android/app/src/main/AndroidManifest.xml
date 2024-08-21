@@ -9,7 +9,7 @@
     <application
         android:label="Sol Market"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyC_DGTR1A486oAHhNG1F6LXKU1AmhjJptY" />
