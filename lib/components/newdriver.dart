@@ -582,11 +582,11 @@ class _DriverState extends State<Driver> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.only(right: 20,left: 20,),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          // color: Colors.grey,
+          height: MediaQuery.of(context).size.height/1.1,
+          //color: Colors.grey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -595,6 +595,17 @@ class _DriverState extends State<Driver> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                     Container(
+                      height: MediaQuery.of(context).size.height/18,
+                      width: MediaQuery.of(context).size.height/18,
+                      decoration:const BoxDecoration(
+                        image: DecorationImage(image: AssetImage(
+                          'lib/imagenes/nuevito.png'
+                        ))
+                      ),
+                    ) ,const SizedBox(
+                      width: 19,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -610,18 +621,8 @@ class _DriverState extends State<Driver> {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      width: 19,
-                    ),
-                     Container(
-                      height: MediaQuery.of(context).size.height/18,
-                      width: MediaQuery.of(context).size.height/18,
-                      decoration:const BoxDecoration(
-                        image: DecorationImage(image: AssetImage(
-                          'lib/imagenes/nuevito.png'
-                        ))
-                      ),
-                    )
+                   
+                    
                   ],
                 ),
               ),
@@ -676,11 +677,11 @@ class _DriverState extends State<Driver> {
                       ),
                     ),
                   )),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 35,
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 3.5,
+                height: MediaQuery.of(context).size.height / 4.2,
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(

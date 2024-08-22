@@ -264,17 +264,17 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                               image: AssetImage('lib/imagenes/nuevecito.png'))),
                     ),
                     const SizedBox(
-                      height: 19,
+                      height: 17,
                     ),
                     Text(
-                      "Felicitaciones.",
+                      "Ubicación añadida exitosamente.",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: MediaQuery.of(context).size.width / 25,
                           color: const Color.fromARGB(255, 2, 100, 181)),
                     ),
                     const SizedBox(
-                      height: 19,
+                      height: 17,
                     ),
                     TextButton(
                         onPressed: () {
@@ -288,11 +288,11 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                               )),
                     );
                         },
-                        child: const Text(
+                        child: Text(
                           "OK",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 24,
+                              fontSize: MediaQuery.of(context).size.width/25,
                               color: const Color.fromARGB(255, 4, 93, 167)),
                         ))
                   ],

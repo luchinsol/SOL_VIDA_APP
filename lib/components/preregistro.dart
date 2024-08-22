@@ -574,10 +574,10 @@ class _FormucliState extends State<Formucli> {
                                                             'lib/imagenes/nuevecito.png'))),
                                               ),
                                               const SizedBox(
-                                                height: 19,
+                                                height: 17,
                                               ),
                                               Text(
-                                                "Felicitaciones!",
+                                                "¡Registro exitoso!",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize:
@@ -600,13 +600,13 @@ class _FormucliState extends State<Formucli> {
                                                               const Prelogin()),
                                                     );
                                                   },
-                                                  child: const Text(
+                                                  child:  Text(
                                                     "OK",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize: 24,
-                                                        color: Color.fromARGB(
+                                                        fontSize: MediaQuery.of(context).size.width/23,
+                                                        color: const Color.fromARGB(
                                                             255, 4, 93, 167)),
                                                   ))
                                             ],
@@ -662,13 +662,13 @@ class _FormucliState extends State<Formucli> {
                                                   onPressed: () {
                                                     Navigator.pop(context);
                                                   },
-                                                  child: const Text(
+                                                  child: Text(
                                                     "OK",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize: 24,
-                                                        color: Color.fromARGB(
+                                                       fontSize: MediaQuery.of(context).size.width/23,
+                                                        color:const Color.fromARGB(
                                                             255, 4, 93, 167)),
                                                   ))
                                             ],

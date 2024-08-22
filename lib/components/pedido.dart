@@ -474,11 +474,12 @@ class _PedidoState extends State<Pedido> {
                                         builder: (BuildContext context) {
                                           return Dialog(
                                             child: Container(
+                                            //  color:Colors.amber,
                                               padding: const EdgeInsets.all(10),
                                               height: MediaQuery.of(context)
                                                       .size
                                                       .height /
-                                                  5,
+                                                  5.5,
                                               child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
@@ -493,10 +494,10 @@ class _PedidoState extends State<Pedido> {
                                                                 'lib/imagenes/nuevecito.png'))),
                                                   ),
                                                   Container(
-                                                    child: const Text(
+                                                    child: Text(
                                                         "¿Estas de acuerdo con tu compra?",
                                                         style: TextStyle(
-                                                            fontSize: 16,
+                                                            fontSize:MediaQuery.of(context).size.width/30,
                                                             color: const Color
                                                                 .fromARGB(255,
                                                                 2, 101, 182),
@@ -505,7 +506,7 @@ class _PedidoState extends State<Pedido> {
                                                                     .bold)),
                                                   ),
                                                   const SizedBox(
-                                                    height: 20,
+                                                    height: 15,
                                                   ),
                                                   Row(
                                                     mainAxisAlignment:
@@ -517,10 +518,10 @@ class _PedidoState extends State<Pedido> {
                                                             Navigator.pop(
                                                                 context);
                                                           },
-                                                          child: const Text(
+                                                          child:  Text(
                                                             "Cancelar",
                                                             style: TextStyle(
-                                                                fontSize: 19,
+                                                                fontSize:MediaQuery.of(context).size.width/27,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -552,10 +553,10 @@ class _PedidoState extends State<Pedido> {
                                                                           const Prefinal()),
                                                             );
                                                           },
-                                                          child: const Text(
+                                                          child:  Text(
                                                             "Si",
                                                             style: TextStyle(
-                                                                fontSize: 19,
+                                                                fontSize: MediaQuery.of(context).size.width/27,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,

@@ -1106,7 +1106,7 @@ class _HolaState extends State<Hola2> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final anchoActual = MediaQuery.of(context).size.width;
-    final largoActual = MediaQuery.of(context).size.height;
+    final largoActual = MediaQuery.of(context).size.height/1.08;
     final userProvider = context.watch<UserProvider>();
     String mensajeCodigoParaAmigos =
         'Hola!,\nTe presento la *app 💧 Sol Vida 💧* usa mi codigo para tu primera compra de un *BIDÓN DE AGUA DE 20L (bidon + agua)* y te lo podrás llevar *a solo S/.23.00 ~(Precio regular: S/.35.00)~*.\n¡Solo usando mi código!.\nAdemás puedes referir a tus contactos con tu codigo y _*beneficiarte con S/. 3.00 💸*_ por las compras que realicen. \n✅ USA MI CODIGO DE REFERENCIA: ${userProvider.user?.codigocliente}\n❓ Más detalles AQUÍ: $urlExplicacion \n⏬ Descarga la APP AQUÍ: $urlPreview';

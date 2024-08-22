@@ -47,7 +47,7 @@ class _PrefinalState extends State<Prefinal> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width/2.3,
-                      height: MediaQuery.of(context).size.height/5,
+                      height: MediaQuery.of(context).size.height/6.5,
                       decoration: const BoxDecoration(
                        // color: Colors.grey,
                           image: DecorationImage(
@@ -68,12 +68,13 @@ class _PrefinalState extends State<Prefinal> {
                       height: 45,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       //crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          height: 180,
-                          width: 180,
+                          height: MediaQuery.of(context).size.width/2.3,
+                           width: MediaQuery.of(context).size.width/2.3,
+                         // width: 180,
                           decoration: BoxDecoration(
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(20),
@@ -85,11 +86,11 @@ class _PrefinalState extends State<Prefinal> {
 
                         // ESPACIO ENTRE CONTAINER
                         const SizedBox(
-                          width: 10,
+                          width: 0,
                         ),
                         Container(
-                          height: 180,
-                          width: 180,
+                          height: MediaQuery.of(context).size.width/2.3,
+                           width: MediaQuery.of(context).size.width/2.3,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.amber,
@@ -100,14 +101,14 @@ class _PrefinalState extends State<Prefinal> {
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
-                    const Center(
+                     Center(
                       child: Text(
                         "Muy pronto\nla Familia Sol, llegará con nuevos\nproductos",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: MediaQuery.of(context).size.width/23,
                             fontWeight: FontWeight.w700,
                             color: Colors.white),
                       ),
@@ -125,7 +126,7 @@ class _PrefinalState extends State<Prefinal> {
                         ),*/
 
                         const SizedBox(
-                      height: 50,
+                      height: 40,
                     ),
                     Center(
                       child: Container(

@@ -265,7 +265,7 @@ class _EstadoPedido extends State<EstadoPedido> with TickerProviderStateMixin {
                           );*/
                         },
                         child: SizedBox(
-                          height: anchoActual * 0.51,
+                          height: anchoActual * 0.55,
                           child: Card(
                             surfaceTintColor: Colors.white,
                             color: Colors.white,

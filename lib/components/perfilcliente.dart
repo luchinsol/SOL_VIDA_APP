@@ -296,7 +296,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                           height: 0.2),
                                     ),
                                     TextSpan(
-                                      text: "\no oportunidades",
+                                      text: "\nu oportunidades",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: largoActual * 0.016,
