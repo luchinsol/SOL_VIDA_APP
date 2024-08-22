@@ -339,9 +339,9 @@ class _Driver1State extends State<Driver1> {
     return/* WillPopScope(
       onWillPop: _onWillPop,
       child:*/ Scaffold(
-        backgroundColor: Color.fromARGB(255, 93, 93, 94),
+        backgroundColor: const Color.fromARGB(255, 93, 93, 94),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 76, 76, 77),
+        backgroundColor: const Color.fromARGB(255, 76, 76, 77),
         toolbarHeight: MediaQuery.of(context).size.height/18,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

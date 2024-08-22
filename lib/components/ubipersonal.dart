@@ -989,25 +989,27 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Color.fromRGBO(33, 88, 254, 1),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      appBar:AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        iconTheme: const IconThemeData(
+          color: Color.fromARGB(255, 0, 0, 0)
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(0.0),
+        padding: const EdgeInsets.all(15.0),
         child: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-            Color.fromRGBO(0, 106, 252, 1.000),
-            Color.fromRGBO(0, 106, 252, 1.000),
-            Color.fromRGBO(0, 106, 252, 1.000),
-            Colors.white,
-          ], begin: Alignment.topLeft, end: Alignment.bottomCenter)),
+         
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // LOGO DE SOL
               Container(
                  //padding: const EdgeInsets.all(9),
+                 //color: Colors.grey,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
@@ -1017,17 +1019,15 @@ class _MapScreenState extends State<MapScreen> {
                           borderRadius: BorderRadius.circular(0),
                           image: const DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage('lib/imagenes/nuevito.png'))),
+                              image: AssetImage('lib/imagenes/nuevecito.png'))),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 10,),
                     Text(
-                      "Indicanos tu ubicación",
+                      "Indicanos tu ubicación de destino",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width / 18,
-                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width / 22,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                           fontWeight: FontWeight.w500),
                     ),
                   ],
@@ -1040,7 +1040,7 @@ class _MapScreenState extends State<MapScreen> {
               // TITULO
 
               Container(
-                width: MediaQuery.of(context).size.width / 1.1,
+                width: MediaQuery.of(context).size.width / 1,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(9),
                     color: Colors.white),
@@ -1099,21 +1099,24 @@ class _MapScreenState extends State<MapScreen> {
                   isCrossBtnShown: true,
                 ),
               ),
+
               const SizedBox(
                 height: 20,
               ),
+
+              // MAPA
               Container(
-                height: MediaQuery.of(context).size.height / 1.85,
-                width: MediaQuery.of(context).size.width / 1.1,
-                padding: const EdgeInsets.all(9),
+                height: MediaQuery.of(context).size.height / 1.95,
+                width: MediaQuery.of(context).size.width / 1,
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(17)),
-                child: Expanded(
+                    borderRadius: BorderRadius.circular(1)),
+             
                   child: GoogleMap(
                     initialCameraPosition: CameraPosition(
                       target: _currentPosition,
-                      zoom: 18.0,
+                      zoom: 14.0,
                     ),
                     onMapCreated: (controller) {
                       _mapController = controller;
@@ -1123,13 +1126,16 @@ class _MapScreenState extends State<MapScreen> {
                       _currentPosition = position.target;
                     },
                   ),
-                ),
+                
               ),
 
+
+              // ESPACIO FINAL
               const SizedBox(
                 height: 15,
               ),
 
+              // BOTON GUARDAR
               Container(
                 decoration:const BoxDecoration(
                     
@@ -1138,7 +1144,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all(
-                          const Color.fromRGBO(58, 182, 0, 1))),
+                          const Color.fromARGB(255, 72, 11, 255))),
                   //onPressed: _addLocation,
                   onPressed: () async {
                     try {
@@ -1151,12 +1157,12 @@ class _MapScreenState extends State<MapScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Éxito"),
-                            content: Text(
+                            title: const Text("Éxito"),
+                            content: const Text(
                                 "Los datos se han guardado de manera exitosa."),
                             actions: <Widget>[
                               TextButton(
-                                child: Text("OK"),
+                                child:const Text("OK"),
                                 onPressed: () {
                                   Navigator.of(context)
                                       .pop(); // Cerramos el diálogo
