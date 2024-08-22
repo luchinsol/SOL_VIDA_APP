@@ -57,8 +57,8 @@ class _Driver1State extends State<Driver1> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: rutaCounter> 0 ? Text('Pedido nuevo') : Text("No hay pedido"),
-            content:rutaCounter > 0 ? Text('Se añadió un pedido más a tu ruta.') : Text("Espera algún pedido."),
+            title: rutaCounter> 0 ? const Text('Pedido nuevo') :const Text("No hay pedido añadidos en tiempo real"),
+            content:rutaCounter > 0 ? const Text('Se añadió un pedido más a tu ruta.') :const Text("Espera algún pedido."),
             actions: <Widget>[
               TextButton(
                 child: Text('OK'),
@@ -336,9 +336,9 @@ class _Driver1State extends State<Driver1> {
   Widget build(BuildContext context) {
     final cardpedidoProvider =
         Provider.of<CardpedidoProvider>(context, listen: false);
-    return WillPopScope(
+    return/* WillPopScope(
       onWillPop: _onWillPop,
-      child: Scaffold(
+      child:*/ Scaffold(
         backgroundColor: Color.fromARGB(255, 93, 93, 94),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 76, 76, 77),
@@ -368,7 +368,7 @@ class _Driver1State extends State<Driver1> {
             ),
             ],
           ),
-          leading: IconButton(
+         /* leading: IconButton(
             icon: Icon(Icons.arrow_back,color: Colors.white,),
             onPressed: () {
               Navigator.push(
@@ -376,7 +376,7 @@ class _Driver1State extends State<Driver1> {
                 MaterialPageRoute(builder: (context) => const Driver()),
               ); // Regresa a Bienvenido
             },
-          ),
+          ),*/
         ),
         body: Padding(
           padding: EdgeInsets.all(8.0),
@@ -418,7 +418,7 @@ class _Driver1State extends State<Driver1> {
                             return Container(
                               margin: const EdgeInsets.only(bottom: 20),
                               padding: const EdgeInsets.all(20),
-                              height: MediaQuery.of(context).size.height / 4,
+                              height: MediaQuery.of(context).size.height / 3.6,
                               decoration: BoxDecoration(
                                   color: listPedidosbyRuta[index].estado ==
                                           'en proceso'
@@ -429,7 +429,7 @@ class _Driver1State extends State<Driver1> {
                                               255, 62, 115, 79)
                                           : listPedidosbyRuta[index].estado ==
                                                   'entregado'
-                                              ? Color.fromARGB(255, 67, 87, 121)
+                                              ? const Color.fromARGB(255, 43, 38, 77)
                                               : listPedidosbyRuta[index]
                                                           .estado ==
                                                       'anulado'
@@ -444,7 +444,7 @@ class _Driver1State extends State<Driver1> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
+                                     const Text(
                                         "Orden ID#",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -457,12 +457,12 @@ class _Driver1State extends State<Driver1> {
                                           color: listPedidosbyRuta[index]
                                                       .estado ==
                                                   'en proceso'
-                                              ? Color.fromARGB(255, 193, 242,
+                                              ? const Color.fromARGB(255, 193, 242,
                                                   207) // Color para 'en proceso'
                                               : listPedidosbyRuta[index]
                                                           .estado ==
                                                       'pagado'
-                                                  ? Color.fromARGB(
+                                                  ? const Color.fromARGB(
                                                       255,
                                                       204,
                                                       251,
@@ -476,7 +476,7 @@ class _Driver1State extends State<Driver1> {
                                       ),
                                       Text(
                                         "${listPedidosbyRuta[index].id}",
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(color: Colors.white),
                                       )
                                     ],
                                   ),
@@ -500,9 +500,10 @@ class _Driver1State extends State<Driver1> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         "Punto de entrega",
                                         style: TextStyle(
+                                          color: Colors.amber,
                                             fontWeight: FontWeight.bold),
                                       )
                                     ],
@@ -515,8 +516,8 @@ class _Driver1State extends State<Driver1> {
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.width /
-                                                25,
-                                        fontWeight: FontWeight.bold),
+                                                27,
+                                        fontWeight: FontWeight.bold,color: Color.fromARGB(255, 186, 185, 185)),
                                     textAlign: TextAlign.left,
                                   ),
                                   Text(
@@ -528,12 +529,13 @@ class _Driver1State extends State<Driver1> {
                                                   .width /
                                               25,
                                           fontWeight: FontWeight.bold)),
-                                  const SizedBox(
-                                    height: 10,
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.width /
+                                                8,
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  //  crossAxisAlignment: CrossAxisAlignment.end,
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         //color: Colors.grey,
@@ -552,7 +554,7 @@ class _Driver1State extends State<Driver1> {
                                                     return Dialog(
                                                       child: Container(
                                                         padding:
-                                                            EdgeInsets.all(22),
+                                                            const EdgeInsets.all(22),
                                                         decoration:
                                                             BoxDecoration(
                                                                 //color: const Color.fromARGB(255, 124, 111, 111),
@@ -897,7 +899,7 @@ class _Driver1State extends State<Driver1> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }

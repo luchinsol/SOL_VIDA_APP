@@ -500,7 +500,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-const kGoogleApiKey = "AIzaSyC_DGTR1A486oAHhNG1F6LXKU1AmhjJptY";
+const kGoogleApiKey = "AIzaSyA45xOgppdm-PXYDE5r07eDlkFuPzYmI9g";
 
 class MapScreen extends StatefulWidget {
   final int? clienteId;

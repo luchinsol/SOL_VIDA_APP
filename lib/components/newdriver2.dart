@@ -293,7 +293,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
     try {
       PolylinePoints polylinePoints = PolylinePoints();
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        googleApiKey: "AIzaSyC_DGTR1A486oAHhNG1F6LXKU1AmhjJptY",
+        googleApiKey: "AIzaSyA45xOgppdm-PXYDE5r07eDlkFuPzYmI9g",
         request: PolylineRequest(
           origin: PointLatLng(
               _currentPosition.latitude, _currentPosition.longitude),
@@ -382,7 +382,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                   
                 },
                 icon: const Icon(Icons.notifications_none,color: Colors.white,),
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: const Color.fromARGB(255, 255, 255, 255),
                 iconSize: MediaQuery.of(context).size.width/13.5,
               ),
             ),
@@ -758,96 +758,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                       ],
                                     )),
                               ),
-                             /* Container(
-                                width: MediaQuery.of(context).size.width / 3.5,
-                                height: MediaQuery.of(context).size.height / 23,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              backgroundColor: const Color.fromARGB(
-                                                  255, 255, 61, 7),
-                                              title: const Row(
-                                                children: [
-                                                  Icon(Icons.warning_amber),
-                                                  SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  Text("Anular pedido"),
-                                                ],
-                                              ),
-                                              content: const Text(
-                                                "La entrega del pedido se anulará",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    Driver1()),
-                                                      );
-                                                    },
-                                                    child: Text(
-                                                      "Continuar",
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    )),
-                                                TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      "Cancelar",
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    )),
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
-                                                Color.fromARGB(
-                                                    255, 255, 0, 0))),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Anular",
-                                          style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  35,
-                                              color: Color.fromARGB(
-                                                  255, 255, 255, 255)),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.cancel_outlined,
-                                          color: const Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          size: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              30,
-                                        )
-                                      ],
-                                    )),
-                              ),*/
+                             
                             ],
                           ),
                           const SizedBox(
@@ -868,7 +779,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                       MediaQuery.of(context).size.width / 25,
                                   fontWeight: FontWeight.bold)),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

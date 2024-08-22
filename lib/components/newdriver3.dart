@@ -201,7 +201,7 @@ class _CobrarState extends State<Cobrar> {
                                   title: const Center(
                                       child: Text("Método de pago")),
                                   content: Container(
-                                    height: MediaQuery.of(context).size.height/2.83,
+                                    height: MediaQuery.of(context).size.height/2.5,
                                     child: Column(
                                       children: [
                                         const Text("¿El cliente agrego productos al pedido?",style: TextStyle(
@@ -235,6 +235,9 @@ class _CobrarState extends State<Cobrar> {
                                               "¿El cliente solo desea cancelar?",style: TextStyle(
                                                 fontWeight: FontWeight.w900
                                               ),),
+                                              const SizedBox(
+                                            height: 14,
+                                          ),
                                         StatefulBuilder(builder:
                                             (BuildContext context,
                                                 StateSetter setState) {
@@ -311,9 +314,9 @@ class _CobrarState extends State<Cobrar> {
                                               
                                              
                                             Navigator.push(context,
-                                            MaterialPageRoute(builder: (BuildContext context)=> Driver1()));
+                                            MaterialPageRoute(builder: (BuildContext context)=> const Driver1()));
                                           },
-                                          child: Text("OK"),
+                                          child:const Text("OK"),
                                         )
                                       ],
                                     ),
@@ -333,12 +336,12 @@ class _CobrarState extends State<Cobrar> {
                               "Pago virtual",
                               style: TextStyle(
                                 fontSize: MediaQuery.of(context).size.width/20,
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                                color: const Color.fromARGB(255, 255, 255, 255)),
                             ),
-                            SizedBox(
+                           const  SizedBox(
                               width: 10,
                             ),
-                            Icon(
+                           const  Icon(
                               Icons.camera_alt_outlined,
                               color: Color.fromARGB(255, 255, 255, 255),
                             )
@@ -365,7 +368,7 @@ class _CobrarState extends State<Cobrar> {
                                   title: const Center(
                                       child: Text("Método de pago")),
                                   content: Container(
-                                    height: MediaQuery.of(context).size.height/3.5,
+                                    height: MediaQuery.of(context).size.height/2.5,
                                     child: Column(
                                       children: [
                                         const Text("¿El cliente agrego productos al pedido?",style: TextStyle(
@@ -415,7 +418,7 @@ class _CobrarState extends State<Cobrar> {
                                             child: Text("Cancelar")),
                                         TextButton(
                                           onPressed: () {
-                                            showDialog(
+                                            /*showDialog(
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
@@ -427,7 +430,7 @@ class _CobrarState extends State<Cobrar> {
                                                       strokeWidth: 4.0,
                                                     ),
                                                   );
-                                                });
+                                                });*/
                                             updateEstadoPedido(
                                                 "entregado",
                                                 null,
@@ -460,7 +463,7 @@ class _CobrarState extends State<Cobrar> {
                             "Pago efectivo",
                             style: TextStyle(
                                fontSize: MediaQuery.of(context).size.width/20,
-                              color: Color.fromARGB(255, 82, 82, 82)),
+                              color: const Color.fromARGB(255, 82, 82, 82)),
                           ),
                           const SizedBox(
                             width: 10,

@@ -531,15 +531,15 @@ class _Stock1State extends State<Stock1> {
   Widget build(BuildContext context) {
     final residuoProvider =
         Provider.of<ResiduoProvider>(context, listen: false);
-    return WillPopScope(
+    return /*WillPopScope(
       onWillPop: _onWillPop,
-      child: Scaffold(
+      child: */Scaffold(
         backgroundColor:const Color.fromARGB(255, 93, 93, 94),
         appBar: AppBar(
           backgroundColor:const Color.fromARGB(255, 76, 76, 77),
           toolbarHeight: MediaQuery.of(context).size.height / 18,
           iconTheme: const IconThemeData(color: Colors.white),
-          leading: IconButton(
+          /*leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.push(
@@ -547,7 +547,7 @@ class _Stock1State extends State<Stock1> {
                 MaterialPageRoute(builder: (context) => const Driver()),
               );
             },
-          ),
+          ),*/
           title: const Text(
             'Abastecimiento - Stock',
             style: TextStyle(
@@ -910,7 +910,7 @@ class _Stock1State extends State<Stock1> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 }
