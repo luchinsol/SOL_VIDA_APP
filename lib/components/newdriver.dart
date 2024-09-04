@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:appsol_final/components/newalmacenes.dart';
 import 'package:appsol_final/components/newdriver1.dart';
 import 'package:appsol_final/components/newdriverstock1.dart';
 import 'package:appsol_final/components/preinicios.dart';
@@ -37,7 +38,7 @@ class Driver extends StatefulWidget {
 }
 
 class _DriverState extends State<Driver> {
-  late io.Socket socket;
+ //late io.Socket socket;
   String apiUrl = dotenv.env['API_URL'] ?? '';
   int idRuta = 0;
   int idconductor = 0;
@@ -50,10 +51,13 @@ class _DriverState extends State<Driver> {
   String apipedidoinforme = '/api/fecharutapedido/';
   TextEditingController _pdffecha = TextEditingController();
   List<Pedidoinforme> informegeneral = [];
-  Future<void> _initialize() async {
-    await getRutas();
+  bool conectado = false;
+  Color colorconectado = Colors.white;
+
+  /*Future<void> _initialize() async {
+   // await getRutas();
     // await cargarPreferencias();
-  }
+  }*/
 
   Future<void> createPdf(List<Pedidoinforme> pedidos) async {
     final pdf = pw.Document();
@@ -164,8 +168,8 @@ class _DriverState extends State<Driver> {
           });
         }
 
-       // print("----------inform----------");
-       // print(informegeneral.length);
+        // print("----------inform----------");
+        // print(informegeneral.length);
         // Crear PDF con los pedidos obtenidos
         await createPdf(tempedido);
 
@@ -355,7 +359,7 @@ class _DriverState extends State<Driver> {
   );
 }*/
 
-  Future<dynamic> getRutas() async {
+ /* Future<dynamic> getRutas() async {
     //print(".......1");
     SharedPreferences userPreference = await SharedPreferences.getInstance();
     SharedPreferences rutaidget = await SharedPreferences.getInstance();
@@ -372,7 +376,7 @@ class _DriverState extends State<Driver> {
     );
     try {
       if (res.statusCode == 200) {
-      //  print("paso el estado");
+        //  print("paso el estado");
         var data = json.decode(res.body);
         RutaModel tempRutaModel = RutaModel(
             id: data['id'],
@@ -383,8 +387,8 @@ class _DriverState extends State<Driver> {
             placaVehiculo: data['placa']);
         if (mounted) {
           setState(() {
-           // print("temprutamodel id");
-           // print(tempRutaModel.id);
+            // print("temprutamodel id");
+            // print(tempRutaModel.id);
             idRuta = tempRutaModel.id;
             rutaidget.setInt('rutaIDNEW', idRuta);
             fechacreacion = tempRutaModel.fechaCreacion;
@@ -395,7 +399,7 @@ class _DriverState extends State<Driver> {
     } catch (error) {
       throw Exception("$error");
     }
-  }
+  }*/
 
   @override
   void dispose() {
@@ -469,8 +473,8 @@ class _DriverState extends State<Driver> {
     final socketService = SocketService();
     socketService.listenToEvent('creadoRuta', (data) async {
       SharedPreferences rutaidget = await SharedPreferences.getInstance();
-     // print("------esta es la RUTA");
-     // print(data);
+      // print("------esta es la RUTA");
+      // print(data);
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
 
@@ -485,13 +489,13 @@ class _DriverState extends State<Driver> {
           idconductor = data['conductor_id'];
           fechacreacion = data['fecha_creacion'];
         });
-       // print("----datos de creado ruta");
-       // print(idRuta);
-       // print(idconductor);
-       // print(fechacreacion);
+        // print("----datos de creado ruta");
+        // print(idRuta);
+        // print(idconductor);
+        // print(fechacreacion);
       }
     });
-    _initialize();
+   // _initialize();
 
     // cargarPreferencias();
 
@@ -520,14 +524,49 @@ class _DriverState extends State<Driver> {
     final rutaProvider = context.watch<RutaProvider>();
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 93, 93, 94),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 76, 76, 77),
-        toolbarHeight: MediaQuery.of(context).size.height/18,
-        
+        backgroundColor: const Color.fromARGB(255, 66, 66, 209),
+        toolbarHeight: MediaQuery.of(context).size.height / 18,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Container(
+          //color: Colors.amber,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height / 18,
+                width: MediaQuery.of(context).size.height / 18,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('lib/imagenes/nuevito.png'))),
+              ),
+              const SizedBox(
+                width: 19,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Bienvenid@",
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  Text(
+                    "Hola,${userProvider.user?.nombre}",
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 18,
+                        color: Colors.white),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       drawer: Drawer(
-        
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         shadowColor: const Color.fromARGB(255, 255, 255, 255),
         child: ListView(
@@ -582,15 +621,18 @@ class _DriverState extends State<Driver> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(right: 20,left: 20,),
+        padding: const EdgeInsets.only(
+          right: 20,
+          left: 20,
+        ),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/1.1,
-         // color: Colors.grey,
+          height: MediaQuery.of(context).size.height / 1.1,
+          // color: Colors.grey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              /*Container(
                 //color: Colors.amber,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -625,7 +667,7 @@ class _DriverState extends State<Driver> {
                     
                   ],
                 ),
-              ),
+              ),*/
               const SizedBox(
                 height: 10,
               ),
@@ -686,24 +728,123 @@ class _DriverState extends State<Driver> {
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(255, 153, 152, 152)),
+                    color: Color.fromARGB(255, 80, 80, 228)),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Center(
-                      child: Text(
-                        "Hoy ${dayName[0].toUpperCase() + dayName.substring(1)}, ${dayNumber[0].toUpperCase() + dayNumber.substring(1)} de ${monthName} ${year}",
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 51, 51, 51),
-                            fontWeight: FontWeight.w700,
-                            fontSize: MediaQuery.of(context).size.width / 28.0),
-                      ),
+                    Text(
+                      "Hoy ${dayName[0].toUpperCase() + dayName.substring(1)}, ${dayNumber[0].toUpperCase() + dayNumber.substring(1)} de ${monthName} ${year}",
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          fontWeight: FontWeight.w600,
+                          fontSize: MediaQuery.of(context).size.width / 23.0),
                     ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: conectado ? colorconectado : Color.fromARGB(255, 64, 64, 64),
+                        borderRadius: BorderRadius.circular(30)
+                      ),
+                      child: Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(conectado ? 
+                                "Conectado a" : "Desconectado" ,
+                                style: TextStyle(
+                                    color: conectado ? Color.fromARGB(255, 255, 255, 255) : Color.fromARGB(255, 255, 255, 255),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 23.0),
+                              ),
+                             const SizedBox(width: 10,),
+                              Container(
+                                height: MediaQuery.of(context).size.height / 18,
+                                width: MediaQuery.of(context).size.height / 18,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'lib/imagenes/nuevito.png'))),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Switch(
+                              value: conectado,
+                              activeColor: Color.fromARGB(255, 206, 255, 176),
+                              onChanged: (bool value) {
+                                setState(() {
+                                  conectado = value;
+                                  colorconectado = Color.fromARGB(255, 86, 194, 64);
+                                  //olor
+                                });
+                               /* if(conectado){
+                                   showDialog(context: context,
+                                 builder: (BuildContext context){
+                                  return  AlertDialog(
+                                    title: Text("Recuerda"),
+                                    content: Container(
+                                      height: MediaQuery.of(context).size.height/20,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                        Container(child: Row(
+                                         
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context).size.width/25,
+                                              height: MediaQuery.of(context).size.width/25,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(50),
+                                                color: Colors.green
+                                              ),
+                                            ),
+                                            Text("Revisa los almacenes más cercanos",style: TextStyle(fontWeight: FontWeight.w600),),
+                                          ],
+                                        )),
+                                        Container(child: Row(
+                                          children: [
+                                             Container(
+                                              width: MediaQuery.of(context).size.width/25,
+                                              height: MediaQuery.of(context).size.width/25,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(50),
+                                                color: Color.fromARGB(255, 68, 53, 224)
+                                              ),
+                                            ),
+                                            Text("La central envía pedidos",style: TextStyle(fontWeight: FontWeight.w600),),
+
+                                          ],
+                                        )),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(onPressed:(){
+                                        Navigator.pop(context);
+                                      },
+                                       child:const Text("OK",style: TextStyle(color: Colors.black),))
+                                    ],
+                                  );
+                                 });
+                                }*/
+                               
+                              }),
+                             
+                        ],
+                      ),
+                      
+                    ),
+
                     /*const SizedBox(
                       height: 50,
                     ),*/
-                    Center(
+                    /* Center(
                       child: Column(
                         children: [
                           Icon(
@@ -727,11 +868,11 @@ class _DriverState extends State<Driver> {
                           ),
                         ],
                       ),
-                    ),
+                    ),*/
                     const SizedBox(
                       height: 10,
                     ),
-                    Center(
+                    /* Center(
                       child: Column(
                         children: [
                           Icon(
@@ -757,10 +898,11 @@ class _DriverState extends State<Driver> {
                           ),
                         ],
                       ),
-                    )
+                    )*/
                   ],
                 ),
               ),
+
               SizedBox(
                 height: MediaQuery.of(context).size.height / 35,
               ),
@@ -768,7 +910,42 @@ class _DriverState extends State<Driver> {
                 height: MediaQuery.of(context).size.height / 15,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext contex)=> Stock1()));
+                    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const DriverAlmacen()));
+                   
+                  },
+                  style: ButtonStyle(
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                      backgroundColor: WidgetStateProperty.all(
+                          Color.fromARGB(255, 61, 94, 201))),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Almacenes cercanos",
+                        style: TextStyle(
+                            fontSize: 19,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      Icon(
+                        Icons.storefront_sharp,
+                        size: 50,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                      //const SizedBox(width: 0,)
+                    ],
+                  ),
+                ),
+              ),
+               SizedBox(
+                height: MediaQuery.of(context).size.height / 35,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Stock1()));
                   },
                   style: ButtonStyle(
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
@@ -799,18 +976,20 @@ class _DriverState extends State<Driver> {
               ),
               Container(
                 height: MediaQuery.of(context).size.height / 15,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+                child:  ElevatedButton(
+                  onPressed: conectado ? () {
+                    /*Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Driver1()),
-                    );
-                  },
+                    );*/
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const Driver1()));
+                  }:null,
                   style: ButtonStyle(
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
-                      backgroundColor: WidgetStateProperty.all(
-                          const Color.fromARGB(255, 48, 36, 153))),
+                      backgroundColor: WidgetStateProperty.all( conectado ? 
+                          Color.fromARGB(255, 230, 230, 230) : Colors.grey)),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -818,17 +997,17 @@ class _DriverState extends State<Driver> {
                         "Pedidos",
                         style: TextStyle(
                             fontSize: 19,
-                            color: Color.fromARGB(255, 255, 255, 255)),
+                            color: Color.fromARGB(255, 0, 0, 0)),
                       ),
                       Icon(
                         Icons.shopping_bag_outlined,
                         size: 50,
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: Color.fromARGB(255, 0, 0, 0),
                       ),
                       //const SizedBox(width: 0,)
                     ],
                   ),
-                ),
+                ) 
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 35,
@@ -841,7 +1020,7 @@ class _DriverState extends State<Driver> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title:const Text("Informe de pedidos"),
+                          title: const Text("Informe de pedidos"),
                           content: Container(
                             height: MediaQuery.of(context).size.height / 7,
                             child: Column(
@@ -891,7 +1070,7 @@ class _DriverState extends State<Driver> {
 
                                   // LLAMO METODO
 
-                                 // print("------${_pdffecha.text}------");
+                                  // print("------${_pdffecha.text}------");
                                   pedidosInforme(_pdffecha.text);
                                   // _createPdf(_pdffecha.text);
 
@@ -899,7 +1078,10 @@ class _DriverState extends State<Driver> {
                                 },
                                 child: const Text("OK")),
                             TextButton(
-                                onPressed: () {Navigator.pop(context);}, child:const Text("Cancelar"))
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Cancelar"))
                           ],
                         );
                       },

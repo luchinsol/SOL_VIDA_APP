@@ -9,6 +9,7 @@ import 'package:appsol_final/components/socketcentral/socketcentral.dart';
 import 'package:appsol_final/models/user_model.dart';
 import 'package:appsol_final/provider/card_provider.dart';
 import 'package:appsol_final/provider/pedido_provider.dart';
+import 'package:appsol_final/provider/pedidoruta_provider.dart';
 import 'package:appsol_final/provider/residuosprovider.dart';
 import 'package:appsol_final/provider/ruta_provider.dart';
 import 'package:appsol_final/provider/ubicacion_provider.dart';
@@ -65,7 +66,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => UbicacionListProvider()),
         ChangeNotifierProvider(create: (context) => RutaProvider()),
         ChangeNotifierProvider(create: (context) => CardpedidoProvider()),
-        ChangeNotifierProvider(create: (context) => ResiduoProvider())
+        ChangeNotifierProvider(create: (context) => ResiduoProvider()),
+        ChangeNotifierProvider(create: (context) => PedidoconductorProvider())
       ],
       child: MyApp(estalogeado: estalogeado, rol: rol),
     ),

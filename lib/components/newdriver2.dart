@@ -20,7 +20,6 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import '../models/producto_model.dart';
 
 class Navegacion extends StatefulWidget {
@@ -52,7 +51,7 @@ class _NavegacionState extends State<Navegacion> {
   List<DetallePedido> detalles = [];
   Map<String, int> grouped = {};
 
-  String groupedJson ="na";
+  String groupedJson = "na";
   String mensajedelete = "No procesa";
   int activeOrderIndex = 0;
   String motivo = "NA";
@@ -64,7 +63,7 @@ class _NavegacionState extends State<Navegacion> {
   BitmapDescriptor? _originIcon;
   BitmapDescriptor? _destinationIcon;
   int anulados = 0;
-  
+
   void _showdialoganulados() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
@@ -72,18 +71,32 @@ class _NavegacionState extends State<Navegacion> {
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Colors.red,
-            title: anulados> 0 ? const Text('Atención se anuló el pedido',
-            style: TextStyle(
-              color: Colors.white
-            ),) : const Text("No hay pedidos anulados",style: TextStyle(color: Colors.white),),
-            content:anulados > 0 ? const Text('Se añadió un pedido más a tu ruta.',
-            style: TextStyle(color: Colors.white),) :
-             const Text("Continúa con tus pedidos.",style: TextStyle(color: Colors.white),),
+            title: anulados > 0
+                ? const Text(
+                    'Atención se anuló el pedido',
+                    style: TextStyle(color: Colors.white),
+                  )
+                : const Text(
+                    "No hay pedidos anulados",
+                    style: TextStyle(color: Colors.white),
+                  ),
+            content: anulados > 0
+                ? const Text(
+                    'Se añadió un pedido más a tu ruta.',
+                    style: TextStyle(color: Colors.white),
+                  )
+                : const Text(
+                    "Continúa con tus pedidos.",
+                    style: TextStyle(color: Colors.white),
+                  ),
             actions: <Widget>[
               TextButton(
-                child:const Text('OK',style: TextStyle(color: Colors.white),),
+                child: const Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
-                   setState(() {
+                  setState(() {
                     anulados = 0;
                   });
                   Navigator.of(context).pop();
@@ -116,13 +129,13 @@ class _NavegacionState extends State<Navegacion> {
     }
   }
 
- Future<void> _loadMarkerIcons() async {
+  Future<void> _loadMarkerIcons() async {
     _originIcon = await BitmapDescriptor.asset(
-     const ImageConfiguration(size: Size(48, 48)), // Tamaño del icono
+      const ImageConfiguration(size: Size(48, 48)), // Tamaño del icono
       'lib/imagenes/carropin_final.png',
     );
     _destinationIcon = await BitmapDescriptor.asset(
-     const ImageConfiguration(size: Size(48, 48)),
+      const ImageConfiguration(size: Size(48, 48)),
       'lib/imagenes/pin_casa_final.png',
     );
   }
@@ -136,37 +149,46 @@ class _NavegacionState extends State<Navegacion> {
     _getCurrentLocation();
     final socketService = SocketService();
     socketService.listenToEvent('pedidoanulado', (data) async {
-     // print("----anulando ---- pedido");
-     // print("dentro del evento");
-SharedPreferences rutaidget = await SharedPreferences.getInstance();
-   int? rutaid = rutaidget.getInt('rutaIDNEW');
-   
- //  print(rutaid);
+      // print("----anulando ---- pedido");
+      // print("dentro del evento");
+      SharedPreferences rutaidget = await SharedPreferences.getInstance();
+      int? rutaid = rutaidget.getInt('rutaIDNEW');
 
-   if(rutaid == data['ruta_id']){
-   //     print("---entro a ala ruta_od");
+      //  print(rutaid);
+
+      if (rutaid == data['ruta_id']) {
+        //     print("---entro a ala ruta_od");
         if (context.mounted) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.red,
-        title:const Text('Un pedido ha sido anulado',style: TextStyle(color: Colors.white),),
-        content:const Text('Un pedido con el que estabas trabajando ha sido cancelado. Por favor, revisa tu lista de pedidos.',style: TextStyle(color: Colors.white)),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Cierra el diálogo
-             Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>const Driver1())); // Navega a la lista de pedidos
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                backgroundColor: Colors.red,
+                title: const Text(
+                  'Un pedido ha sido anulado',
+                  style: TextStyle(color: Colors.white),
+                ),
+                content: const Text(
+                    'Un pedido con el que estabas trabajando ha sido cancelado. Por favor, revisa tu lista de pedidos.',
+                    style: TextStyle(color: Colors.white)),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Cierra el diálogo
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const Driver1())); // Navega a la lista de pedidos
+                    },
+                    child: const Text('Ver Pedidos',
+                        style: TextStyle(color: Colors.white)),
+                  ),
+                ],
+              );
             },
-            child:const Text('Ver Pedidos',style: TextStyle(color: Colors.white)),
-          ),
-          
-        ],
-      );
-    },
-  );
-}
+          );
+        }
 
         /*showDialog(context: context,
          builder: (BuildContext context){
@@ -176,22 +198,24 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
           
           
          });*/
-   }
+      }
     });
   }
-  
+
   @override
   void dispose() {
     _mapController?.dispose();
     super.dispose();
   }
-  
+
   double _toRadians(double degree) {
     return degree * pi / 180;
   }
+
   double _toDegrees(double radian) {
     return radian * 180 / pi;
-  } 
+  }
+
   double _calculateBearing(LatLng start, LatLng end) {
     double lat1 = _toRadians(start.latitude);
     double lon1 = _toRadians(start.longitude);
@@ -208,7 +232,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
   }
 
   Future<void> _getCurrentLocation() async {
-   // print("-------------------------Llamando a current position");
+    // print("-------------------------Llamando a current position");
     Location location = Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
@@ -280,7 +304,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
   void getPolypoints() async {
     if (_currentPosition.latitude < -90 ||
         _currentPosition.latitude > 90 ||
-        _currentPosition.longitude < -180 || 
+        _currentPosition.longitude < -180 ||
         _currentPosition.longitude > 180 ||
         widget.destination.latitude < -90 ||
         widget.destination.latitude > 90 ||
@@ -311,7 +335,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
           });
         });
       } else if (result.status == "ZERO_RESULTS") {
-      //  print("No se encontraron resultados para la ruta.");
+        //  print("No se encontraron resultados para la ruta.");
       } else {
         //print("Error al obtener la ruta: ${result.status}");
       }
@@ -350,43 +374,55 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
     }
   }
 
+void _launchMaps(double lat, double lng) async {
+    final Uri googleMapsUrl = Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng");
+    if (await launchUrl(googleMapsUrl)) {
+      await launchUrl(googleMapsUrl);
+    } else {
+      throw 'No se pudo abrir Google Maps';
+    }
+  }
   @override
   Widget build(BuildContext context) {
-         final cardpedidoProvider = Provider.of<CardpedidoProvider>(context, listen: false);
+    final cardpedidoProvider =
+        Provider.of<CardpedidoProvider>(context, listen: false);
 
     return Scaffold(
-      backgroundColor:const Color.fromARGB(255, 93, 93, 94),
+      backgroundColor: const Color.fromARGB(255, 93, 93, 94),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 76, 76, 77),
-        toolbarHeight: MediaQuery.of(context).size.height/18,
-       iconTheme: const IconThemeData(
-        color: Colors.white
-       ),
+        toolbarHeight: MediaQuery.of(context).size.height / 18,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
               "Navegación",
-              style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white, fontSize: 29),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 29),
             ),
-             Badge(
+            Badge(
               largeSize: 18,
-              backgroundColor: anulados > 0 ? const Color.fromARGB(255, 243, 33, 82) :  Color.fromARGB(255, 0, 0, 0),
+              backgroundColor: anulados > 0
+                  ? const Color.fromARGB(255, 243, 33, 82)
+                  : Color.fromARGB(255, 0, 0, 0),
               label: Text(anulados.toString(),
                   style: const TextStyle(fontSize: 12)),
               child: IconButton(
                 onPressed: () {
                   //getPedidosConductor();
                   _showdialoganulados();
-                 
-                  
                 },
-                icon: const Icon(Icons.notifications_none,color: Colors.white,),
+                icon: const Icon(
+                  Icons.notifications_none,
+                  color: Colors.white,
+                ),
                 color: const Color.fromARGB(255, 255, 255, 255),
-                iconSize: MediaQuery.of(context).size.width/13.5,
+                iconSize: MediaQuery.of(context).size.width / 13.5,
               ),
             ),
-            
           ],
         ),
       ),
@@ -399,8 +435,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
               borderRadius: BorderRadius.circular(20),
               //color: Color.fromARGB(255, 62, 74, 98)
             ),
-            child:
-            GoogleMap(
+            child: GoogleMap(
               initialCameraPosition: CameraPosition(
                 zoom: _currentzoom,
                 target: _currentPosition,
@@ -440,7 +475,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                   ),
               },
             ),
-          /* GoogleMap(
+            /* GoogleMap(
               initialCameraPosition: CameraPosition(
                 zoom: 14,
                 target: LatLng(-16.4014, -71.5343),
@@ -472,6 +507,48 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
             ),*/
           ),
           Positioned(
+            bottom: 140,
+            left: 16,
+            child: Container(
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.height/20,
+              //color: const Color.fromARGB(255, 36, 157, 40),
+              child: ElevatedButton(onPressed: (){
+                print("....esta es la ubicacion: ${widget.destination.latitude} ${widget.destination.longitude}");
+                _launchMaps(widget.destination.latitude, widget.destination.longitude);
+              },
+              style: ButtonStyle(
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                      backgroundColor: WidgetStateProperty.all(
+                          Color.fromARGB(255, 44, 204, 66))),
+               child: Padding(
+                 padding: const EdgeInsets.all(2.0),
+                 child: Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Navegar con",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 255, 255)),),
+                    Container(
+                      width: 50,
+                      height: 50,
+                     // padding: EdgeInsets.all(10),
+                      decoration:BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                      color:Colors.grey,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('lib/imagenes/mapa2.jpg'))
+                      )
+                    ),
+                  ],
+                 ),
+               )),
+            ),
+          ),
+          Positioned(
             bottom: 206,
             right: 16,
             child: FloatingActionButton(
@@ -479,7 +556,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
               onPressed: () {
                 _tiltMap();
               },
-              child:const Icon(
+              child: const Icon(
                 Icons.navigation_outlined,
                 color: Colors.white,
               ),
@@ -534,7 +611,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
@@ -584,13 +661,18 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                                       255, 255, 61, 7),
                                               title: const Row(
                                                 children: [
-                                                  Icon(Icons.warning_amber,color: Colors.white,),
+                                                  Icon(
+                                                    Icons.warning_amber,
+                                                    color: Colors.white,
+                                                  ),
                                                   SizedBox(
                                                     width: 15,
                                                   ),
-                                                  Text("Anular pedido",style: TextStyle(
-                                                    color: Colors.white
-                                                  ),),
+                                                  Text(
+                                                    "Anular pedido",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
                                                 ],
                                               ),
                                               content: Column(
@@ -599,7 +681,7 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                                   const Text(
                                                     "La entrega del pedido se anulará",
                                                     style: TextStyle(
-                                                      color:Colors.white,
+                                                        color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.w600),
                                                   ),
@@ -709,16 +791,24 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                                     child: const Text(
                                                       "Continuar",
                                                       style: TextStyle(
-                                                          color: Color.fromARGB(255, 236, 253, 4)),
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              236,
+                                                              253,
+                                                              4)),
                                                     )),
                                                 TextButton(
                                                     onPressed: () {
                                                       Navigator.pop(context);
                                                     },
-                                                    child:const Text(
+                                                    child: const Text(
                                                       "Cancelar",
                                                       style: TextStyle(
-                                                          color: Color.fromARGB(255, 255, 255, 255)),
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255)),
                                                     )),
                                               ],
                                             );
@@ -758,7 +848,6 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                       ],
                                     )),
                               ),
-                             
                             ],
                           ),
                           const SizedBox(
@@ -772,7 +861,8 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                 fontWeight: FontWeight.bold),
                             textAlign: TextAlign.left,
                           ),
-                          Text("Total: S/. ${cardpedidoProvider.pedido?.precio}",
+                          Text(
+                              "Total: S/. ${cardpedidoProvider.pedido?.precio}",
                               style: TextStyle(
                                   color: Color.fromARGB(255, 45, 30, 160),
                                   fontSize:
@@ -877,11 +967,17 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                                         ),
                                                       ],
                                                     ),
-                                                    const SizedBox(height: 10,),
-                                                    Text("${cardpedidoProvider.pedido?.nombres}"),
-                                                    Text("${cardpedidoProvider.pedido?.nombres}"),
-                                                    Text("${cardpedidoProvider.pedido?.telefono}"),
-                                                    Text("${cardpedidoProvider.pedido?.tipo}"),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Text(
+                                                        "${cardpedidoProvider.pedido?.nombres}"),
+                                                    Text(
+                                                        "${cardpedidoProvider.pedido?.nombres}"),
+                                                    Text(
+                                                        "${cardpedidoProvider.pedido?.telefono}"),
+                                                    Text(
+                                                        "${cardpedidoProvider.pedido?.tipo}"),
                                                     const SizedBox(
                                                       height: 20,
                                                     ),
@@ -900,11 +996,8 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                                               30,
                                                           decoration: BoxDecoration(
                                                               color: const Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      223,
-                                                                      205,
-                                                                      84),
+                                                                  .fromARGB(255,
+                                                                  223, 205, 84),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
@@ -923,41 +1016,72 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                                         ),
                                                       ],
                                                     ),
-                                                    const SizedBox(height: 10,),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
                                                     Container(
-                                                          height: MediaQuery.of(context).size.height/5,
-                                                         // color: Colors.white,
-                                                          child: 
-                                                             ListView.builder(
-                                                            itemCount:
-                                                                cardpedidoProvider.pedido?.detallepedido.length,
-                                                            itemBuilder:
-                                                                (context,
-                                                                    index) {
-                                                              return Row(
-                                                                children: [
-                                                                  Text(cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() == 'BOTELLA 3L' ?
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase()+' X PQTES : ' : 
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() == 'BOTELLA 700ML' ?
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase()+' X PQTES : ':
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() == 'BIDON 20L' ?
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase()+' X UND : ':
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() == 'RECARGA' ?
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase()+' X UND : ':
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() == 'BOTELLA 7L' ?
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase()+' X UND : ' :
-                                                                      cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase()
-                                                                      ,
-                                                                      style: TextStyle(fontWeight: FontWeight.w500),),
-                                                                  const SizedBox(width: 10,),
-                                                                  Text(
-                                                                      "${cardpedidoProvider.pedido?.detallepedido[index]['cantidad']}",
-                                                                       style: TextStyle(fontWeight: FontWeight.w500),),
-                                                                ],
-                                                              );
-                                                            },
-                                                          ),
-                                                        ),
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              5,
+                                                      // color: Colors.white,
+                                                      child: ListView.builder(
+                                                        itemCount:
+                                                            cardpedidoProvider
+                                                                .pedido
+                                                                ?.detallepedido
+                                                                .length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return Row(
+                                                            children: [
+                                                              Text(
+                                                                cardpedidoProvider
+                                                                            .pedido
+                                                                            ?.detallepedido[index][
+                                                                                'nombre_prod']
+                                                                            .toUpperCase() ==
+                                                                        'BOTELLA 3L'
+                                                                    ? cardpedidoProvider
+                                                                            .pedido
+                                                                            ?.detallepedido[index][
+                                                                                'nombre_prod']
+                                                                            .toUpperCase() +
+                                                                        ' X PQTES : '
+                                                                    : cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() ==
+                                                                            'BOTELLA 700ML'
+                                                                        ? cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() +
+                                                                            ' X PQTES : '
+                                                                        : cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() ==
+                                                                                'BIDON 20L'
+                                                                            ? cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() +
+                                                                                ' X UND : '
+                                                                            : cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() == 'RECARGA'
+                                                                                ? cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() + ' X UND : '
+                                                                                : cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() == 'BOTELLA 7L'
+                                                                                    ? cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase() + ' X UND : '
+                                                                                    : cardpedidoProvider.pedido?.detallepedido[index]['nombre_prod'].toUpperCase(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                "${cardpedidoProvider.pedido?.detallepedido[index]['cantidad']}",
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -1003,17 +1127,14 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                 height: MediaQuery.of(context).size.height / 23,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Cobrar()) // Reemplaza BienvenidoScreen con tu pantalla de inicio
-                                     // Asegúrate de tener un nombre de ruta que puedas usar para compararlo
-                                    );
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Cobrar()));
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStateProperty.all(
-                                        Color.fromARGB(255, 38, 111, 48)),
+                                        const Color.fromARGB(255, 38, 111, 48)),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1044,8 +1165,9 @@ SharedPreferences rutaidget = await SharedPreferences.getInstance();
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     //print("------llamandoooo aloooo ");
-                                   // print(cardpedidoProvider.pedido!.telefono);
-                                    _makePhoneCall(cardpedidoProvider.pedido!.telefono);
+                                    // print(cardpedidoProvider.pedido!.telefono);
+                                    _makePhoneCall(
+                                        cardpedidoProvider.pedido!.telefono);
                                   },
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStateProperty.all(

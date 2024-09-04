@@ -61,8 +61,8 @@ class _FormucliState extends State<Formucli> {
       // Formatear la fecha como una cadena en el formato deseado (por ejemplo, 'yyyy-MM-dd')
       //String fechaFormateada = DateFormat('yyyy-MM-dd').format(fechaNacimiento);
       String fechaActual = DateFormat('yyyy-MM-dd').format(fechaAct);
-     //   print(".........");
-       // print("${nickname},${contrasena},$email,$nombre,$apellidos,$telefono,$fechaAct}");
+        print(".........");
+       print("${nickname},${contrasena},$email,$nombre,$apellidos,$telefono,$fechaAct}");
       var res = await http.post(Uri.parse(apiUrl + apiCreateUser),
           headers: {"Content-type": "application/json"},
           body: jsonEncode({
@@ -87,8 +87,8 @@ class _FormucliState extends State<Formucli> {
             "banco_retiro": "NA",
             "numero_cuenta": "NA"
           }));
-        //  print("res----");
-         // print(res.body);
+        print("res----");
+        print(res.body);
       if (res.statusCode == 200) {
         setState(() {
           status = 200;
@@ -407,7 +407,7 @@ class _FormucliState extends State<Formucli> {
                           child: TextFormField(
                             controller: _email,
                             decoration: const InputDecoration(
-                                labelText: 'E-mail',
+                                labelText: 'E-mail(Opcional)',
                                 labelStyle: const TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w500,
@@ -424,7 +424,7 @@ class _FormucliState extends State<Formucli> {
                                 //fillColor: Colors.white.withOpacity(0.8),
                                 ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
+                           /* validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'El campo es obligatorio';
                               } else if (value != null &&
@@ -433,7 +433,7 @@ class _FormucliState extends State<Formucli> {
                                 return 'No es un correo válido';
                               }
                               return null;
-                            },
+                            },*/
                           ),
                         ),
                         const SizedBox(height: 4),
