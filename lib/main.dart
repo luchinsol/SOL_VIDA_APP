@@ -19,13 +19,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:camera/camera.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'firebase_options.dart';
 import 'package:appsol_final/components/holaconductor.dart';
+import 'package:upgrader/upgrader.dart';
 
 late List<CameraDescription> camera;
-late SocketService socketService;
+//late SocketService socketService;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +55,10 @@ Future<void> main() async {
   await userProvider.initUser();
 
     // Inicializar el servicio de Socket.IO
-  SocketService();
+  //SocketService();
+  // Inicializamos el servicio de Socket.IO
+  SocketService socketService = SocketService();
+
   
 
   runApp(
@@ -67,7 +71,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => RutaProvider()),
         ChangeNotifierProvider(create: (context) => CardpedidoProvider()),
         ChangeNotifierProvider(create: (context) => ResiduoProvider()),
-        ChangeNotifierProvider(create: (context) => PedidoconductorProvider())
+        ChangeNotifierProvider(create: (context) => PedidoconductorProvider()),
+        Provider<SocketService>.value(value: socketService), // Proveer el SocketService aquí
       ],
       child: MyApp(estalogeado: estalogeado, rol: rol),
     ),
@@ -82,20 +87,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
+    final socketService = Provider.of<SocketService>(context, listen: false);
+    if(estalogeado && rol ==  5){
+      socketService.connectToServer();
+    }
+    else{
+      socketService.disconnet();
+    }
+    return UpgradeAlert(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('es', ''), // Español
+        ],
+        //home: estalogeado && rol == 4 ? BarraNavegacion(indice: 0,subIndice: 0,) : (estalogeado && rol == 5 ? HolaConductor() :Login()),
+        home: estalogeado
+            ? (rol == 4
+                ? const BarraNavegacion(
+                    indice: 0,
+                    subIndice: 0,
+                  )
+                : (rol == 5 ? const Driver() : const Solvida()))
+            : const Solvida(),
       ),
-      //home: estalogeado && rol == 4 ? BarraNavegacion(indice: 0,subIndice: 0,) : (estalogeado && rol == 5 ? HolaConductor() :Login()),
-      home: estalogeado
-          ? (rol == 4
-              ? const BarraNavegacion(
-                  indice: 0,
-                  subIndice: 0,
-                )
-              : (rol == 5 ? const Driver() : const Solvida()))
-          : const Solvida(),
     );
   }
 }

@@ -59,7 +59,7 @@ class _NavegacionState extends State<Navegacion> {
   LatLng _currentPosition = const LatLng(-16.4014, -71.5343);
   double _currentBearing = 0.0;
   double _currentzoom = 16.0;
-
+List<Map<String, dynamic>> result = [];
   BitmapDescriptor? _originIcon;
   BitmapDescriptor? _destinationIcon;
   int anulados = 0;
@@ -382,6 +382,81 @@ void _launchMaps(double lat, double lng) async {
       throw 'No se pudo abrir Google Maps';
     }
   }
+ 
+ Future<dynamic> getDetalleXUnPedido(pedidoID) async {
+    //print("-----detalle pedido");
+    if (pedidoID != 0) {
+      var res = await http.get(
+        Uri.parse(apiUrl + apiDetallePedido + pedidoID.toString()),
+        headers: {"Content-type": "application/json"},
+      );
+      // print(res.body);
+      try {
+        if (res.statusCode == 200) {
+          var data = json.decode(res.body);
+          print(data);
+          List<DetallePedido> listTemporal = data.map<DetallePedido>((mapa) {
+            return DetallePedido(
+              pedidoID: mapa['pedido_id'],
+              productoID: mapa['producto_id'],
+              productoNombre: mapa['nombre_prod'],
+              cantidadProd: mapa['cantidad'],
+              promocionID: mapa['promocion_id'],
+              promocionNombre: mapa['nombre_prom'],
+            );
+          }).toList();
+          // print("${listTemporal.first.productoNombre}");
+          // Agrupar y sumar las cantidades
+          grouped = {};
+          result = [];
+          for (var i = 0; i < listTemporal.length; i++) {
+            String nombreProd = listTemporal[i].productoNombre;
+            int cantidad = listTemporal[i].cantidadProd;
+
+            if (grouped.containsKey(nombreProd)) {
+              grouped[nombreProd] = grouped[nombreProd]! + cantidad;
+            } else {
+              grouped[nombreProd] = cantidad;
+            }
+          }
+          // Crear la lista de resultados
+
+          grouped.forEach((nombreProd, cantidad) {
+            result.add({'nombre_prod': nombreProd, 'cantidad': cantidad});
+          });
+          // Convertir a JSON
+          groupedJson = jsonEncode(result);
+
+          // Imprimir el resultado
+          //  print(groupedJson);
+          /*r (var i = 0; i < listProducto.length; i++) {
+              if (listProducto[i].cantidad != 0) {
+                var salto = '\n';
+                if (productosYCantidades == '') {
+                  setState(() {
+                    productosYCantidades =
+                        "${listProducto[i].nombre} x ${listProducto[i].cantidad.toString()} uds."
+                            .toUpperCase();
+                  });
+                } else {
+                  setState(() {
+                    productosYCantidades =
+                        "$productosYCantidades $salto${listProducto[i].nombre.toUpperCase()} x ${listProducto[i].cantidad.toString()} uds.";
+                  });
+                }
+                break;
+              }
+            }*/
+        }
+      } catch (e) {
+        //print('Error en la solicitud: $e');
+        throw Exception('Error en la solicitud: $e');
+      }
+    } else {
+      //print('papas');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final cardpedidoProvider =
@@ -390,7 +465,7 @@ void _launchMaps(double lat, double lng) async {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 93, 93, 94),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 76, 76, 77),
+        backgroundColor: const Color.fromARGB(255, 66, 66, 209),
         toolbarHeight: MediaQuery.of(context).size.height / 18,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Row(
@@ -552,7 +627,7 @@ void _launchMaps(double lat, double lng) async {
             bottom: 206,
             right: 16,
             child: FloatingActionButton(
-              backgroundColor: Color.fromARGB(255, 62, 68, 97),
+              backgroundColor: const Color.fromARGB(255, 66, 66, 209),
               onPressed: () {
                 _tiltMap();
               },
@@ -576,7 +651,7 @@ void _launchMaps(double lat, double lng) async {
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20),
                         topLeft: Radius.circular(20)),
-                    color: Color.fromARGB(255, 69, 68, 123)),
+                    color:Color.fromARGB(255, 66, 66, 209)),
                 child: ListView(
                   controller: controller,
                   padding: const EdgeInsets.all(16.0),
@@ -709,7 +784,7 @@ void _launchMaps(double lat, double lng) async {
                                               actions: [
                                                 TextButton(
                                                     onPressed: () async {
-                                                      showDialog(
+                                                     /* showDialog(
                                                         context: context,
                                                         builder: (BuildContext
                                                             context) {
@@ -740,9 +815,9 @@ void _launchMaps(double lat, double lng) async {
                                                             ),
                                                           );
                                                         },
-                                                      );
-                                                      Navigator.pop(context);
-                                                      showDialog(
+                                                      );*/
+                                                     // Navigator.pop(context);
+                                                    /*  showDialog(
                                                         context: context,
                                                         builder: (BuildContext
                                                             context) {
@@ -773,20 +848,20 @@ void _launchMaps(double lat, double lng) async {
                                                             ),
                                                           );
                                                         },
-                                                      );
+                                                      );*/
 
                                                       await anularPedido(
                                                           cardpedidoProvider
                                                               .pedido?.id,
                                                           motivo);
-                                                      //Navigator.pop(context);
-                                                      Navigator.push(
+                                                      Navigator.pop(context);
+                                                     /* Navigator.pushReplacement(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder:
                                                                 (context) =>
                                                                     Driver1()),
-                                                      );
+                                                      );*/
                                                     },
                                                     child: const Text(
                                                       "Continuar",
@@ -879,7 +954,8 @@ void _launchMaps(double lat, double lng) async {
                                 width: MediaQuery.of(context).size.width / 3.5,
                                 height: MediaQuery.of(context).size.height / 23,
                                 child: ElevatedButton(
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      await getDetalleXUnPedido(cardpedidoProvider.pedido?.id);
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {

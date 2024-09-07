@@ -1,3 +1,4 @@
+import 'package:appsol_final/components/newregistroelegir.dart';
 import 'package:appsol_final/components/preregistro.dart';
 import 'package:appsol_final/components/prelogin.dart';
 import 'package:appsol_final/components/responsiveUI/breakpoint.dart';
@@ -126,7 +127,8 @@ class _SolvidaState extends State<Solvida> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Formucli()),
+                                builder: (context) => const Registroelegir()//Formucli()
+                                ),
                           );
                         },
                         style: ElevatedButton.styleFrom(

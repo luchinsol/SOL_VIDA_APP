@@ -113,9 +113,9 @@ class _CobrarState extends State<Cobrar> {
     final cardpedidoProvider =
         Provider.of<CardpedidoProvider>(context, listen: false);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 93, 93, 94),
+      backgroundColor: Color.fromARGB(255, 88, 88, 209),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 76, 76, 77),
+        backgroundColor: const Color.fromARGB(255, 66, 66, 209),
         toolbarHeight: MediaQuery.of(context).size.height / 18,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Row(
@@ -170,7 +170,7 @@ class _CobrarState extends State<Cobrar> {
                     width: MediaQuery.of(context).size.width / 35,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Color.fromARGB(255, 255, 193, 7)),
+                        color: Color.fromARGB(255, 255, 255, 255)),
                   ),
                   const SizedBox(
                     width: 20,
@@ -346,7 +346,7 @@ class _CobrarState extends State<Cobrar> {
                         },
                         style: ButtonStyle(
                             backgroundColor:
-                                WidgetStateProperty.all(Colors.pink)),
+                                WidgetStateProperty.all( Color.fromARGB(255, 66, 66, 209),)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

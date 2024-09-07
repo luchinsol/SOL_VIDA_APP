@@ -5,6 +5,7 @@ import 'package:appsol_final/components/holaconductor.dart';
 import 'package:appsol_final/components/navegador.dart';
 import 'package:appsol_final/components/prepermisos.dart';
 import 'package:appsol_final/components/responsiveUI/breakpoint.dart';
+import 'package:appsol_final/components/socketcentral/socketcentral.dart';
 import 'package:appsol_final/components/ubicacion.dart';
 import 'package:appsol_final/models/user_model.dart';
 import 'package:appsol_final/provider/user_provider.dart';
@@ -162,7 +163,7 @@ class _PreloginState extends State<Prelogin> {
     }
   }
 
-  Future<dynamic> loginsol(username, password) async {
+  Future<dynamic> loginsol(username, password,BuildContext context) async {
     try {
       // print("------loginsool");
       // print(username);
@@ -245,6 +246,10 @@ class _PreloginState extends State<Prelogin> {
             rol = 5;
             id = userData.id!;
           });
+           // Iniciar la conexión de WebSocket si es conductor
+           // Conectamos al servidor de WebSocket
+        var socketService = Provider.of<SocketService>(context, listen: false);
+          socketService.connectToServer();
         }
         // GERENTE
         else if (data['usuario']['rol_id'] == 3) {
@@ -550,7 +555,7 @@ class _PreloginState extends State<Prelogin> {
                                     );
                                   });
                               try {
-                                await loginsol(_usuario.text, _contrasena.text);
+                                await loginsol(_usuario.text, _contrasena.text,context);
               
                                 if (status == 200) {
                                   Navigator.of(context)

@@ -53,7 +53,7 @@ class _DriverState extends State<Driver> {
   List<Pedidoinforme> informegeneral = [];
   bool conectado = false;
   Color colorconectado = Colors.white;
-
+final socketService = SocketService();
   /*Future<void> _initialize() async {
    // await getRutas();
     // await cargarPreferencias();
@@ -470,15 +470,19 @@ class _DriverState extends State<Driver> {
     //pedidosInforme();
     // Inicializa la localización para español
     // connectToServer();
-    final socketService = SocketService();
+   
+    
     socketService.listenToEvent('creadoRuta', (data) async {
+       print("......2.....dentro del init....");
+      print("...creado de ruta ...$data");
       SharedPreferences rutaidget = await SharedPreferences.getInstance();
       // print("------esta es la RUTA");
-      // print(data);
+       print(data['id']);
+      rutaidget.setInt('rutaActual', data['id']);
 
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      //final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-      if (data['conductor_id'] == userProvider.user?.id) {
+      /*if (data['conductor_id'] == userProvider.user?.id) {
         //print("entro al fi");
         setState(() {
           //seteo las preferncias para las demas vistas
@@ -493,7 +497,7 @@ class _DriverState extends State<Driver> {
         // print(idRuta);
         // print(idconductor);
         // print(fechacreacion);
-      }
+      }*/
     });
    // _initialize();
 
@@ -611,6 +615,7 @@ class _DriverState extends State<Driver> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               onTap: () async {
+                socketService.disconnet();
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.remove('user');
                 Navigator.push(context,
@@ -728,7 +733,7 @@ class _DriverState extends State<Driver> {
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 80, 80, 228)),
+                    color: Color.fromARGB(255, 66, 66, 209)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -743,7 +748,7 @@ class _DriverState extends State<Driver> {
                     Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: conectado ? colorconectado : Color.fromARGB(255, 64, 64, 64),
+                        color: conectado ? colorconectado : Colors.grey,
                         borderRadius: BorderRadius.circular(30)
                       ),
                       child: Row(
@@ -755,7 +760,7 @@ class _DriverState extends State<Driver> {
                               Text(conectado ? 
                                 "Conectado a" : "Desconectado" ,
                                 style: TextStyle(
-                                    color: conectado ? Color.fromARGB(255, 255, 255, 255) : Color.fromARGB(255, 255, 255, 255),
+                                    color: conectado ? Color.fromARGB(255, 255, 255, 255) : const Color.fromARGB(255, 255, 255, 255),
                                     fontWeight: FontWeight.w600,
                                     fontSize:
                                         MediaQuery.of(context).size.width / 23.0),
@@ -917,7 +922,7 @@ class _DriverState extends State<Driver> {
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                       backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 61, 94, 201))),
+                          Color.fromARGB(255, 66, 66, 209))),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -942,40 +947,6 @@ class _DriverState extends State<Driver> {
               ),
               Container(
                 height: MediaQuery.of(context).size.height / 15,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Stock1()));
-                  },
-                  style: ButtonStyle(
-                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                      backgroundColor: WidgetStateProperty.all(
-                          const Color.fromARGB(255, 236, 210, 134))),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Abastecer",
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Color.fromARGB(255, 37, 37, 37)),
-                      ),
-                      Icon(
-                        Icons.local_shipping_outlined,
-                        size: 50,
-                        color: Color.fromARGB(255, 74, 74, 74),
-                      ),
-                      //const SizedBox(width: 0,)
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 15,
                 child:  ElevatedButton(
                   onPressed: conectado ? () {
                     /*Navigator.push(
@@ -989,7 +960,7 @@ class _DriverState extends State<Driver> {
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                       backgroundColor: WidgetStateProperty.all( conectado ? 
-                          Color.fromARGB(255, 230, 230, 230) : Colors.grey)),
+                          Color.fromARGB(255, 66, 66, 209) : Colors.grey)),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -997,12 +968,12 @@ class _DriverState extends State<Driver> {
                         "Pedidos",
                         style: TextStyle(
                             fontSize: 19,
-                            color: Color.fromARGB(255, 0, 0, 0)),
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                       Icon(
                         Icons.shopping_bag_outlined,
                         size: 50,
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Color.fromARGB(255, 255, 255, 255),
                       ),
                       //const SizedBox(width: 0,)
                     ],
@@ -1012,6 +983,40 @@ class _DriverState extends State<Driver> {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 35,
               ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Stock1()));
+                  },
+                  style: ButtonStyle(
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                      backgroundColor: WidgetStateProperty.all(Colors.grey)), //Color.fromARGB(255, 236, 210, 134)
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Abastecer",
+                        style: TextStyle(
+                            fontSize: 19,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      Icon(
+                        Icons.local_shipping_outlined,
+                        size: 50,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                      //const SizedBox(width: 0,)
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 35,
+              ),
+              
               Container(
                 height: MediaQuery.of(context).size.height / 15,
                 child: ElevatedButton(
@@ -1091,7 +1096,7 @@ class _DriverState extends State<Driver> {
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                       backgroundColor: WidgetStateProperty.all(
-                          const Color.fromARGB(255, 230, 23, 81))),
+                           Colors.grey)),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

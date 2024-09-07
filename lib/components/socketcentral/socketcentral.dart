@@ -162,7 +162,15 @@ class SocketService {
     socket.emit(eventName, data);
   }
 
+  void disconnet(){
+    if(socket.connected){
+      socket.disconnect();
+      print("Conexión cerrada manualente");
+    }
+  }
+
   void dispose() {
-    socket.dispose();
+    disconnet();
+    //socket.dispose();
   }
 }
