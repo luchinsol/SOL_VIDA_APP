@@ -55,9 +55,9 @@ Future<void> main() async {
   await userProvider.initUser();
 
     // Inicializar el servicio de Socket.IO
-  //SocketService();
+  SocketService();
   // Inicializamos el servicio de Socket.IO
-  SocketService socketService = SocketService();
+  //SocketService socketService = SocketService();
 
   
 
@@ -72,7 +72,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => CardpedidoProvider()),
         ChangeNotifierProvider(create: (context) => ResiduoProvider()),
         ChangeNotifierProvider(create: (context) => PedidoconductorProvider()),
-        Provider<SocketService>.value(value: socketService), // Proveer el SocketService aquí
+       // ChangeNotifierProvider(create: (context) => SocketService())
+       // Provider<SocketService>.value(value: socketService), // Proveer el SocketService aquí
       ],
       child: MyApp(estalogeado: estalogeado, rol: rol),
     ),
@@ -87,13 +88,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final socketService = Provider.of<SocketService>(context, listen: false);
-    if(estalogeado && rol ==  5){
-      socketService.connectToServer();
-    }
-    else{
-      socketService.disconnet();
-    }
+   
     return UpgradeAlert(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

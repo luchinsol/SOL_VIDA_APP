@@ -38,7 +38,7 @@ class Driver extends StatefulWidget {
 }
 
 class _DriverState extends State<Driver> {
- //late io.Socket socket;
+  //late io.Socket socket;
   String apiUrl = dotenv.env['API_URL'] ?? '';
   int idRuta = 0;
   int idconductor = 0;
@@ -53,7 +53,7 @@ class _DriverState extends State<Driver> {
   List<Pedidoinforme> informegeneral = [];
   bool conectado = false;
   Color colorconectado = Colors.white;
-final socketService = SocketService();
+  final socketService = SocketService();
   /*Future<void> _initialize() async {
    // await getRutas();
     // await cargarPreferencias();
@@ -359,7 +359,7 @@ final socketService = SocketService();
   );
 }*/
 
- /* Future<dynamic> getRutas() async {
+  /* Future<dynamic> getRutas() async {
     //print(".......1");
     SharedPreferences userPreference = await SharedPreferences.getInstance();
     SharedPreferences rutaidget = await SharedPreferences.getInstance();
@@ -464,20 +464,37 @@ final socketService = SocketService();
     );
   }
 */
+  Future<dynamic> getlastrutaconductor() async {
+    var res = await http.get(Uri.parse(apiUrl + '/api/lastrutafasty'),
+        headers: {"Content-type": "application/json"});
+    try {
+      SharedPreferences rutaidget = await SharedPreferences.getInstance();
+
+      // print("------esta es la RUTA");
+      if (res.statusCode == 200) {
+        var data = json.decode(res.body);
+        rutaidget.setInt('rutaActual', data['id']);
+        print("getlastconductor-----$data");
+      }
+    } catch (error) {
+      throw Exception("error en la solicitud $error");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    getlastrutaconductor();
     //pedidosInforme();
     // Inicializa la localización para español
     // connectToServer();
-   
-    
+
     socketService.listenToEvent('creadoRuta', (data) async {
-       print("......2.....dentro del init....");
+      print("......2.....dentro del init....");
       print("...creado de ruta ...$data");
       SharedPreferences rutaidget = await SharedPreferences.getInstance();
       // print("------esta es la RUTA");
-       print(data['id']);
+      print(data['id']);
       rutaidget.setInt('rutaActual', data['id']);
 
       //final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -499,7 +516,7 @@ final socketService = SocketService();
         // print(fechacreacion);
       }*/
     });
-   // _initialize();
+    // _initialize();
 
     // cargarPreferencias();
 
@@ -530,15 +547,15 @@ final socketService = SocketService();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 66, 66, 209),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         toolbarHeight: MediaQuery.of(context).size.height / 18,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: const Color.fromARGB(255, 0, 0, 0)),
         title: Container(
           //color: Colors.amber,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              /*Container(
                 height: MediaQuery.of(context).size.height / 18,
                 width: MediaQuery.of(context).size.height / 18,
                 decoration: const BoxDecoration(
@@ -547,7 +564,7 @@ final socketService = SocketService();
               ),
               const SizedBox(
                 width: 19,
-              ),
+              ),*/
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -556,13 +573,13 @@ final socketService = SocketService();
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width / 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: const Color.fromARGB(255, 0, 0, 0)),
                   ),
                   Text(
-                    "Hola,${userProvider.user?.nombre}",
+                    "${userProvider.user?.nombre}",
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width / 18,
-                        color: Colors.white),
+                        color: const Color.fromARGB(255, 0, 0, 0)),
                   )
                 ],
               ),
@@ -625,500 +642,331 @@ final socketService = SocketService();
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          right: 20,
-          left: 20,
-        ),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 1.1,
-          // color: Colors.grey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*Container(
-                //color: Colors.amber,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                     Container(
-                      height: MediaQuery.of(context).size.height/18,
-                      width: MediaQuery.of(context).size.height/18,
-                      decoration:const BoxDecoration(
-                        image: DecorationImage(image: AssetImage(
-                          'lib/imagenes/nuevito.png'
-                        ))
-                      ),
-                    ) ,const SizedBox(
-                      width: 19,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                         Text(
-                          "Bienvenid@",
-                          style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width/20,
-                               fontWeight: FontWeight.bold,color: Colors.white),
-                        ),
-                        Text(
-                          "Hola,${userProvider.user?.nombre}",
-                          style: TextStyle(fontSize: MediaQuery.of(context).size.width/18,color: Colors.white),
-                        )
-                      ],
-                    ),
-                   
-                    
-                  ],
-                ),
-              ),*/
-              const SizedBox(
-                height: 10,
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("lib/imagenes/olas.jpg"), // Ruta de la imagen
+                fit: BoxFit.fill, // Ajusta la imagen al tamaño de la pantalla
               ),
-              // ZONA TRABAJO
-              Container(
-                  height: MediaQuery.of(context).size.height / 6,
-                  width: MediaQuery.of(context).size.width,
-                  //padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(20),
-                      image: const DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage('lib/imagenes/arequipa.jpg'))),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomRight,
-                            stops: [
-                              0.1,
-                              0.8
-                            ],
-                            colors: [
-                              Colors.black.withOpacity(.85),
-                              Colors.black.withOpacity(.2)
-                            ])),
-                    child: const Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 29.0, bottom: 9),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 20,
+              left: 20,
+            ),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 1.1,
+              // color: Colors.grey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  /*Container(
+                    //color: Colors.amber,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                         Container(
+                          height: MediaQuery.of(context).size.height/18,
+                          width: MediaQuery.of(context).size.height/18,
+                          decoration:const BoxDecoration(
+                            image: DecorationImage(image: AssetImage(
+                              'lib/imagenes/nuevito.png'
+                            ))
+                          ),
+                        ) ,const SizedBox(
+                          width: 19,
+                        ),
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Zona de Trabajo",
+                             Text(
+                              "Bienvenid@",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Colors.white),
+                                  fontSize: MediaQuery.of(context).size.width/20,
+                                   fontWeight: FontWeight.bold,color: Colors.white),
                             ),
                             Text(
-                              "Arequipa",
-                              style: TextStyle(color: Colors.white),
+                              "Hola,${userProvider.user?.nombre}",
+                              style: TextStyle(fontSize: MediaQuery.of(context).size.width/18,color: Colors.white),
                             )
                           ],
                         ),
-                      ),
+                       
+                        
+                      ],
                     ),
-                  )),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 4.2,
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 66, 66, 209)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Hoy ${dayName[0].toUpperCase() + dayName.substring(1)}, ${dayNumber[0].toUpperCase() + dayNumber.substring(1)} de ${monthName} ${year}",
-                      style: TextStyle(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          fontWeight: FontWeight.w600,
-                          fontSize: MediaQuery.of(context).size.width / 23.0),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
+                  ),*/
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      height: MediaQuery.of(context).size.height / 4.2,
+                      width: MediaQuery.of(context).size.height / 4.2,
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: conectado ? colorconectado : Colors.grey,
-                        borderRadius: BorderRadius.circular(30)
-                      ),
-                      child: Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(conectado ? 
-                                "Conectado a" : "Desconectado" ,
-                                style: TextStyle(
-                                    color: conectado ? Color.fromARGB(255, 255, 255, 255) : const Color.fromARGB(255, 255, 255, 255),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width / 23.0),
-                              ),
-                             const SizedBox(width: 10,),
-                              Container(
-                                height: MediaQuery.of(context).size.height / 18,
-                                width: MediaQuery.of(context).size.height / 18,
-                                decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'lib/imagenes/nuevito.png'))),
-                              ),
-                            ],
+                          borderRadius: BorderRadius.circular(120),
+                          color: conectado ?Color.fromRGBO(0, 38, 255, 1) :Colors.grey
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Switch(
-                              value: conectado,
-                              activeColor: Color.fromARGB(255, 206, 255, 176),
-                              onChanged: (bool value) {
-                                setState(() {
-                                  conectado = value;
-                                  colorconectado = Color.fromARGB(255, 86, 194, 64);
-                                  //olor
-                                });
-                               /* if(conectado){
-                                   showDialog(context: context,
-                                 builder: (BuildContext context){
-                                  return  AlertDialog(
-                                    title: Text("Recuerda"),
-                                    content: Container(
-                                      height: MediaQuery.of(context).size.height/20,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                        Container(child: Row(
-                                         
-                                          children: [
-                                            Container(
-                                              width: MediaQuery.of(context).size.width/25,
-                                              height: MediaQuery.of(context).size.width/25,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(50),
-                                                color: Colors.green
-                                              ),
-                                            ),
-                                            Text("Revisa los almacenes más cercanos",style: TextStyle(fontWeight: FontWeight.w600),),
-                                          ],
-                                        )),
-                                        Container(child: Row(
-                                          children: [
-                                             Container(
-                                              width: MediaQuery.of(context).size.width/25,
-                                              height: MediaQuery.of(context).size.width/25,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(50),
-                                                color: Color.fromARGB(255, 68, 53, 224)
-                                              ),
-                                            ),
-                                            Text("La central envía pedidos",style: TextStyle(fontWeight: FontWeight.w600),),
-
-                                          ],
-                                        )),
-                                        ],
-                                      ),
-                                    ),
-                                    actions: [
-                                      TextButton(onPressed:(){
-                                        Navigator.pop(context);
-                                      },
-                                       child:const Text("OK",style: TextStyle(color: Colors.black),))
-                                    ],
-                                  );
-                                 });
-                                }*/
-                               
-                              }),
-                             
-                        ],
-                      ),
-                      
-                    ),
-
-                    /*const SizedBox(
-                      height: 50,
-                    ),*/
-                    /* Center(
-                      child: Column(
-                        children: [
-                          Icon(
-                            idRuta != 0
-                                ? Icons.airline_seat_recline_extra_outlined
-                                : Icons.report_gmailerrorred_outlined,
-                            size: MediaQuery.of(context).size.width / 10,
-                            color: idRuta != 0
-                                ? const Color.fromARGB(255, 39, 62, 166)
-                                : const Color.fromARGB(255, 246, 47, 8),
-                          ),
-                          Text(
-                            idRuta != 0
-                                ? "Tu ruta asignada es la N° ${idRuta}"
-                                : "Espera tu ruta",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 25,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),*/
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    /* Center(
-                      child: Column(
-                        children: [
-                          Icon(
-                            nombreauto != '-/-'
-                                ? Icons.car_rental
-                                : Icons.no_transfer_outlined,
-                            size: MediaQuery.of(context).size.width / 10,
-                            color: nombreauto != '-/-'
-                                ? const Color.fromARGB(255, 39, 62, 166)
-                                : const Color.fromARGB(255, 246, 47, 8),
-                          ),
-                          Text(
-                            nombreauto != '-/-'
-                                ? "Tu vehículo es el ${nombreauto}"
-                                : "Espera tu unidad",
-                            style: TextStyle(
-                                color: nombreauto != '-/-'
-                                    ? const Color.fromARGB(255, 255, 255, 255)
-                                    : const Color.fromARGB(255, 246, 47, 8),
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 25,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
-                    )*/
-                  ],
-                ),
-              ),
-
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 15,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const DriverAlmacen()));
-                   
-                  },
-                  style: ButtonStyle(
-                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                      backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 66, 66, 209))),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Almacenes cercanos",
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                      Icon(
-                        Icons.storefront_sharp,
-                        size: 50,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      //const SizedBox(width: 0,)
-                    ],
-                  ),
-                ),
-              ),
-               SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 15,
-                child:  ElevatedButton(
-                  onPressed: conectado ? () {
-                    /*Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Driver1()),
-                    );*/
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Driver1()));
-                  }:null,
-                  style: ButtonStyle(
-                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                      backgroundColor: WidgetStateProperty.all( conectado ? 
-                          Color.fromARGB(255, 66, 66, 209) : Colors.grey)),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Pedidos",
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                      Icon(
-                        Icons.shopping_bag_outlined,
-                        size: 50,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      //const SizedBox(width: 0,)
-                    ],
-                  ),
-                ) 
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 15,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Stock1()));
-                  },
-                  style: ButtonStyle(
-                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                      backgroundColor: WidgetStateProperty.all(Colors.grey)), //Color.fromARGB(255, 236, 210, 134)
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Abastecer",
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                      Icon(
-                        Icons.local_shipping_outlined,
-                        size: 50,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      //const SizedBox(width: 0,)
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
-              ),
-              
-              Container(
-                height: MediaQuery.of(context).size.height / 15,
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text("Informe de pedidos"),
-                          content: Container(
-                            height: MediaQuery.of(context).size.height / 7,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 4.2,
+                        width: MediaQuery.of(context).size.height / 4.2,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(120),
+                            color: Color.fromRGBO(255, 255, 255, 1)
+                            ),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text("Debe ingresar la fecha"),
-                                TextField(
-                                  controller: _pdffecha,
-                                  decoration: const InputDecoration(
-                                      label: Text("Fecha"),
-                                      hintText: 'AAAA-MM-DD'),
+                                Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration:const BoxDecoration(
+                                    image: DecorationImage(image: AssetImage("lib/imagenes/nuevecito.png"))
+                                  ),
                                 ),
+                                IconButton(onPressed: (){
+                                  setState(() {
+                                    conectado= !conectado;
+                                  });
+                                },
+                                 icon: Icon(Icons.power_settings_new_sharp,
+                                 color: conectado ?Color.fromRGBO(0, 38, 255, 1) :Colors.grey,
+                                 size: MediaQuery.of(context).size.width/8,))
                               ],
                             ),
-                          ),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  // LO SACO DEL OTRO SHOW DIALOG
-                                  Navigator.pop(context);
-
-                                  // LO INSERTO EN ESTE NUEVO
-
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const AlertDialog(
-                                        content: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            CircularProgressIndicator(
-                                              backgroundColor: Color.fromARGB(
-                                                  255, 102, 28, 59),
-                                            ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(
-                                              "Creando ...",
-                                              style: TextStyle(fontSize: 15),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
-
-                                  // LLAMO METODO
-
-                                  // print("------${_pdffecha.text}------");
-                                  pedidosInforme(_pdffecha.text);
-                                  // _createPdf(_pdffecha.text);
-
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("OK")),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Cancelar"))
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  style: ButtonStyle(
-                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                      backgroundColor: WidgetStateProperty.all(
-                           Colors.grey)),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Informe",
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Color.fromARGB(255, 255, 255, 255)),
+                      )
                       ),
-                      Icon(
-                        Icons.picture_as_pdf_outlined,
-                        size: 50,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      //const SizedBox(width: 0,)
-                    ],
+                      SizedBox(
+                    height: MediaQuery.of(context).size.height / 30,
                   ),
-                ),
+                      Text("Conductor",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width/20,
+                        color: Colors.black,fontWeight: FontWeight.w500),),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 7.5,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 15,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const DriverAlmacen()));
+                      },
+                      style: ButtonStyle(
+                          shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30))),
+                          backgroundColor: WidgetStateProperty.all(
+                              Color.fromRGBO(255, 255, 255, 1).withOpacity(0.95)
+                              )),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Almacenes",
+                            style: TextStyle(
+                                fontSize: 19,
+                                color: Color.fromARGB(255, 0, 0, 0)),
+                          ),
+                          Icon(
+                            Icons.storefront_sharp,
+                            size: 50,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                          //const SizedBox(width: 0,)
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 35,
+                  ),
+                  Container(
+                      height: MediaQuery.of(context).size.height / 15,
+                      child: ElevatedButton(
+                        onPressed: conectado
+                            ? () {
+                                /*Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Driver1()),
+                        );*/
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const Driver1()));
+                              }
+                            : null,
+                        style: ButtonStyle(
+                            shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30))),
+                            backgroundColor: WidgetStateProperty.all(conectado
+                                ? Color.fromRGBO(60, 57, 255, 1).withOpacity(0.85)
+                                : Colors.grey)),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Pedidos",
+                              style: TextStyle(
+                                  fontSize: 19,
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                            Icon(
+                              Icons.shopping_bag_outlined,
+                              size: 50,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                            //const SizedBox(width: 0,)
+                          ],
+                        ),
+                      )),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 35,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 15,
+                    child: ElevatedButton(
+                      onPressed: () {
+                       /* Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Stock1()));*/
+                      },
+                      style: ButtonStyle(
+                          shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30))),
+                          backgroundColor: WidgetStateProperty.all(Colors
+                              .grey.withOpacity(0.7))), //Color.fromARGB(255, 236, 210, 134)
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Pronto",
+                            style: TextStyle(
+                                fontSize: 19,
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                          Icon(
+                            Icons.local_shipping_outlined,
+                            size: 50,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                          //const SizedBox(width: 0,)
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 35,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 15,
+                    child: ElevatedButton(
+                      onPressed: () {
+                       /* showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Informe de pedidos"),
+                              content: Container(
+                                height: MediaQuery.of(context).size.height / 7,
+                                child: Column(
+                                  children: [
+                                    const Text("Debe ingresar la fecha"),
+                                    TextField(
+                                      controller: _pdffecha,
+                                      decoration: const InputDecoration(
+                                          label: Text("Fecha"),
+                                          hintText: 'AAAA-MM-DD'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      // LO SACO DEL OTRO SHOW DIALOG
+                                      Navigator.pop(context);
+
+                                      // LO INSERTO EN ESTE NUEVO
+
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const AlertDialog(
+                                            content: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                CircularProgressIndicator(
+                                                  backgroundColor:
+                                                      Color.fromARGB(
+                                                          255, 102, 28, 59),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  "Creando ...",
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      );
+
+                                      // LLAMO METODO
+
+                                      // print("------${_pdffecha.text}------");
+                                      pedidosInforme(_pdffecha.text);
+                                      // _createPdf(_pdffecha.text);
+
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("OK")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Cancelar"))
+                              ],
+                            );
+                          },
+                        );*/
+                      },
+                      style: ButtonStyle(
+                          shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30))),
+                          backgroundColor:
+                              WidgetStateProperty.all(Colors.grey.withOpacity(0.7))),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Pronto",
+                            style: TextStyle(
+                                fontSize: 19,
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                          Icon(
+                            Icons.picture_as_pdf_outlined,
+                            size: 50,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                          //const SizedBox(width: 0,)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

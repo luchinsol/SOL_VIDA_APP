@@ -61,7 +61,7 @@ class _ProductosState extends State<Productos> {
 
         if (mounted) {
           setState(() {
-            tempProducto.removeWhere((element) => (element.id == 6));
+            //tempProducto.removeWhere((element) => (element.id == 6));
             listProducto = tempProducto;
             //conductores = tempConductor;
           });

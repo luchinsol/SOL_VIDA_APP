@@ -1,6 +1,6 @@
 class Cardpedidomodel{
   int? id;
-  String? pago;
+  String? estado;
   String direccion;
   List<Map<String, dynamic>> detallepedido;
   String nombres;
@@ -14,7 +14,7 @@ class Cardpedidomodel{
 
   Cardpedidomodel({
     required this.id,
-    required this.pago,
+    required this.estado,
     required this.direccion,
     required this.detallepedido,
     required this.nombres,

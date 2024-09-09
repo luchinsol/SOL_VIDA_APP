@@ -248,8 +248,8 @@ class _PreloginState extends State<Prelogin> {
           });
            // Iniciar la conexión de WebSocket si es conductor
            // Conectamos al servidor de WebSocket
-        var socketService = Provider.of<SocketService>(context, listen: false);
-          socketService.connectToServer();
+       /* var socketService = Provider.of<SocketService>(context, listen: false);
+          socketService.connectToServer();*/
         }
         // GERENTE
         else if (data['usuario']['rol_id'] == 3) {

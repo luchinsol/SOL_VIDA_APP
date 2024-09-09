@@ -84,21 +84,21 @@ class _DriverAlmacenState extends State<DriverAlmacen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 93, 93, 94),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 76, 76, 77),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         title: const Text('Almacenes',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 29,
-            color: Colors.white
+            color: Color.fromARGB(255, 0, 0, 0)
           )),
         iconTheme: const IconThemeData(
-          color: Colors.white,
+          color: Color.fromARGB(255, 0, 0, 0),
         ),
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height / 1.2,
+        height: MediaQuery.of(context).size.height / 1,
         width: MediaQuery.of(context).size.width / 1,
         padding: const EdgeInsets.all(9),
         decoration: BoxDecoration(

@@ -59,7 +59,7 @@ class _NavegacionState extends State<Navegacion> {
   LatLng _currentPosition = const LatLng(-16.4014, -71.5343);
   double _currentBearing = 0.0;
   double _currentzoom = 16.0;
-List<Map<String, dynamic>> result = [];
+  List<Map<String, dynamic>> result = [];
   BitmapDescriptor? _originIcon;
   BitmapDescriptor? _destinationIcon;
   int anulados = 0;
@@ -374,16 +374,17 @@ List<Map<String, dynamic>> result = [];
     }
   }
 
-void _launchMaps(double lat, double lng) async {
-    final Uri googleMapsUrl = Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng");
+  void _launchMaps(double lat, double lng) async {
+    final Uri googleMapsUrl =
+        Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng");
     if (await launchUrl(googleMapsUrl)) {
       await launchUrl(googleMapsUrl);
     } else {
       throw 'No se pudo abrir Google Maps';
     }
   }
- 
- Future<dynamic> getDetalleXUnPedido(pedidoID) async {
+
+  Future<dynamic> getDetalleXUnPedido(pedidoID) async {
     //print("-----detalle pedido");
     if (pedidoID != 0) {
       var res = await http.get(
@@ -463,11 +464,11 @@ void _launchMaps(double lat, double lng) async {
         Provider.of<CardpedidoProvider>(context, listen: false);
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 93, 93, 94),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 66, 66, 209),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         toolbarHeight: MediaQuery.of(context).size.height / 18,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -475,7 +476,7 @@ void _launchMaps(double lat, double lng) async {
               "Navegación",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 0, 0, 0),
                   fontSize: 29),
             ),
             Badge(
@@ -503,8 +504,9 @@ void _launchMaps(double lat, double lng) async {
       ),
       body: Stack(
         children: [
+          
           Container(
-            padding: const EdgeInsets.all(9),
+            padding: const EdgeInsets.all(3),
             height: MediaQuery.of(context).size.height / 1.22,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
@@ -550,84 +552,59 @@ void _launchMaps(double lat, double lng) async {
                   ),
               },
             ),
-            /* GoogleMap(
-              initialCameraPosition: CameraPosition(
-                zoom: 14,
-                target: LatLng(-16.4014, -71.5343),
-                tilt: _tilt,
-              ),
-              mapType: MapType.normal,
-              style: _mapStyle,
-              onMapCreated: (GoogleMapController controller) {
-                _mapController = controller;
-              },
-              polylines: {
-                Polyline(
-                  polylineId: PolylineId("RUTA"),
-                  points: polypoints,
-                  color: Color.fromARGB(255, 47, 44, 144),
-                  width: 5,
-                ),
-              },
-              markers: {
-                const Marker(
-                  markerId: MarkerId("origen"),
-                  position: LatLng(-16.3967402, -71.5418069),
-                ),
-                const Marker(
-                  markerId: MarkerId("destino"),
-                  position: LatLng(-16.4014, -71.5343),
-                ),
-              },
-            ),*/
           ),
           Positioned(
             bottom: 140,
             left: 16,
             child: Container(
-              width: MediaQuery.of(context).size.width/2,
-              height: MediaQuery.of(context).size.height/20,
+              width: MediaQuery.of(context).size.width / 2,
+              height: MediaQuery.of(context).size.height / 20,
               //color: const Color.fromARGB(255, 36, 157, 40),
-              child: ElevatedButton(onPressed: (){
-                print("....esta es la ubicacion: ${widget.destination.latitude} ${widget.destination.longitude}");
-                _launchMaps(widget.destination.latitude, widget.destination.longitude);
-              },
-              style: ButtonStyle(
+              child: ElevatedButton(
+                  onPressed: () {
+                    print(
+                        "....esta es la ubicacion: ${widget.destination.latitude} ${widget.destination.longitude}");
+                    _launchMaps(widget.destination.latitude,
+                        widget.destination.longitude);
+                  },
+                  style: ButtonStyle(
                       shape: WidgetStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                       backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 44, 204, 66))),
-               child: Padding(
-                 padding: const EdgeInsets.all(2.0),
-                 child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Navegar con",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 255, 255)),),
-                    Container(
-                      width: 50,
-                      height: 50,
-                     // padding: EdgeInsets.all(10),
-                      decoration:BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                      color:Colors.grey,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('lib/imagenes/mapa2.jpg'))
-                      )
+                          Color.fromARGB(255, 1, 163, 14)
+                          )),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Navegar con :",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                        Container(
+                            width: 50,
+                            height: 50,
+                            // padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.grey,
+                                image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image:
+                                        AssetImage('lib/imagenes/mapa2.jpg')))),
+                      ],
                     ),
-                  ],
-                 ),
-               )),
+                  )),
             ),
           ),
           Positioned(
             bottom: 206,
             right: 16,
             child: FloatingActionButton(
-              backgroundColor: const Color.fromARGB(255, 66, 66, 209),
+              backgroundColor: const Color.fromRGBO(0, 38, 255, 1),
               onPressed: () {
                 _tiltMap();
               },
@@ -647,24 +624,30 @@ void _launchMaps(double lat, double lng) async {
             builder: (BuildContext context, ScrollController controller) {
               return Container(
                 //color: const Color.fromARGB(255, 144, 141, 141),
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                    borderRadius:const BorderRadius.only(
                         topRight: Radius.circular(20),
                         topLeft: Radius.circular(20)),
-                    color:Color.fromARGB(255, 66, 66, 209)),
+                    color: const Color.fromRGBO(0, 38, 255, 1).withOpacity(0.95)
+                   
+                    
+                    ),
                 child: ListView(
                   controller: controller,
                   padding: const EdgeInsets.all(16.0),
                   children: [
                     Center(
                       child: Text(
-                        'Detalles de entrega',
+                        'Detalles',
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.width / 20,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: MediaQuery.of(context).size.width / 25,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
+                    Icon(Icons.keyboard_double_arrow_up,
+                    color: Colors.white,
+                    size: MediaQuery.of(context).size.width/18,),
                     const SizedBox(height: 4.0),
                     // Línea de agarre
                     Container(
@@ -672,7 +655,7 @@ void _launchMaps(double lat, double lng) async {
                       width: MediaQuery.of(context).size.width / 2,
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 108, 112, 126),
+                       // color: Color.fromARGB(255, 255, 255, 255),
                         borderRadius: BorderRadius.circular(2.0),
                       ),
                     ),
@@ -694,7 +677,7 @@ void _launchMaps(double lat, double lng) async {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "Pago: ${cardpedidoProvider.pedido?.pago}",
+                                "Estado: ${cardpedidoProvider.pedido?.estado}",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromARGB(255, 85, 7, 255)),
@@ -784,7 +767,7 @@ void _launchMaps(double lat, double lng) async {
                                               actions: [
                                                 TextButton(
                                                     onPressed: () async {
-                                                     /* showDialog(
+                                                      /* showDialog(
                                                         context: context,
                                                         builder: (BuildContext
                                                             context) {
@@ -816,8 +799,8 @@ void _launchMaps(double lat, double lng) async {
                                                           );
                                                         },
                                                       );*/
-                                                     // Navigator.pop(context);
-                                                    /*  showDialog(
+                                                      // Navigator.pop(context);
+                                                      /*  showDialog(
                                                         context: context,
                                                         builder: (BuildContext
                                                             context) {
@@ -855,7 +838,7 @@ void _launchMaps(double lat, double lng) async {
                                                               .pedido?.id,
                                                           motivo);
                                                       Navigator.pop(context);
-                                                     /* Navigator.pushReplacement(
+                                                      /* Navigator.pushReplacement(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder:
@@ -955,15 +938,17 @@ void _launchMaps(double lat, double lng) async {
                                 height: MediaQuery.of(context).size.height / 23,
                                 child: ElevatedButton(
                                     onPressed: () async {
-                                      await getDetalleXUnPedido(cardpedidoProvider.pedido?.id);
+                                      await getDetalleXUnPedido(
+                                          cardpedidoProvider.pedido?.id);
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return Dialog(
+                                              backgroundColor: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.75),
                                               child: Container(
                                                 padding: EdgeInsets.all(22),
                                                 decoration: BoxDecoration(
-                                                    color: Colors.white,
+                                                    //color: Color.fromARGB(255, 218, 218, 218).withOpacity(0.75),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20)),
@@ -1215,14 +1200,14 @@ void _launchMaps(double lat, double lng) async {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Cobrar",
+                                      Text("Cobrar ",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: MediaQuery.of(context)
                                                       .size
                                                       .width /
                                                   35)),
-                                      const SizedBox(width: 10),
+                                      //const SizedBox(width: 5),
                                       Icon(Icons.attach_money_rounded,
                                           size: MediaQuery.of(context)
                                                   .size
@@ -1252,14 +1237,14 @@ void _launchMaps(double lat, double lng) async {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Llamar",
+                                      Text("Llamar ",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: MediaQuery.of(context)
                                                       .size
                                                       .width /
                                                   35)),
-                                      const SizedBox(width: 10),
+                                    //  const SizedBox(width: 10),
                                       Icon(Icons.phone,
                                           size: MediaQuery.of(context)
                                                   .size
