@@ -124,9 +124,9 @@ class SocketService {
       'transports': ['websocket'],
       'autoConnect': true,
       'reconnect': true,
-      'reconnectionAttempts': 20,
+      'reconnectionAttempts': 10,
       'reconnectionDelay': 2000,
-      'reconnectionDelayMax': 5000,
+      'reconnectionDelayMax': 2000,
       'timeout':10000
     });
 
