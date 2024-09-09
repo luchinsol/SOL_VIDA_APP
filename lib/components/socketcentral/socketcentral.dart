@@ -124,9 +124,10 @@ class SocketService {
       'transports': ['websocket'],
       'autoConnect': true,
       'reconnect': true,
-      'reconnectionAttempts': 10,
-      'reconnectionDelay': 1000,
-      'reconnectionDelayMax': 2000,
+      'reconnectionAttempts': 20,
+      'reconnectionDelay': 2000,
+      'reconnectionDelayMax': 5000,
+      'timeout':10000
     });
 
     socket.connect();

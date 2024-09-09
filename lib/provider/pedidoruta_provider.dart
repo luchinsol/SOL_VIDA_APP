@@ -62,12 +62,14 @@ class PedidoconductorProvider extends ChangeNotifier {
   }
 
   void rechazarPedidos(int pedidosId) {
+     print("........RECHAZANDO..............");
     listPedidos.removeWhere((pedido) => pedido.id == pedidosId);
     notifyListeners();
   }
   
   Future<dynamic> updateestadoaceptar(String estado, int idpedido) async {
   try {
+    print("........LLLAMANDO AL UPDATE");
     // Hacemos la petición a la API para actualizar el estado en el servidor
     var res = await http.put(
       Uri.parse(apiUrl + apiUpdateestado + idpedido.toString()),

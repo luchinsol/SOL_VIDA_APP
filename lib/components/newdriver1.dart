@@ -955,10 +955,7 @@ class _Driver1State extends State<Driver1> {
                                                     } , 
                                                     style: ButtonStyle(
                                                     backgroundColor: WidgetStateProperty.all(
-                                                     ( estadoescuchado == 'en proceso' &&
-                                                      userProvider.user?.id == conductoridescuchado)
-                                                      || pedidoescuchado == listpedidosconductorruta[index].id
-                                                       ? Colors.grey : Color.fromRGBO(0, 38, 255, 1)
+                                                     Color.fromRGBO(0, 38, 255, 1)
                                                     ),
                                                   ),
                                                     child: const Row(

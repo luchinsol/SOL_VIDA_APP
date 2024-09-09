@@ -49,15 +49,32 @@ class _DriverState extends State<Driver> {
   String apiLastRutaCond = '/api/rutakastcond/';
   String apiDetallePedido = '/api/detallepedido/';
   String apipedidoinforme = '/api/fecharutapedido/';
+  String apiConductorconectado = '/api/conductor/';
   TextEditingController _pdffecha = TextEditingController();
   List<Pedidoinforme> informegeneral = [];
   bool conectado = false;
   Color colorconectado = Colors.white;
   final socketService = SocketService();
+
   /*Future<void> _initialize() async {
    // await getRutas();
     // await cargarPreferencias();
   }*/
+  Future<dynamic> conexionCentral(int usuarioid, String estado) async {
+    try {
+      var res = await http.put(
+          Uri.parse(apiUrl + apiConductorconectado + usuarioid.toString()),
+          headers: {"Content-type": "application/json"},
+          body: jsonEncode({"estado": estado}));
+      if (res.statusCode == 200) {
+        print("Conexión exitosa");
+      } else {
+        print("No se pudo conectar");
+      }
+    } catch (error) {
+      throw Exception("Error peticion $error");
+    }
+  }
 
   Future<void> createPdf(List<Pedidoinforme> pedidos) async {
     final pdf = pw.Document();
@@ -710,44 +727,60 @@ class _DriverState extends State<Driver> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(120),
-                          color: conectado ?Color.fromRGBO(0, 38, 255, 1) :Colors.grey
-                          ),
+                          color: conectado
+                              ? Color.fromRGBO(0, 38, 255, 1)
+                              : Colors.grey),
                       child: Container(
                         height: MediaQuery.of(context).size.height / 4.2,
                         width: MediaQuery.of(context).size.height / 4.2,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(120),
-                            color: Color.fromRGBO(255, 255, 255, 1)
+                            color: Color.fromRGBO(255, 255, 255, 1)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "lib/imagenes/nuevecito.png"))),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration:const BoxDecoration(
-                                    image: DecorationImage(image: AssetImage("lib/imagenes/nuevecito.png"))
-                                  ),
-                                ),
-                                IconButton(onPressed: (){
+                            IconButton(
+                                onPressed: () async {
+                                  int? user = userProvider.user!.id;
+                                  String estado = conectado
+                                      ? "desconectado"
+                                      : "conectado"; // Cambia el estado según el valor actual de 'conectado'
+
+                                  await conexionCentral(user!, estado);
+
                                   setState(() {
-                                    conectado= !conectado;
+                                    conectado =
+                                        !conectado; // Alterna el valor de 'conectado' después de enviar la petición
                                   });
                                 },
-                                 icon: Icon(Icons.power_settings_new_sharp,
-                                 color: conectado ?Color.fromRGBO(0, 38, 255, 1) :Colors.grey,
-                                 size: MediaQuery.of(context).size.width/8,))
-                              ],
-                            ),
-                      )
-                      ),
-                      SizedBox(
+                                icon: Icon(
+                                  Icons.power_settings_new_sharp,
+                                  color: conectado
+                                      ? Color.fromRGBO(0, 38, 255, 1)
+                                      : Colors.grey,
+                                  size: MediaQuery.of(context).size.width / 8,
+                                ))
+                          ],
+                        ),
+                      )),
+                  SizedBox(
                     height: MediaQuery.of(context).size.height / 30,
                   ),
-                      Text("Conductor",
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width/20,
-                        color: Colors.black,fontWeight: FontWeight.w500),),
+                  Text(
+                    "Conductor",
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
+                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 7.5,
                   ),
@@ -762,8 +795,8 @@ class _DriverState extends State<Driver> {
                           shape: WidgetStateProperty.all(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30))),
                           backgroundColor: WidgetStateProperty.all(
-                              Color.fromRGBO(255, 255, 255, 1).withOpacity(0.95)
-                              )),
+                              Color.fromRGBO(255, 255, 255, 1)
+                                  .withOpacity(0.95))),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -804,7 +837,8 @@ class _DriverState extends State<Driver> {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30))),
                             backgroundColor: WidgetStateProperty.all(conectado
-                                ? Color.fromRGBO(60, 57, 255, 1).withOpacity(0.85)
+                                ? Color.fromRGBO(60, 57, 255, 1)
+                                    .withOpacity(0.85)
                                 : Colors.grey)),
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -831,14 +865,15 @@ class _DriverState extends State<Driver> {
                     height: MediaQuery.of(context).size.height / 15,
                     child: ElevatedButton(
                       onPressed: () {
-                       /* Navigator.of(context).push(
+                        /* Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => Stock1()));*/
                       },
                       style: ButtonStyle(
                           shape: WidgetStateProperty.all(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30))),
-                          backgroundColor: WidgetStateProperty.all(Colors
-                              .grey.withOpacity(0.7))), //Color.fromARGB(255, 236, 210, 134)
+                          backgroundColor: WidgetStateProperty.all(Colors.grey
+                              .withOpacity(
+                                  0.7))), //Color.fromARGB(255, 236, 210, 134)
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -865,7 +900,7 @@ class _DriverState extends State<Driver> {
                     height: MediaQuery.of(context).size.height / 15,
                     child: ElevatedButton(
                       onPressed: () {
-                       /* showDialog(
+                        /* showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
@@ -941,8 +976,8 @@ class _DriverState extends State<Driver> {
                       style: ButtonStyle(
                           shape: WidgetStateProperty.all(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30))),
-                          backgroundColor:
-                              WidgetStateProperty.all(Colors.grey.withOpacity(0.7))),
+                          backgroundColor: WidgetStateProperty.all(
+                              Colors.grey.withOpacity(0.7))),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
