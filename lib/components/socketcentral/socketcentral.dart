@@ -125,7 +125,7 @@ class SocketService {
       'autoConnect': true,
       'reconnect': true,
       'reconnectionAttempts': 10,
-      'reconnectionDelay': 500,
+      'reconnectionDelay': 1000,
       'reconnectionDelayMax': 2000,
     });
 
