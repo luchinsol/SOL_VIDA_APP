@@ -1111,13 +1111,20 @@ class _PedidoState extends State<Pedido> {
                                     //print('hay bidones nuevos');
                                     setState(() {
                                       buscandoCodigo = false;
-                                      colorCupon = const Color.fromRGBO(
-                                          255, 0, 93, 1.000);
+                                      colorCupon = const Color.fromARGB(255, 90, 255, 96);
                                       ahorro = 12.0 * cantidadBidones;
 
                                       // print("ESTE ES EL AHORRO: $ahorro");
                                       actualizarProviderPedido();
                                     });
+                                     // Mostrar SnackBar cuando el código es válido
+  ScaffoldMessenger.of(context).showSnackBar(
+   const SnackBar(
+      content: Text('Código válido'),
+      backgroundColor: Colors.green,
+      duration: Duration(seconds: 2),
+    ),
+  );
                                   } else {
                                     //print('no hay bidones');
                                     setState(() {
