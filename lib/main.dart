@@ -55,9 +55,9 @@ Future<void> main() async {
   await userProvider.initUser();
 
     // Inicializar el servicio de Socket.IO
-  SocketService();
+ // SocketService();
   // Inicializamos el servicio de Socket.IO
-  //SocketService socketService = SocketService();
+  SocketService socketService = SocketService();
 
   
 
@@ -73,7 +73,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => ResiduoProvider()),
         ChangeNotifierProvider(create: (context) => PedidoconductorProvider()),
        // ChangeNotifierProvider(create: (context) => SocketService())
-       // Provider<SocketService>.value(value: socketService), // Proveer el SocketService aquí
+        Provider<SocketService>.value(value: socketService), // Proveer el SocketService aquí
       ],
       child: MyApp(estalogeado: estalogeado, rol: rol),
     ),

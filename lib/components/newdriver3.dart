@@ -1,5 +1,6 @@
 import 'package:appsol_final/components/newdriver1.dart';
 import 'package:appsol_final/provider/card_provider.dart';
+import 'package:appsol_final/provider/pedidoruta_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -28,22 +29,21 @@ class _CobrarState extends State<Cobrar> {
   final TextEditingController _controller2 = TextEditingController();
   String apiPedidosConductor = '/api/pedido_conductor/';
   String apiUrl = dotenv.env['API_URL'] ?? '';
- // File? _imageFile;
+  // File? _imageFile;
   //final ImagePicker _picker = ImagePicker();
   List<File> _images = [];
   String? tipoPago;
   final List<String> _tipoPagoItems = ['Yape', 'Plin', 'Otro'];
   final ImagePicker _picker = ImagePicker();
 
-   Future<void> getImageFromCamera() async {
-   try {
+  Future<void> getImageFromCamera() async {
+    try {
       await _picker.pickImage(source: ImageSource.camera);
       // No es necesario hacer nada con la foto, ya que se guarda automáticamente en el dispositivo.
     } catch (e) {
       // Maneja cualquier error que ocurra al intentar abrir la cámara
       print('Error al abrir la cámara: $e');
     }
-   
   }
 
   Future<dynamic> updateEstadoPedido(
@@ -110,6 +110,8 @@ class _CobrarState extends State<Cobrar> {
 
   @override
   Widget build(BuildContext context) {
+    final pedidosProvider =
+        Provider.of<PedidoconductorProvider>(context, listen: false);
     final cardpedidoProvider =
         Provider.of<CardpedidoProvider>(context, listen: false);
     return Scaffold(
@@ -174,9 +176,7 @@ class _CobrarState extends State<Cobrar> {
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                     
-                    ],
+                    children: [],
                   ),
                 ),
                 const SizedBox(
@@ -189,12 +189,12 @@ class _CobrarState extends State<Cobrar> {
                     const SizedBox(
                       height: 20,
                     ),
-          
+
                     const SizedBox(
                       height: 20,
                     ),
                     // VIRTUAL
-          
+
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.2,
@@ -208,8 +208,9 @@ class _CobrarState extends State<Cobrar> {
                                       title: const Center(
                                           child: Text("Método de pago")),
                                       content: Container(
-                                        height: MediaQuery.of(context).size.height /
-                                            2.5,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                2.5,
                                         child: Column(
                                           children: [
                                             const Text(
@@ -237,7 +238,8 @@ class _CobrarState extends State<Cobrar> {
                                             ),
                                             TextField(
                                               controller: _controller2,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               decoration: const InputDecoration(
                                                   hintText: 'S/.0.00'),
                                             ),
@@ -263,8 +265,8 @@ class _CobrarState extends State<Cobrar> {
                                                     12,
                                                 child: Center(
                                                   child: DropdownButton(
-                                                    hint:
-                                                        const Text('Tipo de pago'),
+                                                    hint: const Text(
+                                                        'Tipo de pago'),
                                                     value: tipoPago,
                                                     items: _tipoPagoItems
                                                         .map((String value) {
@@ -274,7 +276,8 @@ class _CobrarState extends State<Cobrar> {
                                                         child: Text(value),
                                                       );
                                                     }).toList(),
-                                                    onChanged: (String? newValue) {
+                                                    onChanged:
+                                                        (String? newValue) {
                                                       setState(() {
                                                         tipoPago = newValue;
                                                       });
@@ -300,11 +303,11 @@ class _CobrarState extends State<Cobrar> {
                                               onPressed: () async {
                                                 // Cierra el diálogo primero
                                                 Navigator.pop(context);
-          
+
                                                 // Usa un retraso breve para asegurar que el contexto esté correctamente actualizado
-                                              /*  await Future.delayed(
+                                                /*  await Future.delayed(
                                                     Duration(milliseconds: 300));*/
-          
+
                                                 // Realiza la lógica necesaria después de cerrar el diálogo
                                                 await updateEstadoPedido(
                                                   "entregado",
@@ -316,14 +319,14 @@ class _CobrarState extends State<Cobrar> {
                                                   cardpedidoProvider
                                                       .pedido?.beneficiadoid,
                                                 );
-          
+                                          pedidosProvider.getPedidosConductor();
                                                 /*await _takePicture(
                                                     cardpedidoProvider.pedido!.id
                                                         .toString());*/
                                                 getImageFromCamera();
-          
+
                                                 // Navega a la pantalla Driver1 después de completar todas las operaciones
-                                               // Navigator.pop(context,const Driver1());
+                                                // Navigator.pop(context,const Driver1());
                                                 /*Navigator.of(context)
                                                     .pushReplacement(
                                                   MaterialPageRoute(
@@ -340,8 +343,9 @@ class _CobrarState extends State<Cobrar> {
                                   });
                             },
                             style: ButtonStyle(
-                                backgroundColor:
-                                    WidgetStateProperty.all( Color.fromARGB(255, 66, 66, 209),)),
+                                backgroundColor: WidgetStateProperty.all(
+                              Color.fromARGB(255, 66, 66, 209),
+                            )),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -349,9 +353,10 @@ class _CobrarState extends State<Cobrar> {
                                   "Pago virtual",
                                   style: TextStyle(
                                       fontSize:
-                                          MediaQuery.of(context).size.width / 20,
-                                      color:
-                                          const Color.fromARGB(255, 255, 255, 255)),
+                                          MediaQuery.of(context).size.width /
+                                              20,
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255)),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -364,11 +369,11 @@ class _CobrarState extends State<Cobrar> {
                             )),
                       ),
                     ),
-          
+
                     const SizedBox(
                       height: 20,
                     ),
-          
+
                     // EFECTIVO
                     Center(
                       child: Container(
@@ -380,11 +385,12 @@ class _CobrarState extends State<Cobrar> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title:
-                                        const Center(child: Text("Método de pago")),
+                                    title: const Center(
+                                        child: Text("Método de pago")),
                                     content: Container(
                                       height:
-                                          MediaQuery.of(context).size.height / 2.5,
+                                          MediaQuery.of(context).size.height /
+                                              2.5,
                                       child: Column(
                                         children: [
                                           const Text(
@@ -429,7 +435,8 @@ class _CobrarState extends State<Cobrar> {
                                     ),
                                     actions: [
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           TextButton(
                                               onPressed: () {
@@ -438,7 +445,7 @@ class _CobrarState extends State<Cobrar> {
                                               child: Text("Cancelar")),
                                           TextButton(
                                             onPressed: () {
-                                               Navigator.pop(context);
+                                              Navigator.pop(context);
                                               /*showDialog(
                                                     context: context,
                                                     builder:
@@ -461,14 +468,15 @@ class _CobrarState extends State<Cobrar> {
                                                   cardpedidoProvider.pedido?.id,
                                                   cardpedidoProvider
                                                       .pedido?.beneficiadoid);
-          
-                                     /*         Navigator.pushAndRemoveUntil(
+                                              pedidosProvider
+                                                  .getPedidosConductor();
+                                              /*         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => Driver1()),
             (Route<dynamic> route) => false,
           );*/
-          
-                                             /* Navigator.push(
+
+                                              /* Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder:
@@ -491,7 +499,8 @@ class _CobrarState extends State<Cobrar> {
                                 style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).size.width / 20,
-                                    color: const Color.fromARGB(255, 82, 82, 82)),
+                                    color:
+                                        const Color.fromARGB(255, 82, 82, 82)),
                               ),
                               const SizedBox(
                                 width: 10,

@@ -15,23 +15,38 @@ class PedidoconductorProvider extends ChangeNotifier {
   String apiDetallePedido = '/api/detallepedido/';
   String apiUpdateestado = '/api/estadoflash/';
   List<Pedido> get pedidos => listPedidos;
+  int? rutaIDGET = 0;
+
+  cargarPreferencias() async {
+    SharedPreferences rutaidget = await SharedPreferences.getInstance();
+
+    rutaIDGET = rutaidget.getInt('rutaActual');
+    print("---RUTA ID GET: ${rutaIDGET}");
+
+    await getPedidosConductor();
+  }
 
   Future<void> getPedidosConductor() async {
     print(".....1...dentro del provider get");
-     SharedPreferences rutaidget = await SharedPreferences.getInstance();
-   
-    int? rutaid = rutaidget.getInt('rutaActual'); // Cambia esto si es necesario
-    print("...ruta en provider: $rutaid");
+   // SharedPreferences rutaidget = await SharedPreferences.getInstance();
+
+    //int? rutaid = rutaidget.getInt('rutaActual'); // Cambia esto si es necesario
+    print("...ruta en provider: $rutaIDGET");
+    print(
+        "-----la ruta es: ${apiUrl + apiPedidosConductor + rutaIDGET.toString()}");
     var res = await http.get(
-      Uri.parse("$apiUrl$apiPedidosConductor$rutaid}"),
+      Uri.parse(apiUrl + apiPedidosConductor + rutaIDGET.toString()),
       headers: {"Content-type": "application/json"},
     );
 
     try {
       if (res.statusCode == 200) {
         var data = json.decode(res.body);
-        List<Pedido> listTemporal = data.map<Pedido>((mapa) {
-          return Pedido(
+
+        // Verifica si 'data' es una lista
+        if (data is List) {
+          List<Pedido> listTemporal = data.map<Pedido>((mapa) {
+            return Pedido(
               id: mapa['id'],
               montoTotal: mapa['total']?.toDouble(),
               latitud: mapa['latitud']?.toDouble(),
@@ -45,11 +60,25 @@ class PedidoconductorProvider extends ChangeNotifier {
               direccion: mapa['direccion'],
               tipoPago: mapa['tipo_pago'],
               beneficiadoID: mapa['beneficiado_id'],
-              comentario: mapa['observacion'] ?? 'sin comentarios');
-        }).toList();
-        
-        listPedidos = listTemporal;  
-        notifyListeners();
+              comentario: mapa['observacion'] ?? 'sin comentarios',
+            );
+          }).toList();
+
+          print(".....CANTIDAD PEDIDOS PROVIDER....");
+          print("${listTemporal.length}");
+
+          // Asigna la lista de pedidos temporal a la lista principal
+
+         // listPedidos = listTemporal;
+         
+         // notifyListeners();
+         setPedidos(listTemporal);
+        } else {
+          print("Error: Los datos recibidos no son una lista.");
+        }
+      } else {
+        print("Error en la respuesta: ${res.statusCode}");
+        print("Cuerpo de la respuesta: ${res.body}");
       }
     } catch (error) {
       throw Exception("Error de consulta $error");
@@ -62,36 +91,33 @@ class PedidoconductorProvider extends ChangeNotifier {
   }
 
   void rechazarPedidos(int pedidosId) {
-     print("........RECHAZANDO..............");
+    print("........RECHAZANDO..............");
     listPedidos.removeWhere((pedido) => pedido.id == pedidosId);
     notifyListeners();
   }
-  
+
   Future<dynamic> updateestadoaceptar(String estado, int idpedido) async {
-  try {
-    print("........LLLAMANDO AL UPDATE");
-    // Hacemos la petición a la API para actualizar el estado en el servidor
-    var res = await http.put(
-      Uri.parse(apiUrl + apiUpdateestado + idpedido.toString()),
-      headers: {"Content-type": "application/json"},
-      body: jsonEncode({"estado": estado}),
-    );
+    try {
+      print("........LLLAMANDO AL UPDATE");
+      // Hacemos la petición a la API para actualizar el estado en el servidor
+      var res = await http.put(
+        Uri.parse(apiUrl + apiUpdateestado + idpedido.toString()),
+        headers: {"Content-type": "application/json"},
+        body: jsonEncode({"estado": estado}),
+      );
 
-    if (res.statusCode == 200) {
-      // Actualizamos el estado del pedido localmente si la solicitud fue exitosa
-      int index = listPedidos.indexWhere((pedido) => pedido.id == idpedido);
-      if (index != -1) {
-        listPedidos[index].estado = estado;
-        notifyListeners();  // Notificamos a los widgets escuchando que la lista ha cambiado
+      if (res.statusCode == 200) {
+        // Actualizamos el estado del pedido localmente si la solicitud fue exitosa
+        int index = listPedidos.indexWhere((pedido) => pedido.id == idpedido);
+        if (index != -1) {
+          listPedidos[index].estado = estado;
+          notifyListeners(); // Notificamos a los widgets escuchando que la lista ha cambiado
+        }
+      } else {
+        throw Exception('Error al actualizar el estado: ${res.statusCode}');
       }
-    } else {
-      throw Exception('Error al actualizar el estado: ${res.statusCode}');
+    } catch (error) {
+      throw Exception("Error en la solicitud: $error");
     }
-  } catch (error) {
-    throw Exception("Error en la solicitud: $error");
   }
-}
-
-
-
 }

@@ -6,6 +6,7 @@ import 'package:appsol_final/components/socketcentral/socketcentral.dart';
 import 'package:appsol_final/models/pedido_conductor_model.dart';
 import 'package:appsol_final/models/pedido_detalle_model.dart';
 import 'package:appsol_final/provider/card_provider.dart';
+import 'package:appsol_final/provider/pedidoruta_provider.dart';
 import 'package:appsol_final/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -460,13 +461,15 @@ class _NavegacionState extends State<Navegacion> {
 
   @override
   Widget build(BuildContext context) {
+    final pedidosProvider =
+        Provider.of<PedidoconductorProvider>(context, listen: false);
     final cardpedidoProvider =
         Provider.of<CardpedidoProvider>(context, listen: false);
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         toolbarHeight: MediaQuery.of(context).size.height / 18,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
         title: Row(
@@ -767,84 +770,29 @@ class _NavegacionState extends State<Navegacion> {
                                               actions: [
                                                 TextButton(
                                                     onPressed: () async {
-                                                      /* showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return const AlertDialog(
-                                                            content: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                CircularProgressIndicator(
-                                                                  backgroundColor:
-                                                                      Color.fromARGB(
-                                                                          255,
-                                                                          118,
-                                                                          213,
-                                                                          80),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 20,
-                                                                ),
-                                                                Text(
-                                                                  "Cargando ...",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                      );*/
-                                                      // Navigator.pop(context);
-                                                      /*  showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return const AlertDialog(
-                                                            content: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                CircularProgressIndicator(
-                                                                  backgroundColor:
-                                                                      Color.fromARGB(
-                                                                          255,
-                                                                          118,
-                                                                          213,
-                                                                          80),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 20,
-                                                                ),
-                                                                Text(
-                                                                  "Cargando ...",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                      );*/
-
-                                                      await anularPedido(
+                                                     await anularPedido(
                                                           cardpedidoProvider
                                                               .pedido?.id,
                                                           motivo);
                                                       Navigator.pop(context);
-                                                      /* Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    Driver1()),
-                                                      );*/
+                                                      showDialog(
+                                                        context: context,
+                                                        barrierDismissible:
+                                                            false,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return Center(
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.pink,
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                      pedidosProvider
+                                                          .getPedidosConductor();
+                                                      Navigator.pop(context);
                                                     },
                                                     child: const Text(
                                                       "Continuar",

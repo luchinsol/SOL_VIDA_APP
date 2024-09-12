@@ -266,7 +266,7 @@ class _PerfilCliente extends State<PerfilCliente> {
                                     child: Container(
                                       width: 150,
                                       height: 230,
-                                      child: Image.network('$apiUrl/images/sorteo.jpg'),
+                                      child: Image.network('$apiUrl/images/sorteoviaje.png'),
                                     ),
                                   );
                                 });
@@ -301,7 +301,15 @@ class _PerfilCliente extends State<PerfilCliente> {
                                           fontWeight: FontWeight.w500,
                                           fontSize: largoActual * 0.016,
                                           color: colorTitulos),
-                                    )
+                                    ),
+                                      TextSpan(
+                                      text: "\nPulsa aquí.",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: largoActual * 0.016,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
                                   ]))),
                                   SizedBox(width: anchoActual*0.034,),
                               Container(

@@ -8,6 +8,7 @@ import 'package:appsol_final/components/socketcentral/socketcentral.dart';
 import 'package:appsol_final/models/pedido_conductor_model.dart';
 import 'package:appsol_final/models/pedidoinforme_model.dart';
 import 'package:appsol_final/models/ruta_model.dart';
+import 'package:appsol_final/provider/pedidoruta_provider.dart';
 import 'package:appsol_final/provider/ruta_provider.dart';
 import 'package:appsol_final/provider/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _DriverState extends State<Driver> {
   bool conectado = false;
   Color colorconectado = Colors.white;
   final socketService = SocketService();
-
+  bool? haAceptadoTerminos;
   /*Future<void> _initialize() async {
    // await getRutas();
     // await cargarPreferencias();
@@ -498,49 +499,95 @@ class _DriverState extends State<Driver> {
     }
   }
 
+  // Verifica si el usuario ya ha aceptado los términos
+  Future<void> _verificarTerminos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool aceptado = prefs.getBool('haAceptadoTerminos') ?? false;
+    setState(() {
+      haAceptadoTerminos = aceptado;
+    });
+  }
+
+  // Guarda que el usuario ha aceptado los términos
+  Future<void> _aceptarTerminos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('haAceptadoTerminos', true);
+  }
+
   @override
   void initState() {
     super.initState();
-    getlastrutaconductor();
-    //pedidosInforme();
-    // Inicializa la localización para español
-    // connectToServer();
+    _verificarTerminos();
+    getlastrutaconductor(); // llegaron tarde y obtengo la ultima ruta o "ayer"
 
+    // llegaron temprano y crea un nueva
     socketService.listenToEvent('creadoRuta', (data) async {
-      print("......2.....dentro del init....");
-      print("...creado de ruta ...$data");
+      if (!mounted) return;
+      print("Ruta creada: $data");
       SharedPreferences rutaidget = await SharedPreferences.getInstance();
-      // print("------esta es la RUTA");
-      print(data['id']);
       rutaidget.setInt('rutaActual', data['id']);
+      final pedidosProvider =
+          Provider.of<PedidoconductorProvider>(context, listen: false);
 
-      //final userProvider = Provider.of<UserProvider>(context, listen: false);
+      if (rutaidget.containsKey('rutaActual')) {
+        print('La clave "rutaActual" existe en SharedPreferences');
+        // Puedes acceder al valor si es necesario
+        int? rutaActual = rutaidget.getInt('rutaActual');
+        print('Ruta actual: $rutaActual');
 
-      /*if (data['conductor_id'] == userProvider.user?.id) {
-        //print("entro al fi");
-        setState(() {
-          //seteo las preferncias para las demas vistas
-          idRuta = data['id'];
+        // Añade un retraso de 5 segundos
+        await Future.delayed(Duration(seconds: 5));
 
-          rutaidget.setInt('rutaIDNEW', idRuta);
-
-          idconductor = data['conductor_id'];
-          fechacreacion = data['fecha_creacion'];
-        });
-        // print("----datos de creado ruta");
-        // print(idRuta);
-        // print(idconductor);
-        // print(fechacreacion);
-      }*/
+        pedidosProvider.cargarPreferencias();
+      }
     });
-    // _initialize();
+
+    final pedidosProvider =
+        Provider.of<PedidoconductorProvider>(context, listen: false);
+    pedidosProvider.getPedidosConductor();
+
+   /* socketService.onRutaCreada((data) async {
+      if (!mounted) return;
+      print("Ruta creada: $data");
+      SharedPreferences rutaidget = await SharedPreferences.getInstance();
+      rutaidget.setInt('rutaActual', data['id']);
+      final pedidosProvider =
+          Provider.of<PedidoconductorProvider>(context, listen: false);
+
+      if (rutaidget.containsKey('rutaActual')) {
+        print('La clave "rutaActual" existe en SharedPreferences');
+        // Puedes acceder al valor si es necesario
+        int? rutaActual = rutaidget.getInt('rutaActual');
+        print('Ruta actual: $rutaActual');
+
+        // Añade un retraso de 5 segundos
+        await Future.delayed(Duration(seconds: 5));
+
+        pedidosProvider.cargarPreferencias();
+      }
+    });*/
 
     // cargarPreferencias();
+    //context.watch<RutaProvider>();
+    /* final pedidosProvider =
+        Provider.of<PedidoconductorProvider>(context, listen: false);
+    pedidosProvider.getPedidosConductor();*/
+    // final pedidosProvider = context.watch<PedidoconductorProvider>();
 
-    // getPedidosConductor();
     initializeDateFormatting('es_ES', null);
   }
 
+/*@override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("----did chagne deend");
+    final pedidosProvider =
+        Provider.of<PedidoconductorProvider>(context, listen: false);
+    // Cargar los pedidos si la lista está vacía
+   // if (pedidosProvider.pedidos.isEmpty) {
+      pedidosProvider.getPedidosConductor();
+   // }
+  }*/
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -649,7 +696,7 @@ class _DriverState extends State<Driver> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               onTap: () async {
-                socketService.disconnet();
+                //socketService.disconnet();
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.remove('user');
                 Navigator.push(context,
@@ -750,9 +797,19 @@ class _DriverState extends State<Driver> {
                             IconButton(
                                 onPressed: () async {
                                   int? user = userProvider.user!.id;
-                                  String estado = conectado
-                                      ? "desconectado"
-                                      : "conectado"; // Cambia el estado según el valor actual de 'conectado'
+                                  String estado =
+                                      conectado ? "desconectado" : "conectado";
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.pink,
+                                        ),
+                                      );
+                                    },
+                                  );
 
                                   await conexionCentral(user!, estado);
 
@@ -760,6 +817,7 @@ class _DriverState extends State<Driver> {
                                     conectado =
                                         !conectado; // Alterna el valor de 'conectado' después de enviar la petición
                                   });
+                                  Navigator.pop(context);
                                 },
                                 icon: Icon(
                                   Icons.power_settings_new_sharp,
@@ -824,12 +882,104 @@ class _DriverState extends State<Driver> {
                       child: ElevatedButton(
                         onPressed: conectado
                             ? () {
-                                /*Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Driver1()),
-                        );*/
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const Driver1()));
+                                if (haAceptadoTerminos == true) {
+                                  // Si ya ha aceptado los términos, navega directamente
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const Driver1()));
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                            "Términos y Condiciones"),
+                                        content: const SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Responsabilidad del Conductor:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Eres responsable de los pedidos asignados y de su entrega en buenas condiciones. Cualquier pérdida o daño es tu responsabilidad.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Cumplimiento Legal:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Debes cumplir con todas las leyes de transporte y tener los permisos necesarios para conducir.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Acciones Disciplinarias:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "La empresa puede suspender o cancelar tu acceso a la app por incumplimiento o mala conducta.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Responsabilidad Legal:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Serás legalmente responsable por cualquier daño o pérdida causado durante la entrega.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Confidencialidad:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "La información sobre los pedidos y clientes es confidencial.",
+                                              ),
+                                              SizedBox(height: 20),
+                                              Text(
+                                                "Al continuar, aceptas estos términos.",
+                                                style: TextStyle(
+                                                    fontStyle:
+                                                        FontStyle.italic),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () async {
+                                              Navigator.of(context)
+                                                  .pop(); // Cierra el diálogo
+                                              await _aceptarTerminos(); // Guarda que aceptó los términos
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const Driver1()));
+                                            },
+                                            child: Text("Aceptar"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               }
                             : null,
                         style: ButtonStyle(

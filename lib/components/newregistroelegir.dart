@@ -57,21 +57,21 @@ class _RegistroelegirState extends State<Registroelegir> {
                             height: MediaQuery.of(context).size.height / 19,
                             child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
+                                 /* Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const Registroconductor()),
-                                  );
+                                  );*/
                                 },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                        const Color.fromRGBO(0, 77, 255, 1),
+                                        Color.fromARGB(255, 131, 132, 133),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(18))),
                                 child: Text(
-                                  "Conductor",
+                                  "Conductor: Pronto",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize:
