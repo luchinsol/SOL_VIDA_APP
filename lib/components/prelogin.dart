@@ -375,412 +375,414 @@ class _PreloginState extends State<Prelogin> {
           padding: const EdgeInsets.all(40.0),
           child: Container(
               height: MediaQuery.of(context).size.height,
-              child: Column(
-               // mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    height: MediaQuery.of(context).size.height / 4.5,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('lib/imagenes/nuevito.png'))),
-                  ),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Inicia Sesión",
-                          style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width / 7.9,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Llevando vida a tu hogar!",
-                          style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width / 18.5,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 0,
-                        ),
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(18)),
-                                child: TextFormField(
-                                  controller: _usuario,
-                                  keyboardType: TextInputType.visiblePassword,
-                                  decoration: InputDecoration(
-                                      //necesario para login
-              
-                                      labelText: 'Usuario',
-                                      hintText: 'Usuario',
-                                      border: InputBorder.none,
+              child: SingleChildScrollView(
+                child: Column(
+                 // mainAxisAlignment: MainAxisAlignment.center,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: MediaQuery.of(context).size.height / 4.5,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('lib/imagenes/nuevito.png'))),
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Inicia Sesión",
+                            style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width / 7.9,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Llevando vida a tu hogar!",
+                            style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width / 18.5,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 0,
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(18)),
+                                  child: TextFormField(
+                                    controller: _usuario,
+                                    keyboardType: TextInputType.visiblePassword,
+                                    decoration: InputDecoration(
+                                        //necesario para login
+                
+                                        labelText: 'Usuario',
+                                        hintText: 'Usuario',
+                                        border: InputBorder.none,
+                                        isDense: true,
+                                        labelStyle: TextStyle(
+                                            fontSize: texto1,
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.grey),
+                                        hintStyle: TextStyle(
+                                            fontSize: texto1, color: Colors.grey),
+                                        prefixIcon: Icon(
+                                          Icons.person_outline_outlined,
+                                          color: Colors.grey,
+                                          size: texto1,
+                                        )),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Por favor, ingrese su usuario';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(18)),
+                                  child: TextFormField(
+                                    controller: _contrasena,
+                                    keyboardType: TextInputType.visiblePassword,
+                                    obscureText: _obscureText1,
+                                    decoration: InputDecoration(
+                                      labelText: 'Contraseña',
+                                      hintText: 'Contraseña',
                                       isDense: true,
+                                      border: InputBorder.none,
                                       labelStyle: TextStyle(
                                           fontSize: texto1,
                                           fontWeight: FontWeight.normal,
                                           color: Colors.grey),
                                       hintStyle: TextStyle(
                                           fontSize: texto1, color: Colors.grey),
+                                      suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            _obscureText1 = !_obscureText1;
+                                          });
+                                        },
+                                        child: Icon(
+                                          _obscureText1
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off,
+                                          color: Colors.grey,
+                                          size: texto1,
+                                        ),
+                                      ),
                                       prefixIcon: Icon(
-                                        Icons.person_outline_outlined,
+                                        Icons.lock_outline,
+                                        size: texto1, //30,
                                         color: Colors.grey,
-                                        size: texto1,
-                                      )),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Por favor, ingrese su usuario';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(18)),
-                                child: TextFormField(
-                                  controller: _contrasena,
-                                  keyboardType: TextInputType.visiblePassword,
-                                  obscureText: _obscureText1,
-                                  decoration: InputDecoration(
-                                    labelText: 'Contraseña',
-                                    hintText: 'Contraseña',
-                                    isDense: true,
-                                    border: InputBorder.none,
-                                    labelStyle: TextStyle(
-                                        fontSize: texto1,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.grey),
-                                    hintStyle: TextStyle(
-                                        fontSize: texto1, color: Colors.grey),
-                                    suffixIcon: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _obscureText1 = !_obscureText1;
-                                        });
-                                      },
-                                      child: Icon(
-                                        _obscureText1
-                                            ? Icons.visibility_outlined
-                                            : Icons.visibility_off,
-                                        color: Colors.grey,
-                                        size: texto1,
                                       ),
                                     ),
-                                    prefixIcon: Icon(
-                                      Icons.lock_outline,
-                                      size: texto1, //30,
-                                      color: Colors.grey,
-                                    ),
+                                    //VALIDACION DE CONTRASEÑA ORIGINAL
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Por favor, ingrese una contraseña';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                  //VALIDACION DE CONTRASEÑA ORIGINAL
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Por favor, ingrese una contraseña';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        //color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10)),
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width /
-                            3), //MediaQuery.of(context).size.width / 3),
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Recuperacion()),
-                          );
-                        },
-              
-                        //RECUPERACION DE CONTRASEÑA DEL ARCHIVO ORIGINAL
-                        child: Text(
-                          "¿Olvidaste contraseña?",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: MediaQuery.of(context).size.width / 26,
-                              color: const Color.fromARGB(255, 255, 255, 255)),
-                        )),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: Container(
-                      width: ancho * 2.5, //MediaQuery.of(context).size.width,
-                      height: alto / 2.85, //50,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            //INICIAR SESIÓN DEL ARCHIVO ORIGINAL
-              
-                            if (_formKey.currentState!.validate()) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    );
-                                  });
-                              try {
-                                await loginsol(_usuario.text, _contrasena.text,context);
-              
-                                if (status == 200) {
-                                  Navigator.of(context)
-                                      .pop(); // Cerrar el primer AlertDialog
-              
-                                  print("q pasa=");
-                                  //SI ES CLIENTE
-                                  if (rol == 4) {
-                                    await tieneUbicaciones(userData.id);
-                                    await tienePedidos(userData.id);
-                                    if (noTienePedidosEsNuevo) {
-                                      setState(() {
-                                        userData.esNuevo = true;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        userData.esNuevo = false;
-                                      });
-                                    }
-                                    //SI YA TIENE UBICACIONES INGRESA DIRECTAMENTE A LA BARRA DE AVEGACION
-                                    if (yaTieneUbicaciones == true) {
-                                      //print("YA tiene unibicaciones");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const BarraNavegacion(
-                                                    indice: 0, subIndice: 0)),
-                                      );
-                                      //SI NO TIENE UBICACIONES INGRESA A UBICACION
-                                    } else {
-                                      //print("NO tiene unibicaciones");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LocationPermissionScreen()),
-                                      );
-                                    }
-              
-                                    //SI ES CONDUCTOR
-                                  } else if (rol == 5) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => const Driver()),
-                                    );
-              
-                                    //SI ES GERENTE
-                                  } else if (rol == 3) {
-                                    //por cmabiar
-                                  }
-                                  //SI NO ESTA REGISTRADO
-                                } else if (status == 401) {
-                                  Navigator.of(context)
-                                      .pop(); // Cerrar el primer AlertDialog
-              
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(10),
-                                          height:
-                                              MediaQuery.of(context).size.height /
-                                                  5,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                width: 50,
-                                                height: 50,
-                                                decoration: const BoxDecoration(
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                            'lib/imagenes/nuevecito.png'))),
-                                              ),
-                                              const SizedBox(
-                                                height: 19,
-                                              ),
-                                              Text(
-                                                "Credenciales inválidas.",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        25,
-                                                    color: const Color.fromARGB(
-                                                        255, 2, 100, 181)),
-                                              ),
-                                              const SizedBox(
-                                                height: 19,
-                                              ),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text(
-                                                    "OK",
-                                                    style: TextStyle(
-                                                        fontWeight: FontWeight.bold,
-                                                        fontSize: 24,
-                                                        color: const Color.fromARGB(
-                                                            255, 4, 93, 167)),
-                                                  ))
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                } else if (status == 404) {
-                                  Navigator.of(context).pop();
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(10),
-                                          height:
-                                              MediaQuery.of(context).size.height /
-                                                  5,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                width: 50,
-                                                height: 50,
-                                                decoration: const BoxDecoration(
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                            'lib/imagenes/nuevecito.png'))),
-                                              ),
-                                              const SizedBox(
-                                                height: 19,
-                                              ),
-                                              Text(
-                                                "Usuario no existente. Intente de nuevo.",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        25,
-                                                    color: const Color.fromARGB(
-                                                        255, 2, 100, 181)),
-                                              ),
-                                              const SizedBox(
-                                                height: 19,
-                                              ),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text(
-                                                    "OK",
-                                                    style: TextStyle(
-                                                        fontWeight: FontWeight.bold,
-                                                        fontSize: 24,
-                                                        color: const Color.fromARGB(
-                                                            255, 4, 93, 167)),
-                                                  ))
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }
-                              } catch (e) {
-                                /*print(
-                                      "Excepción durante el inicio de sesión: $e");*/
-                              }
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18))),
-                          child: Text(
-                            "Iniciar Sesión",
-                            style: TextStyle(
-                                color: const Color.fromRGBO(0, 77, 225, 1),
-                                fontSize: texto1 * 1.7, //30,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "¿Todavía no tienes cuenta?",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.width / 25.5, //16,
-                            color: Colors.white),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                      TextButton(
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          //color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10)),
+                      margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width /
+                              3), //MediaQuery.of(context).size.width / 3),
+                      child: TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Formucli()),
+                                  builder: (context) => const Recuperacion()),
                             );
                           },
+                
+                          //RECUPERACION DE CONTRASEÑA DEL ARCHIVO ORIGINAL
                           child: Text(
-                            "Registrarse",
+                            "¿Olvidaste contraseña?",
                             style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width / 26,
+                                color: const Color.fromARGB(255, 255, 255, 255)),
+                          )),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: Container(
+                        width: ancho * 2.5, //MediaQuery.of(context).size.width,
+                        height: alto / 2.85, //50,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              //INICIAR SESIÓN DEL ARCHIVO ORIGINAL
+                
+                              if (_formKey.currentState!.validate()) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      );
+                                    });
+                                try {
+                                  await loginsol(_usuario.text, _contrasena.text,context);
+                
+                                  if (status == 200) {
+                                    Navigator.of(context)
+                                        .pop(); // Cerrar el primer AlertDialog
+                
+                                    print("q pasa=");
+                                    //SI ES CLIENTE
+                                    if (rol == 4) {
+                                      await tieneUbicaciones(userData.id);
+                                      await tienePedidos(userData.id);
+                                      if (noTienePedidosEsNuevo) {
+                                        setState(() {
+                                          userData.esNuevo = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          userData.esNuevo = false;
+                                        });
+                                      }
+                                      //SI YA TIENE UBICACIONES INGRESA DIRECTAMENTE A LA BARRA DE AVEGACION
+                                      if (yaTieneUbicaciones == true) {
+                                        //print("YA tiene unibicaciones");
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const BarraNavegacion(
+                                                      indice: 0, subIndice: 0)),
+                                        );
+                                        //SI NO TIENE UBICACIONES INGRESA A UBICACION
+                                      } else {
+                                        //print("NO tiene unibicaciones");
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LocationPermissionScreen()),
+                                        );
+                                      }
+                
+                                      //SI ES CONDUCTOR
+                                    } else if (rol == 5) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => const Driver()),
+                                      );
+                
+                                      //SI ES GERENTE
+                                    } else if (rol == 3) {
+                                      //por cmabiar
+                                    }
+                                    //SI NO ESTA REGISTRADO
+                                  } else if (status == 401) {
+                                    Navigator.of(context)
+                                        .pop(); // Cerrar el primer AlertDialog
+                
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          child: Container(
+                                            padding: const EdgeInsets.all(10),
+                                            height:
+                                                MediaQuery.of(context).size.height /
+                                                    5,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: const BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'lib/imagenes/nuevecito.png'))),
+                                                ),
+                                                const SizedBox(
+                                                  height: 19,
+                                                ),
+                                                Text(
+                                                  "Credenciales inválidas.",
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          25,
+                                                      color: const Color.fromARGB(
+                                                          255, 2, 100, 181)),
+                                                ),
+                                                const SizedBox(
+                                                  height: 19,
+                                                ),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text(
+                                                      "OK",
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 24,
+                                                          color: const Color.fromARGB(
+                                                              255, 4, 93, 167)),
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else if (status == 404) {
+                                    Navigator.of(context).pop();
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          child: Container(
+                                            padding: const EdgeInsets.all(10),
+                                            height:
+                                                MediaQuery.of(context).size.height /
+                                                    5,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: const BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'lib/imagenes/nuevecito.png'))),
+                                                ),
+                                                const SizedBox(
+                                                  height: 19,
+                                                ),
+                                                Text(
+                                                  "Usuario no existente. Intente de nuevo.",
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: MediaQuery.of(context)
+                                                              .size
+                                                              .width /
+                                                          25,
+                                                      color: const Color.fromARGB(
+                                                          255, 2, 100, 181)),
+                                                ),
+                                                const SizedBox(
+                                                  height: 19,
+                                                ),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text(
+                                                      "OK",
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 24,
+                                                          color: const Color.fromARGB(
+                                                              255, 4, 93, 167)),
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                } catch (e) {
+                                  /*print(
+                                        "Excepción durante el inicio de sesión: $e");*/
+                                }
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18))),
+                            child: Text(
+                              "Iniciar Sesión",
+                              style: TextStyle(
+                                  color: const Color.fromRGBO(0, 77, 225, 1),
+                                  fontSize: texto1 * 1.7, //30,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "¿Todavía no tienes cuenta?",
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize:
                                   MediaQuery.of(context).size.width / 25.5, //16,
-              
-                              color: const Color.fromRGBO(84, 226, 132, 1),
-                            ),
-                          ))
-                    ],
-                  )
-                ],
+                              color: Colors.white),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Formucli()),
+                              );
+                            },
+                            child: Text(
+                              "Registrarse",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    MediaQuery.of(context).size.width / 25.5, //16,
+                
+                                color: const Color.fromRGBO(84, 226, 132, 1),
+                              ),
+                            ))
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

@@ -487,11 +487,14 @@ class _DriverState extends State<Driver> {
         headers: {"Content-type": "application/json"});
     try {
       SharedPreferences rutaidget = await SharedPreferences.getInstance();
-
+final pedidosProvider =
+          Provider.of<PedidoconductorProvider>(context, listen: false);
       // print("------esta es la RUTA");
       if (res.statusCode == 200) {
         var data = json.decode(res.body);
-        rutaidget.setInt('rutaActual', data['id']);
+        //rutaidget.setInt('rutaActual', data['id']);
+        pedidosProvider.setRutaActual(data['id']);
+        
         print("getlastconductor-----$data");
       }
     } catch (error) {
@@ -517,35 +520,37 @@ class _DriverState extends State<Driver> {
   @override
   void initState() {
     super.initState();
-    _verificarTerminos();
-    getlastrutaconductor(); // llegaron tarde y obtengo la ultima ruta o "ayer"
+    final pedidosProvider =
+          Provider.of<PedidoconductorProvider>(context, listen: false);
+    pedidosProvider.getlastrutaconductor();
+    //_verificarTerminos();
+    //getlastrutaconductor(); // llegaron tarde y obtengo la ultima ruta o "ayer"
 
     // llegaron temprano y crea un nueva
     socketService.listenToEvent('creadoRuta', (data) async {
       if (!mounted) return;
-      print("Ruta creada: $data");
-      SharedPreferences rutaidget = await SharedPreferences.getInstance();
-      rutaidget.setInt('rutaActual', data['id']);
-      final pedidosProvider =
-          Provider.of<PedidoconductorProvider>(context, listen: false);
+     // print("Ruta creada: $data");
+      /*SharedPreferences rutaidget = await SharedPreferences.getInstance();
+      rutaidget.setInt('rutaActual', data['id']);*/
+      pedidosProvider.getlastrutaconductor();
 
-      if (rutaidget.containsKey('rutaActual')) {
+     // if (rutaidget.containsKey('rutaActual')) {
         print('La clave "rutaActual" existe en SharedPreferences');
         // Puedes acceder al valor si es necesario
-        int? rutaActual = rutaidget.getInt('rutaActual');
-        print('Ruta actual: $rutaActual');
-
+        //int? rutaActual = rutaidget.getInt('rutaActual');
+        //print('Ruta actual: $rutaActual');
+      //  pedidosProvider.setRutaActual(data['id']);
         // Añade un retraso de 5 segundos
         await Future.delayed(Duration(seconds: 5));
 
-        pedidosProvider.cargarPreferencias();
-      }
+       
+    //  }
     });
 
-    final pedidosProvider =
+   /* final pedidosProvider =
         Provider.of<PedidoconductorProvider>(context, listen: false);
     pedidosProvider.getPedidosConductor();
-
+*/
    /* socketService.onRutaCreada((data) async {
       if (!mounted) return;
       print("Ruta creada: $data");
@@ -617,7 +622,7 @@ class _DriverState extends State<Driver> {
         title: Container(
           //color: Colors.amber,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               /*Container(
                 height: MediaQuery.of(context).size.height / 18,
@@ -629,24 +634,118 @@ class _DriverState extends State<Driver> {
               const SizedBox(
                 width: 19,
               ),*/
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Bienvenid@",
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width / 25,
-                        fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 0, 0, 0)),
+             
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Bienvenid@",
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 25,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 0, 0, 0)),
+                      ),
+                      Text(
+                        "${userProvider.user?.nombre}",
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 18,
+                            color: const Color.fromARGB(255, 0, 0, 0)),
+                      )
+                    ],
                   ),
-                  Text(
-                    "${userProvider.user?.nombre}",
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width / 18,
-                        color: const Color.fromARGB(255, 0, 0, 0)),
-                  )
-                ],
-              ),
+                  IconButton(onPressed: (){
+                    showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                            "Términos y Condiciones"),
+                                        content: const SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Responsabilidad del Conductor:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Eres responsable de los pedidos asignados y de su entrega en buenas condiciones. Cualquier pérdida o daño es tu responsabilidad.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Cumplimiento Legal:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Debes cumplir con todas las leyes de transporte y tener los permisos necesarios para conducir.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Acciones Disciplinarias:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "La empresa puede suspender o cancelar tu acceso a la app por incumplimiento o mala conducta.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Responsabilidad Legal:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Serás legalmente responsable por cualquier daño o pérdida causado durante la entrega.",
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                "Confidencialidad:",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "La información sobre los pedidos y clientes es confidencial.",
+                                              ),
+                                              SizedBox(height: 20),
+                                              Text(
+                                                "Al continuar, aceptas estos términos.",
+                                                style: TextStyle(
+                                                    fontStyle:
+                                                        FontStyle.italic),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () async {
+                                              Navigator.of(context)
+                                                  .pop(); // Cierra el diálogo
+                                              
+                                            },
+                                            child: Text("Aceptar"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                  },
+                   icon:Icon(Icons.shield_outlined))
+              
+              
             ],
           ),
         ),
@@ -707,15 +806,20 @@ class _DriverState extends State<Driver> {
         ),
       ),
       body: Stack(
+        
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("lib/imagenes/olas.jpg"), // Ruta de la imagen
-                fit: BoxFit.fill, // Ajusta la imagen al tamaño de la pantalla
-              ),
-            ),
+          Align(
+      alignment: Alignment.bottomCenter, // Mueve la imagen a la parte inferior
+      child: Container(
+        height: MediaQuery.of(context).size.height / 1.8,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/imagenes/motorizado.jpg"), // Ruta de la imagen
+            fit: BoxFit.fill, // Ajusta la imagen al tamaño de la pantalla
           ),
+        ),
+      ),
+    ),
           Padding(
             padding: const EdgeInsets.only(
               right: 20,
@@ -853,7 +957,7 @@ class _DriverState extends State<Driver> {
                           shape: WidgetStateProperty.all(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30))),
                           backgroundColor: WidgetStateProperty.all(
-                              Color.fromRGBO(255, 255, 255, 1)
+                              Color.fromRGBO(230, 197, 127, 1)
                                   .withOpacity(0.95))),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -882,104 +986,14 @@ class _DriverState extends State<Driver> {
                       child: ElevatedButton(
                         onPressed: conectado
                             ? () {
-                                if (haAceptadoTerminos == true) {
-                                  // Si ya ha aceptado los términos, navega directamente
-                                  Navigator.of(context).push(MaterialPageRoute(
+                               Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => const Driver1()));
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text(
-                                            "Términos y Condiciones"),
-                                        content: const SingleChildScrollView(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Responsabilidad del Conductor:",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Text(
-                                                "Eres responsable de los pedidos asignados y de su entrega en buenas condiciones. Cualquier pérdida o daño es tu responsabilidad.",
-                                              ),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                "Cumplimiento Legal:",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Text(
-                                                "Debes cumplir con todas las leyes de transporte y tener los permisos necesarios para conducir.",
-                                              ),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                "Acciones Disciplinarias:",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Text(
-                                                "La empresa puede suspender o cancelar tu acceso a la app por incumplimiento o mala conducta.",
-                                              ),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                "Responsabilidad Legal:",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Text(
-                                                "Serás legalmente responsable por cualquier daño o pérdida causado durante la entrega.",
-                                              ),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                "Confidencialidad:",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Text(
-                                                "La información sobre los pedidos y clientes es confidencial.",
-                                              ),
-                                              SizedBox(height: 20),
-                                              Text(
-                                                "Al continuar, aceptas estos términos.",
-                                                style: TextStyle(
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () async {
-                                              Navigator.of(context)
-                                                  .pop(); // Cierra el diálogo
-                                              await _aceptarTerminos(); // Guarda que aceptó los términos
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const Driver1()));
-                                            },
-                                            child: Text("Aceptar"),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
+                                //if (haAceptadoTerminos == true) {
+                                  // Si ya ha aceptado los términos, navega directamente
+                                 
+                               // } else {
+                                  
+                              //  }
                               }
                             : null,
                         style: ButtonStyle(
@@ -1008,7 +1022,7 @@ class _DriverState extends State<Driver> {
                           ],
                         ),
                       )),
-                  SizedBox(
+                 /* SizedBox(
                     height: MediaQuery.of(context).size.height / 35,
                   ),
                   Container(
@@ -1147,6 +1161,8 @@ class _DriverState extends State<Driver> {
                       ),
                     ),
                   ),
+                
+                */
                 ],
               ),
             ),

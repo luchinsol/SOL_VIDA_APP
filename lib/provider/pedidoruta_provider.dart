@@ -16,26 +16,51 @@ class PedidoconductorProvider extends ChangeNotifier {
   String apiUpdateestado = '/api/estadoflash/';
   List<Pedido> get pedidos => listPedidos;
   int? rutaIDGET = 0;
+  int? _rutaActual;
 
   cargarPreferencias() async {
-    SharedPreferences rutaidget = await SharedPreferences.getInstance();
+   /* SharedPreferences rutaidget = await SharedPreferences.getInstance();
 
     rutaIDGET = rutaidget.getInt('rutaActual');
     print("---RUTA ID GET: ${rutaIDGET}");
-
+*/
     await getPedidosConductor();
+  }
+  Future<dynamic> getlastrutaconductor() async {
+    print("-----1---");
+    var res = await http.get(Uri.parse(apiUrl + '/api/lastrutafasty'),
+        headers: {"Content-type": "application/json"});
+    try {
+      //SharedPreferences rutaidget = await SharedPreferences.getInstance();
+      
+      // print("------esta es la RUTA");
+      if (res.statusCode == 200) {
+        var data = json.decode(res.body);
+        //rutaidget.setInt('rutaActual', data['id']);
+        setRutaActual(data['id']);
+      //  rutaIDGET = data['id'];
+        print("getlastconductor-----$data");
+        notifyListeners();
+      }
+    } catch (error) {
+      throw Exception("error en la solicitud $error");
+    }
+  }
+
+  int? getIdRuta(){
+    return _rutaActual;
   }
 
   Future<void> getPedidosConductor() async {
-    print(".....1...dentro del provider get");
+    print(".....2...dentro del provider get");
    // SharedPreferences rutaidget = await SharedPreferences.getInstance();
 
     //int? rutaid = rutaidget.getInt('rutaActual'); // Cambia esto si es necesario
-    print("...ruta en provider: $rutaIDGET");
+    //print("...ruta en provider: $rutaIDGET");
     print(
-        "-----la ruta es: ${apiUrl + apiPedidosConductor + rutaIDGET.toString()}");
+        "-----la ruta es: ${apiUrl + apiPedidosConductor + getIdRuta().toString()}");
     var res = await http.get(
-      Uri.parse(apiUrl + apiPedidosConductor + rutaIDGET.toString()),
+      Uri.parse(apiUrl + apiPedidosConductor + getIdRuta().toString()),
       headers: {"Content-type": "application/json"},
     );
 
@@ -69,9 +94,9 @@ class PedidoconductorProvider extends ChangeNotifier {
 
           // Asigna la lista de pedidos temporal a la lista principal
 
-         // listPedidos = listTemporal;
-         
-         // notifyListeners();
+          listPedidos = listTemporal;
+         // estado pendiente
+         notifyListeners();
          setPedidos(listTemporal);
         } else {
           print("Error: Los datos recibidos no son una lista.");
@@ -87,6 +112,12 @@ class PedidoconductorProvider extends ChangeNotifier {
 
   void setPedidos(List<Pedido> pedidos) {
     listPedidos = pedidos;
+    notifyListeners();
+  }
+
+  void setRutaActual(int idRuta){
+    _rutaActual = idRuta;
+    print("---1.1.............. $_rutaActual");
     notifyListeners();
   }
 

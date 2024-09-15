@@ -540,7 +540,7 @@ class _MapScreenState extends State<MapScreen> {
   int? zonaIDUbicacion = 0;
   List<String> tempString = [];
   String apiZona = '/api/zona';
-
+final FocusNode _focusNode = FocusNode();
   Future<void> _updateMapLocation() async {
     //print("3---------UPDATE");
     _mapController?.animateCamera(
@@ -1047,6 +1047,7 @@ class _MapScreenState extends State<MapScreen> {
                 padding: const EdgeInsets.all(0.0),
                 child: GooglePlaceAutoCompleteTextField(
                   textEditingController: _addressController,
+                  focusNode: _focusNode,
                   googleAPIKey: kGoogleApiKey,
                   inputDecoration: const InputDecoration(
                     //fillColor: Colors.white,
@@ -1056,6 +1057,8 @@ class _MapScreenState extends State<MapScreen> {
 
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
                   debounceTime: 400,
                   countries: ["pe"],
@@ -1099,6 +1102,7 @@ class _MapScreenState extends State<MapScreen> {
                   isCrossBtnShown: true,
                 ),
               ),
+
 
               const SizedBox(
                 height: 20,

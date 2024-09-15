@@ -32,6 +32,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? userJson = prefs.getString('user');
+  //await Upgrader.clearSavedSettings();
   //print("userJson main ---------------------------------");
   //print(userJson);
   bool estalogeado = userJson != null; //false = nologeado, true = logeado
@@ -89,8 +90,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    
-    return UpgradeAlert(
-      child: MaterialApp(
+    return  MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
@@ -104,15 +104,18 @@ class MyApp extends StatelessWidget {
           const Locale('es', ''), // Español
         ],
         //home: estalogeado && rol == 4 ? BarraNavegacion(indice: 0,subIndice: 0,) : (estalogeado && rol == 5 ? HolaConductor() :Login()),
-        home: estalogeado
-            ? (rol == 4
-                ? const BarraNavegacion(
-                    indice: 0,
-                    subIndice: 0,
-                  )
-                : (rol == 5 ? const Driver() : const Solvida()))
-            : const Solvida(),
-      ),
+        home: UpgradeAlert(
+          
+          child: estalogeado
+              ? (rol == 4
+                  ? const BarraNavegacion(
+                      indice: 0,
+                      subIndice: 0,
+                    )
+                  : (rol == 5 ? const Driver() : const Solvida()))
+              : const Solvida(),
+        ),
+      
     );
   }
 }
